@@ -1,19 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import HomeTopCard from "../../Components/Cards/HomeTopCard";
+import Charts from "../../components/Charts/Charts";
 
-export default function Home() {
+const Dashboard = () => {
+  const [userType] = useState("Admin");
+
+  const data = [
+    {
+      title: "Total Reserve",
+      number: 784645,
+      color: "bg-successColor",
+    },
+    {
+      title: "Total Cost",
+      number: 327,
+      color: "bg-secondaryMainLight",
+    },
+    {
+      title: "Total Dues",
+      number: 73665,
+      color: "bg-infoColor",
+    },
+    {
+      title: "Total Loan",
+      number: 3278,
+      color: "bg-errorMidColor",
+    },
+  ];
+
   return (
-    <section className="py-8 h-full overflow-auto relative">
-      <div>
-        <div className="h-[25rem] w-full bg-melody bg-no-repeat bg-center bg-cover object-contain rounded-xl"></div>
-        <div className="mt-10">
-          <h4 className="text-lg font-semibold capitalize">suggested songs</h4>
-          <audio controls>
-            <source src="http://www.last.fm/music/Cher/_/Believe" />
-            Your browser does not support the audio element.
-          </audio>
-          ;<div className="flex flex-col gap-4">hello</div>
-        </div>
+    <div className="w-full overflow-auto pt-10 pb-6 pr-10">
+      <div className="flex flex-col justify-around pty-10 gap-4 w-full">
+        {/* 4 top cards */}
+        <section className="flex justify-between gap-8 px-4">
+          {data.map((data, index) => (
+            <HomeTopCard data={data} key={index}></HomeTopCard>
+          ))}
+        </section>
+        <Charts></Charts>
+        {/* temporary for testing only */}
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+export default Dashboard;

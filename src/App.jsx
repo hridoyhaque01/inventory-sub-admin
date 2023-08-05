@@ -8,7 +8,7 @@ function App() {
   return !authChecked ? (
     <div>loading....</div>
   ) : (
-    <div>
+    <div className="font-ubuntu">
       <RouterProvider router={Router}></RouterProvider>
     </div>
   );
