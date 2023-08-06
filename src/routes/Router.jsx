@@ -3,6 +3,7 @@ import Layout from "../layout/Layout";
 import SecondaryLayout from "../layout/SecondaryLayout";
 import Login from "../pages/authentication/Login";
 import ResetPassword from "../pages/authentication/ResetPassword";
+import Signup from "../pages/authentication/Signup";
 import Customer from "../pages/customer/Customer";
 import Expenses from "../pages/expenses/Expenses";
 import CustomerForm from "../pages/forms/CustomerForm";
@@ -133,6 +134,10 @@ export const routes = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
+  },
+  {
+    path: "/signup",
+    element: <Signup></Signup>,
   },
   {
     path: "/reset-password",

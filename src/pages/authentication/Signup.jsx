@@ -8,8 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
-function Login() {
+function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
@@ -26,6 +25,32 @@ function Login() {
             </div>
             <form action="#" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-4">
+                {/* first name  */}
+                <div className="inline-flex flex-col justify-start items-start gap-4 ">
+                  <span className="text-xs text-fadeColor font-medium leading-none">
+                    FIRST NAME
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    name="firstName"
+                    placeholder="Enter first name"
+                    className="w-full py-3 px-4 border border-fadeLight outline-none rounded-lg"
+                  />
+                </div>
+                {/* last name  */}
+                <div className="inline-flex flex-col justify-start items-start gap-4 ">
+                  <span className="text-xs text-fadeColor font-medium leading-none">
+                    LAST NAME
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    name="lastName"
+                    placeholder="Enter last name"
+                    className="w-full py-3 px-4 border border-fadeLight outline-none rounded-lg"
+                  />
+                </div>
                 {/* email  */}
                 <div className="inline-flex flex-col justify-start items-start gap-4 ">
                   <span className="text-xs text-fadeColor font-medium leading-none">
@@ -80,16 +105,10 @@ function Login() {
                 </div>
               </div>
             </form>
-
-            <div className="text-center mt-6">
-              <Link to="/reset-password" className="text-navyDark">
-                Forgot Password?
-              </Link>
-            </div>
             <div className="text-center mt-20 text-blackLow">
-              Dont have account?{" "}
-              <Link to="/signup" className="text-primaryMainLight">
-                Sign Up.
+              Already have account?{" "}
+              <Link to="/login" className="text-primaryMainLight">
+                Login
               </Link>
             </div>
           </div>
@@ -173,4 +192,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
