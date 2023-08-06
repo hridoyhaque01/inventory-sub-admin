@@ -157,7 +157,7 @@ const SideNav = () => {
         {/* Money Owed  */}
         <div className="w-full overflow-hidden capitalize">
           <NavLink
-            to="/money"
+            to="/moneyOwed"
             className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
           >
             <span>

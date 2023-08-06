@@ -8,6 +8,7 @@ module.exports = {
       gradientColor: "#FF9D80",
       disabledColor: "#797979",
       pureBlackColor: "#000000",
+      blackRgb: "rgba(0, 0, 0, 0.60)",
 
       black: "#212121",
       blackHigh: "#474747",
@@ -25,12 +26,13 @@ module.exports = {
 
       successColor: "#00AE5B",
 
-      warningColor: "#FF6D00",
+      warningColor: "#FECA57",
+      warningLowColor: "#FFE788",
       warningLightColor: "#FFEBEB",
       errorColor: "#FF4646",
       errorMidColor: "#FC5B2B",
       errorLightColor: "#FD5D5D",
-      errorLowColor: "#FFEDED",
+      errorLowColor: "#FF6B6B",
       infoColor: "#2D8EFF",
       alertColor: "#F4A100",
 
@@ -40,7 +42,7 @@ module.exports = {
       primaryMainDarkest: "#234B4C",
       primaryMainLight: "#54ADAA",
       primaryMainLighter: "#979EE9",
-      primaryMainLightest: "#B9BFF1",
+      primaryMainLightest: "#D7F0ED",
 
       secondaryMain: "#3BCE7F",
       secondaryMainDark: "#1EBB66",
@@ -57,6 +59,7 @@ module.exports = {
       warningLight: "#FFEFD1",
 
       fadeColor: "#808080",
+      fadeHigh: "#919191",
       fadeLight: "#E0E0E0",
     },
     backgroundImage: {
@@ -78,6 +81,6 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [],
+    themes: ["light"],
   },
 };
