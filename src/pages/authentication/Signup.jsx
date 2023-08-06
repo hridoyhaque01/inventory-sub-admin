@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+
 function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();

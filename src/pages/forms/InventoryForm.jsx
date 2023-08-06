@@ -1,7 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAddPostMutation } from "../../features/inventory/inventoryApi";
 
 function InventoryForm() {
+  const [addPost, { data, isLoading, isError }] = useAddPostMutation();
+  const test = {
+    name: "test data",
+    title: "ehgeldksd",
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = JSON.stringify(test);
+    addPost(data);
+  };
+
+  console.log(data);
+
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
@@ -10,7 +25,7 @@ function InventoryForm() {
         </div>
         <div className="bg-whiteHigh w-full">
           <div className=" w-full max-w-[620px] mx-auto py-6">
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start gap-6">
                 {/* productId */}
                 <div className="flex items-center gap-3">
@@ -167,11 +182,14 @@ function InventoryForm() {
                     </Link>
                     <button
                       type="submit"
+                      disabled={isLoading}
                       className="w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
                     >
                       Save
                     </button>
                   </div>
+                  {isLoading && <div>loading....</div>}
+                  {isError && <div>Error....</div>}
                 </div>
               </div>
             </form>

@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 function InventoryTable({ data }) {
   const navigate = useNavigate();
 
+  // const sliceData = data?.slice()
+
   const handleNavigate = () => {
     navigate("/inventory-edit");
   };
-
-  console.log(data);
 
   return (
     <div>
@@ -60,7 +60,7 @@ function InventoryTable({ data }) {
           </tr>
         </thead>
         <tbody className="text-center">
-          {/* {data?.map((item, i) => {
+          {data?.map((item, i) => {
             return (
               <tr className="text-center" key={i}>
                 <th className="py-3">
@@ -98,7 +98,7 @@ function InventoryTable({ data }) {
                 </td>
               </tr>
             );
-          })} */}
+          })}
         </tbody>
       </table>
     </div>
