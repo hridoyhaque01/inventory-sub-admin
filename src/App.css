@@ -12,3 +12,12 @@ input[type="number"] {
 .menu li > *:not(ul):not(.menu-title):not(details):active {
   background-color: transparent !important;
 }
+
+.swiper-pagination-bullet {
+  height: 10px !important;
+  width: 10px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+}

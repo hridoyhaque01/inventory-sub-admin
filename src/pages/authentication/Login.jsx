@@ -1,5 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// import Swiper core and required modules
+import { Autoplay, Pagination } from "swiper/modules";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 function Login() {
   const handleSubmit = (event) => {
@@ -78,23 +86,80 @@ function Login() {
                 Forgot Password?
               </Link>
             </div>
-            <div className="text-center mt-20">
-              Dont have account?
-              <Link to="/" className="text-primaryMainLight">
-                Sign Up.
-              </Link>
-            </div>
           </div>
         </div>
         <div className="w-full h-full bg-login bg-cover bg-center object-cover flex items-end pb-24">
-          <div className="w-full max-w-[490px] mx-auto text-center">
-            <h2 className="text-2xl font-bold">
-              Connect and manage with your team!
-            </h2>
-            <p className="mt-4">
-              Aziest Jordan is one of the biggest superstars to have immerged
-              from the professional designer in world.
-            </p>
+          <div className="w-full max-w-[490px] mx-auto">
+            <Swiper
+              // install Swiper modules
+              modules={[Autoplay, Pagination]}
+              spaceBetween={50}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              scrollbar={{ draggable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log("slide change")}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+            >
+              <SwiperSlide>
+                <div className="w-full text-center pb-20">
+                  <h2 className="text-2xl font-bold">
+                    Connect and manage with your team!
+                  </h2>
+                  <p className="mt-4">
+                    Aziest Jordan is one of the biggest superstars to have
+                    immerged from the professional designer in world.
+                  </p>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="w-full text-center pb-20">
+                  <h2 className="text-2xl font-bold">
+                    Connect and manage with your team!
+                  </h2>
+                  <p className="mt-4">
+                    Aziest Jordan is one of the biggest superstars to have
+                    immerged from the professional designer in world.
+                  </p>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="w-full text-center pb-20">
+                  <h2 className="text-2xl font-bold">
+                    Connect and manage with your team!
+                  </h2>
+                  <p className="mt-4">
+                    Aziest Jordan is one of the biggest superstars to have
+                    immerged from the professional designer in world.
+                  </p>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="w-full text-center pb-20">
+                  <h2 className="text-2xl font-bold">
+                    Connect and manage with your team!
+                  </h2>
+                  <p className="mt-4">
+                    Aziest Jordan is one of the biggest superstars to have
+                    immerged from the professional designer in world.
+                  </p>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="w-full text-center pb-20">
+                  <h2 className="text-2xl font-bold">
+                    Connect and manage with your team!
+                  </h2>
+                  <p className="mt-4">
+                    Aziest Jordan is one of the biggest superstars to have
+                    immerged from the professional designer in world.
+                  </p>
+                </div>
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
       </div>
