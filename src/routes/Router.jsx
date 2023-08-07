@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import SecondaryLayout from "../layout/SecondaryLayout";
+import ForgetPassword from "../pages/authentication/ForgetPassword";
 import Login from "../pages/authentication/Login";
 import ResetPassword from "../pages/authentication/ResetPassword";
 import Signup from "../pages/authentication/Signup";
@@ -140,7 +141,11 @@ export const routes = createBrowserRouter([
     element: <Signup></Signup>,
   },
   {
-    path: "/reset-password",
+    path: "/forget-password",
+    element: <ForgetPassword></ForgetPassword>,
+  },
+  {
+    path: "/eyJhbGciOiJIUzI1NiIsInR5/:email",
     element: <ResetPassword></ResetPassword>,
   },
   {

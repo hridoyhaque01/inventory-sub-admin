@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { avatar } from "../../assets/getAssets";
 
 function Profile() {
+  const { user } = useSelector((state) => state.auth);
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
@@ -23,7 +25,7 @@ function Profile() {
                     placeholder="Name"
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                    defaultValue="Mumu Arif"
+                    defaultValue={user?.firstName + " " + user?.lastName}
                   />
                 </div>
                 {/* profile pic */}
@@ -33,7 +35,7 @@ function Profile() {
                   </span>
                   <div>
                     <img
-                      src={avatar}
+                      src={user?.fileUrl || avatar}
                       alt=""
                       className="w-40 h-40 rounded-full"
                     />
@@ -46,10 +48,10 @@ function Profile() {
                   </span>
                   <input
                     type="text"
-                    placeholder="Email"
+                    placeholder="Email address"
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                    defaultValue="Mumuarif@gmail.com"
+                    defaultValue={user?.email}
                   />
                 </div>
                 {/* phone no */}
@@ -59,14 +61,20 @@ function Profile() {
                   </span>
                   <input
                     type="text"
-                    placeholder="Phone No"
+                    placeholder="Phone number"
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                    defaultValue="+880 1246-589456"
+                    defaultValue={user?.phoneNumber}
                   />
                 </div>
                 {/* edit button */}
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-end gap-6">
+                  <Link
+                    to="/"
+                    className="w-full max-w-[160px] p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center"
+                  >
+                    Cancel
+                  </Link>
                   <Link
                     to="/edit-profile"
                     className="w-full max-w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"

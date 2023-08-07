@@ -1,11 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { logout } from "../../../features/auth/authSlice";
 import "./SideNav.css";
 
 const SideNav = () => {
+  const dispatch = useDispatch();
   return (
     <div
-      className={`w-52 bg-primaryMainDarkest flex flex-col gap-1 h-full sideNav pb-24 overflow-auto text-whiteHigh`}
+      className={`w-52 bg-primaryMainDarkest flex flex-col gap-1 h-full sideNav pb-24 overflow-auto text-whiteHigh shrink-0`}
     >
       {/* routes */}
       <section className="flex flex-col flex-1 justify-start items-start gap-4 py-4">
@@ -208,7 +211,10 @@ const SideNav = () => {
 
         {/* logout */}
         <div className="w-full overflow-hidden capitalize">
-          <button className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none">
+          <button
+            className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
+            onClick={() => dispatch(logout())}
+          >
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -9,6 +9,7 @@ module.exports = {
       disabledColor: "#797979",
       pureBlackColor: "#000000",
       blackRgb: "rgba(0, 0, 0, 0.60)",
+      overlay: "rgba(0, 0, 0, 0.45)",
 
       black: "#212121",
       blackHigh: "#474747",

@@ -1,18 +1,64 @@
-import React from "react";
-import { Link } from "react-router-dom";
-// import Swiper core and required modules
-import { Autoplay, Pagination } from "swiper/modules";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import RequestLoader from "../../components/loaders/RequestLoader";
+import PasswordInput from "../../components/shared/ui/PasswordInput";
+import { useLoginMutation } from "../../features/auth/authApi";
 
 function Login() {
+  const { accessToken } = useSelector((state) => state.auth);
+
+  const [login, { isLoading }] = useLoginMutation();
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowIcon, setIsShowIcon] = useState(false);
+  const navigate = useNavigate();
+  const handleInput = (event) => {
+    setIsShowIcon(event.target.value.trim().length > 0);
+  };
+
+  const errorNotify = (message) =>
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const data = {
+      email,
+      password,
+    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    login(formData)
+      .unwrap()
+      .then((res) => navigate("/"))
+      .catch((error) => {
+        errorNotify("Invalid credentials!");
+      });
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [accessToken, navigate]);
+
   return (
     <section className="h-screen w-full text-whiteHigh">
       <div className="flex items-center w-full h-full">
@@ -29,7 +75,7 @@ function Login() {
                 {/* email  */}
                 <div className="inline-flex flex-col justify-start items-start gap-4 ">
                   <span className="text-xs text-fadeColor font-medium leading-none">
-                    EMAIL
+                    Email
                   </span>
                   <input
                     type="email"
@@ -43,31 +89,17 @@ function Login() {
 
                 <div className="inline-flex flex-col justify-start items-start gap-4 ">
                   <span className="text-xs text-fadeColor font-medium leading-none">
-                    PASSWORD
+                    Password
                   </span>
-                  <input
-                    type="password"
+                  <PasswordInput
+                    isShowPassword={isShowPassword}
+                    setIsShowPassword={setIsShowPassword}
+                    handleInput={handleInput}
+                    isShowIcon={isShowIcon}
                     required
                     name="password"
                     placeholder="Enter password"
-                    className="w-full py-3 px-4 border border-fadeLight outline-none rounded-lg"
-                  />
-                </div>
-                {/* remember  */}
-
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="remember"
-                    className="bg-whiteLow"
-                    id="remember"
-                  />
-                  <label
-                    htmlFor="remember"
-                    className="text-blackLow font-medium"
-                  >
-                    Remeber me
-                  </label>
+                  ></PasswordInput>
                 </div>
 
                 <div className="mt-8">
@@ -82,7 +114,7 @@ function Login() {
             </form>
 
             <div className="text-center mt-6">
-              <Link to="/reset-password" className="text-navyDark">
+              <Link to="/forget-password" className="text-navyDark">
                 Forgot Password?
               </Link>
             </div>
@@ -103,8 +135,6 @@ function Login() {
               slidesPerView={1}
               pagination={{ clickable: true }}
               scrollbar={{ draggable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log("slide change")}
               autoplay={{
                 delay: 3000,
                 disableOnInteraction: false,
@@ -168,6 +198,21 @@ function Login() {
             </Swiper>
           </div>
         </div>
+      </div>
+      {isLoading && <RequestLoader></RequestLoader>}
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </section>
   );
