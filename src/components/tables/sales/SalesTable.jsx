@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "../../shared/pagination/Pagination";
 
-function CustomerTable({ data }) {
+function SalesTable({ data }) {
   const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -13,7 +14,7 @@ function CustomerTable({ data }) {
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   const handleNavigate = () => {
-    navigate("/customer-edit");
+    navigate("/sales-edit");
   };
 
   return (
@@ -29,24 +30,36 @@ function CustomerTable({ data }) {
                   name="checkbox"
                 />
               </th>
-
-              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
+              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
                 Serial
               </th>
-              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
-                Name
+
+              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
+                Product Id
               </th>
 
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Phone Number
+                Product Name
               </th>
 
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Address
+                Category
               </th>
 
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Action
+                Shop Name
+              </th>
+
+              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
+                Quantity
+              </th>
+
+              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
+                Selling Price/Unit
+              </th>
+
+              <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
+                Actions
               </th>
             </tr>
           </thead>
@@ -60,8 +73,8 @@ function CustomerTable({ data }) {
             </tbody>
           ) : (
             <tbody className="text-center">
-              {currentRows?.map((customer, i) => (
-                <tr className="text-center">
+              {currentRows?.map((sale, i) => (
+                <tr className="text-center" key={sale?._id}>
                   <th className="py-3">
                     <input
                       type="checkbox"
@@ -69,14 +82,18 @@ function CustomerTable({ data }) {
                       name="checkbox"
                     />
                   </th>
-                  <td className="py-3">1</td>
-                  <td className="py-3">Saimon Vai</td>
-
-                  <td className="py-3">01946521345</td>
                   <td className="py-3">
-                    Horogram, Rajpar, Rajshahi, Dhaka, Bangladesh, Asia, World,
-                    Milky Way.
+                    {currentPage === 1 && i + 1 < 10
+                      ? "0" + (rowsPerPage * (currentPage - 1) + i + 1)
+                      : rowsPerPage * (currentPage - 1) + i + 1}
                   </td>
+                  <td className="py-3">00004682</td>
+
+                  <td className="py-3">Pesticides</td>
+                  <td className="py-3">Pesticides</td>
+                  <td className="py-3">Pesticides</td>
+                  <td className="py-3">50 </td>
+                  <td className="py-3">5,000</td>
                   <td className="py-3">
                     <button type="button" onClick={handleNavigate}>
                       <svg
@@ -111,4 +128,4 @@ function CustomerTable({ data }) {
   );
 }
 
-export default CustomerTable;
+export default SalesTable;

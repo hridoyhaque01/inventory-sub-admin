@@ -1,18 +1,18 @@
 import { apiSlice } from "../api/apiSlice";
 
-const inventoryApi = apiSlice.injectEndpoints({
+const salesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getInventories: builder.query({
+    getSales: builder.query({
       query: () => ({
-        url: "/products",
+        url: "/invoices",
       }),
 
       // providesTags: ["products"],
     }),
 
-    addProducts: builder.mutation({
+    addSales: builder.mutation({
       query: (data) => ({
-        url: "/products/add",
+        url: "/invoices/add",
         method: "POST",
         body: data,
       }),
@@ -36,9 +36,10 @@ const inventoryApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    updateProducts: builder.mutation({
+
+    updateSales: builder.mutation({
       query: ({ data, id }) => ({
-        url: `/products/update/${id}`,
+        url: `/invoices/update/${id}`,
         method: "PATCH",
         body: data,
       }),
@@ -72,8 +73,5 @@ const inventoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetInventoriesQuery,
-  useAddProductsMutation,
-  useUpdateProductsMutation,
-} = inventoryApi;
+export const { useGetSalesQuery, useAddSalesMutation, useUpdateSalesMutation } =
+  salesApi;

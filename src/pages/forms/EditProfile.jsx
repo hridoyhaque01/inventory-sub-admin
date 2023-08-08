@@ -104,7 +104,6 @@ function EditProfile() {
       const imageURL = URL.createObjectURL(file);
       setProfile(file);
       setProfilePreveiw(imageURL);
-      console.log(imageURL);
       setIsTypeError(false);
     } else {
       profileRef.current.value = "";
@@ -147,14 +146,13 @@ function EditProfile() {
         lastName,
         email,
         phoneNumber,
-        newPassword,
+        password: newPassword,
       };
       formData.append("data", JSON.stringify(data));
       updateAdmin({
         data: formData,
         id: user?._id,
         token: accessToken,
-        fileUrl: profilePreveiw,
       })
         .unwrap()
         .then((res) => {
@@ -176,7 +174,6 @@ function EditProfile() {
         data: formData,
         id: user?._id,
         token: accessToken,
-        fileUrl: profilePreveiw,
       })
         .unwrap()
         .then((res) => {
@@ -188,13 +185,6 @@ function EditProfile() {
         });
     }
   };
-
-  // useEffect(() => {
-  //   if (user?.fileUrl) {
-  //     setProfilePreveiw(user?.fileUrl);
-  //   }
-  // }, [user?.fileUrl]);
-  // console.log(user?.fileUrl);
 
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">

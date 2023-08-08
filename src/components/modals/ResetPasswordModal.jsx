@@ -1,6 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
+import PasswordInput from "../shared/ui/PasswordInput";
 
-const ResetPasswordModal = ({ handleStatus, status, modalClose }) => {
+const ResetPasswordModal = ({ email, errorNotify, infoNotify, handler }) => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowIcon, setIsShowIcon] = useState(false);
+  const [isStrong, setIsStrong] = useState(false);
+  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+  const [isShowConfirmIcon, setIsShowConfirmIcon] = useState(false);
+
+  const handleInput = (event) => {
+    setIsShowIcon(event.target.value.trim().length > 0);
+    const password = event.target.value;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasLength = password.length >= 8;
+    const hasSpecialSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    if (
+      hasUppercase &&
+      hasLowercase &&
+      hasNumber &&
+      hasLength &&
+      hasSpecialSymbol
+    ) {
+      setIsStrong(true);
+    } else {
+      setIsStrong(false);
+    }
+  };
+
+  const handleInputTwo = (event) => {
+    setIsShowConfirmIcon(event.target.value.trim().length > 0);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const newPassword = form.newPassword.value;
+    const confirmPassword = form.confirmPassword.value;
+    if (newPassword !== confirmPassword) {
+      errorNotify("Password does not match");
+      return;
+    } else {
+      const formData = new FormData();
+      const data = { newPassword, email };
+      formData.append("data", JSON.stringify(data));
+      handler(formData)
+        .unwrap()
+        .then((res) => {
+          infoNotify("Store password update successfull");
+          form.reset();
+        })
+        .catch((error) => {
+          console.log(error);
+          errorNotify("Store password update failed");
+        });
+    }
+  };
   return (
     <section>
       <input type="checkbox" id="resetPasswordModal" className="modal-toggle" />
@@ -12,32 +68,52 @@ const ResetPasswordModal = ({ handleStatus, status, modalClose }) => {
                 Reset Password
               </span>
             </div>
-            <form action="" className="w-full">
+            <form action="" className="w-full" onSubmit={handleSubmit}>
               <div className="w-full flex flex-col justify-start gap-6">
-                {/* New Password */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    New Password :
-                  </span>
-                  <input
-                    type="number"
-                    placeholder="New password"
-                    name="newPassword"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                  />
-                </div>
+                {/* NEW PASSWORD  */}
 
-                {/* Confirm Password */}
+                <div className="">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                      New Password :
+                    </span>
+                    <PasswordInput
+                      isShowPassword={isShowPassword}
+                      setIsShowPassword={setIsShowPassword}
+                      handleInput={handleInput}
+                      isShowIcon={isShowIcon}
+                      name="newPassword"
+                      required
+                      placeholder="Enter new password"
+                    ></PasswordInput>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right"></span>
+                    {!isStrong && (
+                      <p className="text-[10px] text-fadeColor mt-1">
+                        Must contain more than 7 character with uppercase,
+                        lowercase, symble and number
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* confirm PASSWORD  */}
+
                 <div className="flex items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
                     Confirm Password :
                   </span>
-                  <input
-                    type="text"
-                    placeholder="Confirm password"
-                    name="confirmPassword"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                  />
+                  <div className="w-full">
+                    <PasswordInput
+                      isShowPassword={isShowConfirmPassword}
+                      setIsShowPassword={setIsShowConfirmPassword}
+                      handleInput={handleInputTwo}
+                      isShowIcon={isShowConfirmIcon}
+                      name="confirmPassword"
+                      required
+                      placeholder="Enter confirm password"
+                    ></PasswordInput>
+                  </div>
                 </div>
 
                 {/* submit button  */}
@@ -47,16 +123,19 @@ const ResetPasswordModal = ({ handleStatus, status, modalClose }) => {
                   <div className="modal-action flex items-center justify-center">
                     <label
                       htmlFor="resetPasswordModal"
-                      className="btn rounded-full w-[160px] bg-transparent text-errorLowColor border-errorLowColor hover:border-errorLowColor hover:bg-transparent"
+                      className="btn rounded-full w-[160px] bg-transparent text-errorLowColor border-errorLowColor hover:border-errorLowColor hover:bg-transparent cursor-pointer"
                     >
                       Cancel
                     </label>
-                    <label
-                      htmlFor="resetPasswordModal"
-                      className="btn rounded-full w-[160px] bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh"
-                    >
-                      Save
-                    </label>
+                    <button type="submit" disabled={!isStrong}>
+                      <label
+                        htmlFor="resetPasswordModal"
+                        className="btn rounded-full w-[160px] bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh cursor-pointer"
+                        disabled={!isStrong}
+                      >
+                        Save
+                      </label>
+                    </button>
                   </div>
                 </div>
               </div>

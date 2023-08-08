@@ -1,23 +1,108 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useAddPostMutation } from "../../features/inventory/inventoryApi";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import RequestLoader from "../../components/loaders/RequestLoader";
+import {
+  useAddProductsMutation,
+  useUpdateProductsMutation,
+} from "../../features/inventory/inventoryApi";
+import { useGetStoresQuery } from "../../features/store/storeApi";
 
 function InventoryForm() {
-  const [addPost, { data, isLoading, isError }] = useAddPostMutation();
-  const test = {
-    name: "test data",
-    title: "ehgeldksd",
-  };
+  const { state } = useLocation() || {};
+  const { payload, type } = state || {};
+  const [addProducts, { isLoading }] = useAddProductsMutation();
+  const [updateProducts, { isLoading: updateProductLoading }] =
+    useUpdateProductsMutation();
+  const navigate = useNavigate();
+  const {
+    data: stores,
+    isLoading: storeLoading,
+    isError,
+  } = useGetStoresQuery();
+
+  const errorNotify = (message) =>
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const infoNotify = (message) =>
+    toast.info(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = JSON.stringify(test);
-    addPost(data);
+    const form = event.target;
+    const productId = form.productId.value;
+    const productName = form.productName.value;
+    const productCategory = form.productCategory.value;
+    const productQuantity = Number(form.productQuantity.value);
+    const unit = form.unit.value;
+    const buyingPrice = Number(form.buyingPrice.value);
+    const sellingPrice = Number(form.sellingPrice.value);
+    const store = form.store.value;
+    const splitStore = store?.split("-");
+    const storeName = splitStore[0] || "";
+    const storeId = splitStore[1] || "";
+    const data = {
+      productId,
+      productName,
+      productCategory,
+      productQuantity,
+      unit,
+      buyingPrice,
+      sellingPrice,
+      storeName,
+      storeId,
+    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    if (type === "edit") {
+      updateProducts({ data: formData, id: payload?.productId })
+        .unwrap()
+        .then((res) => {
+          // infoNotify("Product update successfull");
+          navigate("/inventory");
+        })
+        .catch((error) => {
+          errorNotify("Product update failed");
+          console.log(error);
+        });
+    } else {
+      addProducts(formData)
+        .unwrap()
+        .then((res) => {
+          form.reset();
+          infoNotify("Product add successfull");
+        })
+        .catch((error) => {
+          errorNotify("Product add failed");
+          console.log(error);
+        });
+    }
   };
 
-  console.log(data);
-
-  return (
+  return storeLoading ? (
+    <div>Loading...</div>
+  ) : isError ? (
+    <div>Something went wrong</div>
+  ) : (
     <section className="h-full w-full overflow-auto px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
@@ -34,9 +119,11 @@ function InventoryForm() {
                   </span>
                   <input
                     type="text"
-                    placeholder="Product ID"
+                    placeholder="Enter product ID"
                     name="productId"
+                    required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.productId}
                   />
                 </div>
 
@@ -47,9 +134,11 @@ function InventoryForm() {
                   </span>
                   <input
                     type="text"
-                    placeholder="Product name"
+                    placeholder="Enter product name"
                     name="productName"
+                    required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.productName}
                   />
                 </div>
 
@@ -62,11 +151,17 @@ function InventoryForm() {
                     <select
                       className="w-full bg-transparent p-3 border border-whiteLow rounded-md flex items-center text-darkSemi placeholder:text-blackSemi appearance-none outline-none"
                       name="productCategory"
-                      defaultValue=""
+                      defaultValue={payload ? payload?.productCategory : ""}
+                      required
                     >
                       <option value="" disabled>
-                        Select Category
+                        Select product Category
                       </option>
+                      <option value="category one">Category one</option>
+                      <option value="category two">Category two</option>
+                      <option value="category three">Category three</option>
+                      <option value="category four">Category four</option>
+                      <option value="category five">Category five</option>
                     </select>
                     <div className="absolute inset-y-0 right-3 flex items-center text-secondaryColor pointer-events-none">
                       <svg
@@ -85,17 +180,46 @@ function InventoryForm() {
                   </div>
                 </div>
 
-                {/* Shop Name: */}
+                {/* Shop name */}
                 <div className="flex items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    Shop Name:
+                    Shop Name :
                   </span>
-                  <input
-                    type="text"
-                    placeholder="Shop name"
-                    name="shopName"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                  />
+                  <div className="relative w-full">
+                    <select
+                      className="w-full bg-transparent p-3 border border-whiteLow rounded-md flex items-center text-darkSemi placeholder:text-blackSemi appearance-none outline-none"
+                      name="store"
+                      defaultValue={
+                        payload
+                          ? `${payload?.storeName}-${payload?.storeId}`
+                          : ""
+                      }
+                      required
+                    >
+                      <option value="" disabled>
+                        Select shop name
+                      </option>
+                      {stores?.map((store, i) => (
+                        <option value={`${store?.name}-${store?._id}`} key={i}>
+                          {store?.name}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="absolute inset-y-0 right-3 flex items-center text-secondaryColor pointer-events-none">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="17"
+                        height="16"
+                        viewBox="0 0 17 16"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.0561 5.53003L8.99609 8.58336L5.93609 5.53003L4.99609 6.47003L8.99609 10.47L12.9961 6.47003L12.0561 5.53003Z"
+                          fill="#303030"
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Buying Price/Unit: */}
@@ -106,16 +230,18 @@ function InventoryForm() {
                   <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-blackLow text-sm">
                     <input
                       type="number"
-                      name="quantity"
-                      className="w-20 border-none outline-none"
-                      placeholder="Quantity"
+                      name="productQuantity"
+                      className="w-28 border-none outline-none"
+                      placeholder="Enter quantity"
+                      defaultValue={`${payload?.productQuantity}`}
+                      required
                     />
 
                     <div className="relative w-full max-w-max">
                       <select
                         className="appearance-none outline-none  w-16"
-                        name="quantityAction"
-                        defaultValue=""
+                        name="unit"
+                        defaultValue={`${payload?.unit}` || "KG"}
                       >
                         <option value="KG">KG</option>
                         <option value="Bosta">Bosta</option>
@@ -153,12 +279,14 @@ function InventoryForm() {
                   <input
                     type="number"
                     name="buyingPrice"
-                    placeholder="Buying price"
+                    placeholder="Enter buying price"
+                    required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.buyingPrice}
                   />
                 </div>
 
-                {/* Buying Price/Unit: */}
+                {/* Selling Price/Unit: */}
                 <div className="flex items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
                     Selling Price/Unit:
@@ -166,8 +294,10 @@ function InventoryForm() {
                   <input
                     type="number"
                     name="sellingPrice"
-                    placeholder="Selling price"
+                    placeholder="Enter selling price"
+                    required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.sellingPrice}
                   />
                 </div>
                 {/* edit button */}
@@ -195,6 +325,21 @@ function InventoryForm() {
             </form>
           </div>
         </div>
+      </div>
+      {(isLoading || updateProductLoading) && <RequestLoader></RequestLoader>}
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </section>
   );

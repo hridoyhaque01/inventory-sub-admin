@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import InventoryTable from "../../components/tables/inventory/InventoryTable";
-import { useGetPostsQuery } from "../../features/inventory/inventoryApi";
+import { useGetInventoriesQuery } from "../../features/inventory/inventoryApi";
 
 function Inventory() {
-  const { data, isLoading, isError } = useGetPostsQuery();
+  const { data, isLoading, isError } = useGetInventoriesQuery();
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -15,7 +16,9 @@ function Inventory() {
 
   const filterBySearch = (data) => {
     if (searchValue.trim().length > 0) {
-      return data.title.toLowerCase().includes(searchValue?.toLowerCase());
+      return data?.productName
+        ?.toLowerCase()
+        .includes(searchValue?.toLowerCase());
     } else {
       return true;
     }
@@ -24,7 +27,7 @@ function Inventory() {
   let content = null;
 
   if (isLoading) {
-    content = <div>Loading...</div>;
+    content = <SearchLoader></SearchLoader>;
   } else if (!isLoading && isError) {
     content = <div>Something went wrong</div>;
   } else if (!isLoading && !isError && data?.length === 0) {

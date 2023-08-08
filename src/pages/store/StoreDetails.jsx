@@ -1,10 +1,41 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import StoreCard from "../../components/Cards/StoreCard";
+import RequestLoader from "../../components/loaders/RequestLoader";
 import ResetPasswordModal from "../../components/modals/ResetPasswordModal";
+import { useUpdateStorePasswordMutation } from "../../features/store/storeApi";
 
 function StoreDetails() {
+  const [updateStorePassword, { isLoading }] = useUpdateStorePasswordMutation();
   const navigate = useNavigate();
+  const { state } = useLocation() || {};
+  const { payload } = state || {};
+
+  const errorNotify = (message) =>
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const infoNotify = (message) =>
+    toast.info(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const handleNavigate = () => {
     navigate("/store-details");
@@ -79,11 +110,13 @@ function StoreDetails() {
                       name="checkbox"
                     />
                   </th>
-                  <td className="py-3">1</td>
-                  <td className="py-3">11/12/2019</td>
+                  <td className="py-3">01</td>
+                  <td className="py-3">
+                    {new Date(payload?.timestamp).toLocaleDateString("en-US")}
+                  </td>
 
-                  <td className="py-3">Shop Name</td>
-                  <td className="py-3">user@gmail.com</td>
+                  <td className="py-3">{payload?.name}</td>
+                  <td className="py-3">{payload?.email}</td>
                   <td className="py-3">*************</td>
                   <td className="py-3 text-center">
                     <label
@@ -100,7 +133,27 @@ function StoreDetails() {
         </div>
       </div>
       <div>
-        <ResetPasswordModal></ResetPasswordModal>
+        <ResetPasswordModal
+          email={payload?.email}
+          errorNotify={errorNotify}
+          infoNotify={infoNotify}
+          handler={updateStorePassword}
+        ></ResetPasswordModal>
+      </div>
+      {isLoading && <RequestLoader></RequestLoader>}
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </div>
   );

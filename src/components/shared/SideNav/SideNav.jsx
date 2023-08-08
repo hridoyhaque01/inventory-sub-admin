@@ -71,7 +71,7 @@ const SideNav = () => {
         {/* Sell  */}
         <div className="w-full overflow-hidden capitalize">
           <NavLink
-            to="/sell"
+            to="/sales"
             className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
           >
             <span>
@@ -93,7 +93,7 @@ const SideNav = () => {
               </svg>
             </span>
             <span className={`flex-1 shrink-0`}>
-              <span>Sell</span>
+              <span>Sales</span>
             </span>
           </NavLink>
         </div>

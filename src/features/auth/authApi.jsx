@@ -76,6 +76,15 @@ const authApi = apiSlice.injectEndpoints({
                 expireIn: parseAuth?.expireIn,
               })
             );
+            // dispatch(
+            //   apiSlice.util.updateQueryData(
+            //     "login",
+            //     undefined,
+            //     (draft) => {
+            //       console.log(JSON.parse(draft))
+            //     }
+            //   )
+            // );
           }
         } catch (error) {
           console.log(error);

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import SecondaryLayout from "../layout/SecondaryLayout";
+import Sales from "../pages/Sales/Sales";
 import ForgetPassword from "../pages/authentication/ForgetPassword";
 import Login from "../pages/authentication/Login";
 import ResetPassword from "../pages/authentication/ResetPassword";
@@ -12,13 +13,12 @@ import EditProfile from "../pages/forms/EditProfile";
 import ExpensesForm from "../pages/forms/ExpensesForm";
 import InventoryForm from "../pages/forms/InventoryForm";
 import MoneyOwedForm from "../pages/forms/MoneyOwedForm";
-import SellForm from "../pages/forms/SellForm";
+import SalesForm from "../pages/forms/SalesForm";
 import StoreForm from "../pages/forms/StoreForm";
 import Home from "../pages/home/Home";
 import Inventory from "../pages/inventory/Inventory";
 import Money from "../pages/money/Money";
 import Profile from "../pages/profile/Profile";
-import Sell from "../pages/sell/Sell";
 import Store from "../pages/store/Store";
 import StoreDetails from "../pages/store/StoreDetails";
 import PrivateRouter from "./PrivateRouter";
@@ -53,8 +53,8 @@ export const routes = createBrowserRouter([
         element: <Money></Money>,
       },
       {
-        path: "/sell",
-        element: <Sell></Sell>,
+        path: "/sales",
+        element: <Sales></Sales>,
       },
       {
         path: "/store",
@@ -69,12 +69,12 @@ export const routes = createBrowserRouter([
         element: <InventoryForm></InventoryForm>,
       },
       {
-        path: "/sell-add",
-        element: <SellForm></SellForm>,
+        path: "/sales-add",
+        element: <SalesForm></SalesForm>,
       },
       {
-        path: "/sell-edit",
-        element: <SellForm></SellForm>,
+        path: "/sales-edit",
+        element: <SalesForm></SalesForm>,
       },
       {
         path: "/customer-add",

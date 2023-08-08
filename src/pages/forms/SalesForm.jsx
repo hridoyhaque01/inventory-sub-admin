@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function SellForm() {
+function SalesForm() {
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
@@ -148,7 +148,7 @@ function SellForm() {
                   <span className="w-[140px]"></span>
                   <div className="flex items-center gap-3">
                     <Link
-                      to="/sell"
+                      to="/sales"
                       className="w-[160px] p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
                     >
                       Cancel
@@ -170,4 +170,4 @@ function SellForm() {
   );
 }
 
-export default SellForm;
+export default SalesForm;
