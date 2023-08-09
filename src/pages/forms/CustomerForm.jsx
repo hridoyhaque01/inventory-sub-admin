@@ -1,9 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RequestLoader from "../../components/loaders/RequestLoader";
+import {
+  useAddCustomersMutation,
+  useUpdateCustomersMutation,
+} from "../../features/customers/customerApi";
 
 function CustomerForm() {
+  const { store } = useSelector((state) => state.auth);
+  const { _id: id } = store || {};
+  const [addCustomers, { isLoading }] = useAddCustomersMutation();
+  const [updateCustomers, { isLoading: updateLoading }] =
+    useUpdateCustomersMutation();
+  const { state } = useLocation();
+  const { payload, type } = state || {};
+  const navigate = useNavigate();
+
   const errorNotify = (message) =>
     toast.error(message, {
       position: "top-right",
@@ -33,15 +48,45 @@ function CustomerForm() {
     const form = event.target;
     const customerPhone = form.customerPhone.value;
     const customerName = form.customerName.value;
-    const location = form.location.value;
+    const customerAddress = form.customerAddress.value;
 
-    const data = {
-      customerPhone,
-      customerName,
-      location,
-    };
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(data));
+    if (type === "edit") {
+      const data = {
+        customerName,
+        customerAddress,
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      updateCustomers({ data: formData, id: payload?.customerPhone })
+        .unwrap()
+        .then((res) => {
+          form.reset();
+          navigate("/customer");
+        })
+        .catch((error) => {
+          console.log(error);
+          errorNotify("Customer update failed");
+        });
+    } else {
+      const data = {
+        storeId: id,
+        customerPhone,
+        customerName,
+        customerAddress,
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      addCustomers(formData)
+        .unwrap()
+        .then((res) => {
+          form.reset();
+          infoNotify("Customer add successfull");
+        })
+        .catch((error) => {
+          console.log(error);
+          errorNotify("Customer add failed");
+        });
+    }
   };
 
   return (
@@ -63,8 +108,10 @@ function CustomerForm() {
                     type="number"
                     placeholder="Enter mobile number"
                     name="customerPhone"
+                    readOnly={type === "edit" ? true : false}
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.customerPhone}
                   />
                 </div>
 
@@ -79,6 +126,7 @@ function CustomerForm() {
                     name="customerName"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.customerName}
                   />
                 </div>
 
@@ -90,9 +138,10 @@ function CustomerForm() {
                   <input
                     type="text"
                     placeholder="Enter address"
-                    name="location"
+                    name="customerAddress"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.customerAddress}
                   />
                 </div>
 
@@ -119,7 +168,7 @@ function CustomerForm() {
           </div>
         </div>
       </div>
-      {/* {(isLoading || updateProductLoading) && <RequestLoader></RequestLoader>} */}
+      {(isLoading || updateLoading) && <RequestLoader></RequestLoader>}
       <div>
         <ToastContainer
           position="top-right"

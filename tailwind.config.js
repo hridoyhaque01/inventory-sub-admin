@@ -24,6 +24,7 @@ module.exports = {
       whiteMid: "#F5F5F5",
       whiteSemi: "#F6F6F6",
       whiteLow: "#E8E8E8",
+      // whiteLow: "#E8E8E8",
 
       successColor: "#00AE5B",
 

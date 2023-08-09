@@ -1,18 +1,11 @@
 import { apiSlice } from "../api/apiSlice";
-import { setUser } from "./authSlice";
+import { setStore, updateStore } from "./authSlice";
 
 const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation({
-      query: (data) => ({
-        url: "/admins/register",
-        method: "POST",
-        body: data,
-      }),
-    }),
     login: builder.mutation({
       query: (data) => ({
-        url: "/admins/login",
+        url: "/stores/login",
         method: "POST",
         body: data,
       }),
@@ -20,14 +13,15 @@ const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           const data = result?.data;
-          dispatch(setUser(data));
+          console.log(result);
+          dispatch(setStore(data));
           const tokenExpiration = 7 * 24 * 60 * 60 * 1000;
           const expireIn = Date.now() + tokenExpiration;
           localStorage.setItem(
-            "auth",
+            "store",
             JSON.stringify({
               token: result.data.token,
-              admin: result.data.admin,
+              store: result.data.store,
               expireIn,
             })
           );
@@ -38,53 +32,45 @@ const authApi = apiSlice.injectEndpoints({
     }),
     sendResetPasswordEmail: builder.mutation({
       query: (data) => ({
-        url: "/admins/reset",
+        url: "/stores/reset",
         method: "POST",
         body: data,
       }),
     }),
     resetPassword: builder.mutation({
       query: (data) => ({
-        url: "/admins/reset",
+        url: "/stores/reset",
         method: "PATCH",
         body: data,
       }),
     }),
     updateAdmin: builder.mutation({
-      query: ({ data, id, token, fileUrl }) => ({
-        url: `/admins/update/${id}`,
+      query: ({ data, id }) => ({
+        url: `/stores/update/${id}`,
         method: "PATCH",
         body: data,
-        headers: { Authorization: `Bearer ${token}` },
       }),
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          if (result?.data?.result?.matchedCount === 1) {
-            const { data, fileUrl, id, token } = args || {};
-            const formData = JSON.parse(data?.get("data"));
-            const admin = { ...formData, _id: id, fileUrl };
-            const localAuth = localStorage?.getItem("auth");
-            const parseAuth = JSON.parse(localAuth);
-            const auth = { admin, token, expireIn: parseAuth?.expireIn };
-            dispatch(setUser(auth));
+          if (result?.data) {
+            console.log(result?.data);
+            const { fileUrl } = result?.data || {};
+            dispatch(updateStore({ fileUrl }));
+            console.log(fileUrl);
+            const localAuth = localStorage?.getItem("store");
+            const auth = JSON.parse(localAuth);
+            console.log(auth);
+            const { token, store, expireIn } = auth || {};
+            store.fileUrl = fileUrl;
             localStorage.setItem(
-              "auth",
+              "store",
               JSON.stringify({
-                token: auth.token,
-                admin: auth.admin,
-                expireIn: parseAuth?.expireIn,
+                token,
+                store,
+                expireIn,
               })
             );
-            // dispatch(
-            //   apiSlice.util.updateQueryData(
-            //     "login",
-            //     undefined,
-            //     (draft) => {
-            //       console.log(JSON.parse(draft))
-            //     }
-            //   )
-            // );
           }
         } catch (error) {
           console.log(error);
@@ -95,7 +81,6 @@ const authApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useRegisterMutation,
   useLoginMutation,
   useSendResetPasswordEmailMutation,
   useResetPasswordMutation,

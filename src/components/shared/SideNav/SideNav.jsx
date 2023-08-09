@@ -127,36 +127,6 @@ const SideNav = () => {
           </NavLink>
         </div>
 
-        {/* Expenses  */}
-        <div className="w-full overflow-hidden capitalize">
-          <NavLink
-            to="/expenses"
-            className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
-          >
-            <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M20.5 7.28V5C20.5 3.9 19.6 3 18.5 3H4.5C3.39 3 2.5 3.9 2.5 5V19C2.5 20.1 3.39 21 4.5 21H18.5C19.6 21 20.5 20.1 20.5 19V16.72C21.09 16.37 21.5 15.74 21.5 15V9C21.5 8.26 21.09 7.63 20.5 7.28ZM19.5 9V15H12.5V9H19.5ZM4.5 19V5H18.5V7H12.5C11.4 7 10.5 7.9 10.5 9V15C10.5 16.1 11.4 17 12.5 17H18.5V19H4.5Z"
-                  fill="white"
-                />
-                <path
-                  d="M15.5 13.5C16.3284 13.5 17 12.8284 17 12C17 11.1716 16.3284 10.5 15.5 10.5C14.6716 10.5 14 11.1716 14 12C14 12.8284 14.6716 13.5 15.5 13.5Z"
-                  fill="white"
-                />
-              </svg>
-            </span>
-            <span className={`flex-1 shrink-0`}>
-              <span>My Expenses</span>
-            </span>
-          </NavLink>
-        </div>
-
         {/* Money Owed  */}
         <div className="w-full overflow-hidden capitalize">
           <NavLink
@@ -179,32 +149,6 @@ const SideNav = () => {
             </span>
             <span className={`flex-1 shrink-0`}>
               <span>Money Owed</span>
-            </span>
-          </NavLink>
-        </div>
-
-        {/* Store */}
-        <div className="w-full overflow-hidden capitalize">
-          <NavLink
-            to="/store"
-            className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
-          >
-            <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M18.36 9L18.96 12H5.04L5.64 9H18.36ZM20 4H4V6H20V4ZM20 7H4L3 12V14H4V20H14V14H18V20H20V14H21V12L20 7ZM6 18V14H12V18H6Z"
-                  fill="white"
-                />
-              </svg>
-            </span>
-            <span className={`flex-1 shrink-0`}>
-              <span>Store</span>
             </span>
           </NavLink>
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "swiper/css";
@@ -47,7 +47,9 @@ function Login() {
     formData.append("data", JSON.stringify(data));
     login(formData)
       .unwrap()
-      .then((res) => navigate("/"))
+      .then((res) => {
+        navigate("/");
+      })
       .catch((error) => {
         errorNotify("Invalid credentials!");
       });
@@ -82,7 +84,7 @@ function Login() {
                     required
                     name="email"
                     placeholder="Enter email"
-                    className="w-full py-3 px-4 border border-fadeLight outline-none rounded-lg"
+                    className="w-full py-3 px-4 border text-black border-fadeLight outline-none rounded-lg"
                   />
                 </div>
                 {/* password  */}
@@ -113,17 +115,11 @@ function Login() {
               </div>
             </form>
 
-            <div className="text-center mt-6">
+            {/* <div className="text-center mt-6">
               <Link to="/forget-password" className="text-navyDark">
                 Forgot Password?
               </Link>
-            </div>
-            <div className="text-center mt-20 text-blackLow">
-              Dont have account?{" "}
-              <Link to="/signup" className="text-primaryMainLight">
-                Sign Up.
-              </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="w-full h-full bg-login bg-cover bg-center object-cover flex items-end pb-24">

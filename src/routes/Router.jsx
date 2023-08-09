@@ -5,22 +5,16 @@ import Sales from "../pages/Sales/Sales";
 import ForgetPassword from "../pages/authentication/ForgetPassword";
 import Login from "../pages/authentication/Login";
 import ResetPassword from "../pages/authentication/ResetPassword";
-import Signup from "../pages/authentication/Signup";
 import Customer from "../pages/customer/Customer";
-import Expenses from "../pages/expenses/Expenses";
 import CustomerForm from "../pages/forms/CustomerForm";
 import EditProfile from "../pages/forms/EditProfile";
-import ExpensesForm from "../pages/forms/ExpensesForm";
 import InventoryForm from "../pages/forms/InventoryForm";
 import MoneyOwedForm from "../pages/forms/MoneyOwedForm";
 import SalesForm from "../pages/forms/SalesForm";
-import StoreForm from "../pages/forms/StoreForm";
 import Home from "../pages/home/Home";
 import Inventory from "../pages/inventory/Inventory";
 import Money from "../pages/money/Money";
 import Profile from "../pages/profile/Profile";
-import Store from "../pages/store/Store";
-import StoreDetails from "../pages/store/StoreDetails";
 import PrivateRouter from "./PrivateRouter";
 
 export const routes = createBrowserRouter([
@@ -40,10 +34,7 @@ export const routes = createBrowserRouter([
         path: "/customer",
         element: <Customer></Customer>,
       },
-      {
-        path: "/expenses",
-        element: <Expenses></Expenses>,
-      },
+
       {
         path: "/inventory",
         element: <Inventory></Inventory>,
@@ -56,10 +47,7 @@ export const routes = createBrowserRouter([
         path: "/sales",
         element: <Sales></Sales>,
       },
-      {
-        path: "/store",
-        element: <Store></Store>,
-      },
+
       {
         path: "/inventory-add",
         element: <InventoryForm></InventoryForm>,
@@ -84,14 +72,7 @@ export const routes = createBrowserRouter([
         path: "/customer-edit",
         element: <CustomerForm></CustomerForm>,
       },
-      {
-        path: "/expenses-add",
-        element: <ExpensesForm></ExpensesForm>,
-      },
-      {
-        path: "/expenses-edit",
-        element: <ExpensesForm></ExpensesForm>,
-      },
+
       {
         path: "/moneyOwed-add",
         element: <MoneyOwedForm></MoneyOwedForm>,
@@ -99,14 +80,6 @@ export const routes = createBrowserRouter([
       {
         path: "/moneyOwed-edit",
         element: <MoneyOwedForm></MoneyOwedForm>,
-      },
-      {
-        path: "/store-add",
-        element: <StoreForm></StoreForm>,
-      },
-      {
-        path: "/store-details",
-        element: <StoreDetails></StoreDetails>,
       },
     ],
   },
@@ -119,11 +92,11 @@ export const routes = createBrowserRouter([
     ),
     children: [
       {
-        path: "/profile",
+        path: "/store-profile",
         element: <Profile></Profile>,
       },
       {
-        path: "/edit-profile",
+        path: "/edit-store-profile",
         element: <EditProfile></EditProfile>,
       },
     ],
@@ -135,10 +108,6 @@ export const routes = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
-  },
-  {
-    path: "/signup",
-    element: <Signup></Signup>,
   },
   {
     path: "/forget-password",

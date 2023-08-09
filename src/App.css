@@ -9,6 +9,15 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.jiMOeR .wrapper {
+  border-radius: 4px !important;
+}
+
+.jiMOeR .wrapper:hover,
+.jiMOeR .wrapper:focus-within {
+  box-shadow: none !important;
+}
+
 .menu li > *:not(ul):not(.menu-title):not(details):active {
   background-color: transparent !important;
 }

@@ -1,28 +1,22 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RequestLoader from "../../components/loaders/RequestLoader";
-import PasswordInput from "../../components/shared/ui/PasswordInput";
 import { useUpdateAdminMutation } from "../../features/auth/authApi";
 import getCompressedImage from "../../utils/getCompresedImage";
 
 function EditProfile() {
   const [updateAdmin, { isLoading }] = useUpdateAdminMutation();
-  const { user, accessToken } = useSelector((state) => state.auth);
-  console.log(user);
+  const { store } = useSelector((state) => state.auth);
+  console.log(store);
   const profileRef = useRef();
   const [profile, setProfile] = useState(null);
   const [profilePreveiw, setProfilePreveiw] = useState(null);
   const [isTypeError, setIsTypeError] = useState(false);
-  // const [resetPassword, { isLoading }] = use ();
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isShowIcon, setIsShowIcon] = useState(false);
-  const [isStrong, setIsStrong] = useState(false);
-  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
-  const [isShowConfirmIcon, setIsShowConfirmIcon] = useState(false);
   const [compressedLoading, setCompressedLoading] = useState(false);
+  const navigate = useNavigate();
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -47,31 +41,6 @@ function EditProfile() {
       progress: undefined,
       theme: "light",
     });
-
-  const handleInputTwo = (event) => {
-    setIsShowConfirmIcon(event.target.value.trim().length > 0);
-  };
-
-  const handleInput = (event) => {
-    setIsShowIcon(event.target.value.trim().length > 0);
-    const password = event.target.value;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasLength = password.length >= 8;
-    const hasSpecialSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    if (
-      hasUppercase &&
-      hasLowercase &&
-      hasNumber &&
-      hasLength &&
-      hasSpecialSymbol
-    ) {
-      setIsStrong(true);
-    } else {
-      setIsStrong(false);
-    }
-  };
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -121,13 +90,6 @@ function EditProfile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.target;
-    const firstName = form.firstName.value || "";
-    const lastName = form.lastName.value || "";
-    const email = form.email.value || "";
-    const phoneNumber = form.phoneNumber.value || "";
-    const newPassword = form.newPassword.value;
-    const confirmPassword = form.confirmPassword.value;
     const formData = new FormData();
     if (profile?.name) {
       setCompressedLoading(true);
@@ -136,54 +98,26 @@ function EditProfile() {
       formData.append("files", compressedFile);
     }
 
-    if (newPassword) {
-      if (newPassword !== confirmPassword) {
-        errorNotify("Password doesn't match");
-        return;
-      }
-      const data = {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        password: newPassword,
-      };
-      formData.append("data", JSON.stringify(data));
-      updateAdmin({
-        data: formData,
-        id: user?._id,
-        token: accessToken,
+    const data = {
+      name: store?.name,
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    updateAdmin({
+      data: formData,
+      id: store?._id,
+    })
+      .unwrap()
+      .then((res) => {
+        navigate("/store-profile");
+        profileRef.current.value = "";
+        setProfilePreveiw(null);
       })
-        .unwrap()
-        .then((res) => {
-          infoNotify("User update successfull");
-        })
-        .catch((error) => {
-          errorNotify("Update user failed");
-          console.log(error);
-        });
-    } else {
-      const data = {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-      };
-      formData.append("data", JSON.stringify(data));
-      updateAdmin({
-        data: formData,
-        id: user?._id,
-        token: accessToken,
-      })
-        .unwrap()
-        .then((res) => {
-          infoNotify("User update successfull");
-        })
-        .catch((error) => {
-          errorNotify("Update user failed");
-          console.log(error);
-        });
-    }
+      .catch((error) => {
+        errorNotify("Store image update failed");
+        console.log(error);
+      });
   };
 
   return (
@@ -196,34 +130,6 @@ function EditProfile() {
           <div className=" w-full max-w-[620px] mx-auto py-6">
             <form action="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start gap-6">
-                {/* name */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    First Name :
-                  </span>
-                  <input
-                    required
-                    type="text"
-                    name="firstName"
-                    placeholder="Enter firstname"
-                    defaultValue={user?.firstName}
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm placeholder:text-fadeColor"
-                  />
-                </div>
-                {/* name */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    Last Name :
-                  </span>
-                  <input
-                    required
-                    type="text"
-                    name="lastName"
-                    placeholder="Enter lastname"
-                    defaultValue={user?.lastName}
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm placeholder:text-fadeColor"
-                  />
-                </div>
                 {/* profile */}
                 <div className="flex items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
@@ -300,6 +206,7 @@ function EditProfile() {
                       onChange={handleFileSelect}
                       className="absolute bottom-14 left-44 w-1 h-1 opacity-0"
                       ref={profileRef}
+                      required
                     />
                     {isTypeError && (
                       <p className="text-errorLightColor text-sm">
@@ -308,97 +215,11 @@ function EditProfile() {
                     )}
                   </div>
                 </div>
-                {/* email */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    Email:
-                  </span>
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    placeholder="Your email address"
-                    defaultValue={user?.email}
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm placeholder:text-fadeColor"
-                  />
-                </div>
-
-                {/* phone */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    Phone No :
-                  </span>
-                  <input
-                    required
-                    type="number"
-                    name="phoneNumber"
-                    placeholder="Enter phone number"
-                    defaultValue={user?.phoneNumber}
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm placeholder:text-fadeColor appearance-none"
-                  />
-                </div>
-
-                {/* Old Password : */}
-                {/* <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    Old Password :
-                  </span>
-                  <input
-                    type="text"
-                    name="oldPassword"
-                    placeholder="Old password"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm placeholder:text-fadeColor"
-                  />
-                </div> */}
-
-                {/* NEW PASSWORD  */}
-
-                <div className="">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                      New Password :
-                    </span>
-                    <PasswordInput
-                      isShowPassword={isShowPassword}
-                      setIsShowPassword={setIsShowPassword}
-                      handleInput={handleInput}
-                      isShowIcon={isShowIcon}
-                      name="newPassword"
-                      placeholder="Enter new password"
-                    ></PasswordInput>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right"></span>
-                    {!isStrong && (
-                      <p className="text-[10px] text-fadeColor mt-1">
-                        Must contain more than 7 character with uppercase,
-                        lowercase, symble and number
-                      </p>
-                    )}
-                  </div>
-                </div>
-                {/* confirm PASSWORD  */}
-
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
-                    Confirm Password :
-                  </span>
-                  <div className="w-full">
-                    <PasswordInput
-                      isShowPassword={isShowConfirmPassword}
-                      setIsShowPassword={setIsShowConfirmPassword}
-                      handleInput={handleInputTwo}
-                      isShowIcon={isShowConfirmIcon}
-                      name="confirmPassword"
-                      placeholder="Enter confirm password"
-                    ></PasswordInput>
-                  </div>
-                </div>
 
                 {/* edit button */}
                 <div className="flex items-center justify-end gap-3">
                   <Link
-                    to="/profile"
+                    to="/store-profile"
                     className="w-full max-w-[160px] p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center"
                   >
                     Cancel
@@ -406,7 +227,6 @@ function EditProfile() {
                   <button
                     type="submit"
                     className="w-full max-w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
-                    disabled={isShowIcon ? (isStrong ? false : true) : false}
                   >
                     Save
                   </button>

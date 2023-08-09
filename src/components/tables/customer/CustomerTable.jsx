@@ -12,8 +12,13 @@ function CustomerTable({ data }) {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
-  const handleNavigate = () => {
-    navigate("/customer-edit");
+  const handleNavigate = (item) => {
+    navigate("/customer-edit", {
+      state: {
+        payload: item,
+        type: "edit",
+      },
+    });
   };
 
   return (
@@ -61,7 +66,7 @@ function CustomerTable({ data }) {
           ) : (
             <tbody className="text-center">
               {currentRows?.map((customer, i) => (
-                <tr className="text-center">
+                <tr className="text-center" key={i}>
                   <th className="py-3">
                     <input
                       type="checkbox"
@@ -69,16 +74,20 @@ function CustomerTable({ data }) {
                       name="checkbox"
                     />
                   </th>
-                  <td className="py-3">1</td>
-                  <td className="py-3">Saimon Vai</td>
-
-                  <td className="py-3">01946521345</td>
                   <td className="py-3">
-                    Horogram, Rajpar, Rajshahi, Dhaka, Bangladesh, Asia, World,
-                    Milky Way.
+                    {currentPage === 1 && i + 1 < 10
+                      ? "0" + (rowsPerPage * (currentPage - 1) + i + 1)
+                      : rowsPerPage * (currentPage - 1) + i + 1}
                   </td>
+                  <td className="py-3">{customer?.customerName}</td>
+
+                  <td className="py-3">{customer?.customerPhone}</td>
+                  <td className="py-3">{customer?.customerAddress}</td>
                   <td className="py-3">
-                    <button type="button" onClick={handleNavigate}>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate(customer)}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"

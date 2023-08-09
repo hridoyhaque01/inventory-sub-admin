@@ -47,19 +47,19 @@ const customerApi = apiSlice.injectEndpoints({
       async onQueryStarted({ data, id }, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          console.log(result);
+          const formData = JSON.parse(data.get("data"));
           if (result?.data) {
             dispatch(
               apiSlice.util.updateQueryData(
                 "getCustomers",
                 undefined,
                 (draft) => {
-                  const index = draft.findIndex(
-                    (prdouct) => prdouct.productId === id
+                  const changeObj = draft.find(
+                    (customer) => customer.customerPhone === id
                   );
-                  // console.log(JSON.stringify(draft));
-                  if (index !== -1) {
-                    draft[index] = result?.data;
+                  if (changeObj) {
+                    changeObj.customerName = formData.customerName;
+                    changeObj.customerAddress = formData.customerAddress;
                   }
                 }
               )

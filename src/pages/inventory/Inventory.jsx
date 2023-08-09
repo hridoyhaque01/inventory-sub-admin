@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import SearchLoader from "../../components/loaders/SearchLoader";
+import { useSelector } from "react-redux";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
+import NoData from "../../components/shared/ui/NoData";
 import InventoryTable from "../../components/tables/inventory/InventoryTable";
-import { useGetInventoriesQuery } from "../../features/inventory/inventoryApi";
 
 function Inventory() {
-  const { data, isLoading, isError } = useGetInventoriesQuery();
+  // const { data, isLoading, isError } = useGetInventoriesQuery();
+  const { store } = useSelector((state) => state.auth);
+  const { products: data } = store || {};
+  // console.log(products);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -25,26 +28,22 @@ function Inventory() {
   };
 
   let content = null;
-
-  if (isLoading) {
-    content = <SearchLoader></SearchLoader>;
-  } else if (!isLoading && isError) {
-    content = <div>Something went wrong</div>;
-  } else if (!isLoading && !isError && data?.length === 0) {
-    content = <div>No data found</div>;
-  } else if (!isLoading && !isError && data?.length > 0) {
+  if (data?.length === 0) {
+    content = <NoData></NoData>;
+  } else if (data?.length > 0) {
     const newData = data?.filter(filterBySearch);
     content = <InventoryTable data={newData}></InventoryTable>;
   }
 
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">
-      <div className="shadow-sm w-full h-full rounded-2xl overflow-hidden">
+      <div className="bg-whiteHigh shadow-sm w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
           title="Inventory"
           path="/inventory-add"
           value={searchValue}
           onChange={onChange}
+          isNotAddable={true}
         ></SearchBar>
         <div className="h-[calc(100%-80px)] overflow-auto flex flex-col justify-between pb-4">
           {content}
