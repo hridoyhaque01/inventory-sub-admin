@@ -22,13 +22,9 @@ const salesApi = apiSlice.injectEndpoints({
           console.log(result);
           if (result?.data) {
             dispatch(
-              apiSlice.util.updateQueryData(
-                "getInventories",
-                undefined,
-                (draft) => {
-                  draft?.push(result?.data);
-                }
-              )
+              apiSlice.util.updateQueryData("getSales", undefined, (draft) => {
+                draft?.push(result?.data);
+              })
             );
           }
         } catch (error) {

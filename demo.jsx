@@ -3,40 +3,36 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import RequestLoader from "../../components/loaders/RequestLoader";
 import CustomerModal from "../../components/modals/CustomerModal";
-import CustomerSuggestions from "../../components/shared/autosuggestions/CustomerSuggestions";
-import ProductSuggestions from "../../components/shared/autosuggestions/ProductSuggestions";
-import {
-  useAddCustomersMutation,
-  useGetCustomersQuery,
-} from "../../features/customers/customerApi";
-import { useAddSalesMutation } from "../../features/sales/salesApi";
+import { useGetCustomersQuery } from "../../features/customers/customerApi";
 
 function SalesForm() {
   const {
     data: customers,
-    isLoading: customerLoading,
+    isLoading,
     isError: customerFetchError,
   } = useGetCustomersQuery();
-  const [addCustomers, { isLoading: customerAddLoading }] =
-    useAddCustomersMutation();
-  const [addSales, { isLoading }] = useAddSalesMutation();
   const { store } = useSelector((state) => state.auth);
   const { products: data } = store || {};
+
   const { state } = useLocation();
   const { payload } = state || {};
   const [isFullPaid, setIsFullPaid] = useState(true);
-  const [quantity, setQuantity] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState({});
-  const [productValue, setProductValue] = useState("");
-  const [selectedCustomer, setSelectedCustomer] = useState({});
-  const [customerValue, setCustomerValue] = useState("");
-  const [paidAmount, setPaidAmount] = useState("0");
-  let totalPrice =
-    selectedProduct?.sellingPrice === undefined
-      ? ""
-      : selectedProduct?.sellingPrice * quantity;
+  const [searchValue, setSearchValue] = useState("");
+  const [isType, setIsType] = useState(false);
+  const [filteredProduct, setFilteredProduct] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+
+  const onProductIdChange = (event) => {
+    const value = event.target.value;
+    setSearchValue(value);
+    setIsType(value?.trim()?.length > 0 ? true : false);
+    const newData = data?.filter((item) =>
+      item?.productId?.toLowerCase().includes(value?.toLowerCase())
+    );
+    setFilteredProduct(newData);
+  };
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -62,59 +58,23 @@ function SalesForm() {
       theme: "light",
     });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const dueAmount = event.target?.dueAmount?.value;
-    const data = {
-      productId: selectedProduct?.productId,
-      productName: selectedProduct?.productName,
-      productCategory: selectedProduct?.productCategory,
-      storeId: selectedProduct?.storeId,
-      storeName: selectedProduct?.storeName,
-      unit: selectedProduct?.unit,
-      unitPrice: selectedProduct?.sellingPrice,
-      unitCount: quantity,
-      totalAmount: totalPrice,
-      paidAmount: isFullPaid
-        ? totalPrice?.toString()
-        : paidAmount
-        ? paidAmount?.toString()
-        : "0",
-      customerId: customerValue,
-      dueAmount: dueAmount ? dueAmount?.toString() : "0",
-    };
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(data));
-
-    addSales(formData)
-      .unwrap()
-      .then((res) => {
-        infoNotify("New sales add successfull");
-        setSelectedCustomer({});
-        setSelectedProduct({});
-        setProductValue("");
-        setCustomerValue("");
-        setPaidAmount("");
-        totalPrice = "";
-      })
-      .catch((error) => {
-        errorNotify("New sales add failed");
-      });
+  const handleProductSelect = (item) => {
+    setSelectedProduct(item);
+    setIsType(false);
+    setSearchValue(item?.productId);
   };
 
-  return customerLoading ? (
-    <div>Loading...</div>
-  ) : customerFetchError ? (
+  return customerFetchError ? (
     <div>Something went wrong </div>
   ) : (
     <section className="h-full w-full overflow-auto px-10 py-6">
-      <div className="shadow-sm w-full rounded-2xl">
-        <div className="bg-primaryMainDarkest p-4 rounded-t-2xl">
+      <div className="shadow-sm w-full rounded-2xl overflow-hidden">
+        <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-2xl font-bold">Sales</h4>
         </div>
-        <div className="bg-whiteHigh w-full rounded-b-2xl">
+        <div className="bg-whiteHigh w-full">
           <div className=" w-full max-w-[620px] mx-auto py-6">
-            <form action="" onSubmit={handleSubmit}>
+            <form action="">
               <div className="flex flex-col justify-start gap-6">
                 {/* productId */}
                 <div className="flex items-center gap-3 relative">
@@ -122,18 +82,41 @@ function SalesForm() {
                     Product ID :
                   </span>
                   <div className="w-full relative">
-                    <ProductSuggestions
-                      suggestions={data}
-                      setSelectedProduct={setSelectedProduct}
-                      setValue={setProductValue}
-                      value={productValue}
-                    ></ProductSuggestions>
+                    <input
+                      type="text"
+                      placeholder="Enter product ID"
+                      name="productId"
+                      className="w-full py-3 px-4 text-blackLow border border-whiteLow outline-none rounded text-sm"
+                      value={searchValue}
+                      onChange={onProductIdChange}
+                    />
+                    {isType ? (
+                      filteredProduct?.length > 0 ? (
+                        <div className="absolute left-0 right-0 top-12 py-2 bg-whiteHigh shadow-md rounded-md divide-y divide-fadeLight">
+                          {filteredProduct?.map((item) => (
+                            <div
+                              className="w-full px-6 py-2 cursor-pointer hover:bg-whiteSemi"
+                              key={item?.productId}
+                              onClick={() => handleProductSelect(item)}
+                            >
+                              {item?.productId}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="absolute left-0 right-0 top-12 p-4 bg-whiteHigh shadow-md rounded-md divide-y divide-fadeLight">
+                          <div>No product found</div>
+                        </div>
+                      )
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
 
                 {/* Product Name */}
                 <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right ">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
                     Product Name :
                   </span>
                   <input
@@ -202,7 +185,6 @@ function SalesForm() {
                       name="quantity"
                       className="w-20 border-none outline-none"
                       placeholder="Quantity"
-                      step="any"
                       value={`${quantity}`}
                       onChange={(e) => setQuantity(Number(e.target.value))}
                     />
@@ -254,7 +236,11 @@ function SalesForm() {
                     name="totalPrice"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                     readOnly
-                    value={totalPrice}
+                    value={
+                      selectedProduct?.sellingPrice === undefined
+                        ? 0
+                        : selectedProduct?.sellingPrice * quantity
+                    }
                     // onChange={() => console.log("")}
                   />
                 </div>
@@ -282,13 +268,10 @@ function SalesForm() {
                         Pay :
                       </span>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Pay amount"
                         name="payAmount"
-                        step="any"
                         className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                        value={paidAmount}
-                        onChange={(e) => setPaidAmount(e.target.value)}
                       />
                     </div>
                     <div className="flex items-center gap-3">
@@ -296,17 +279,10 @@ function SalesForm() {
                         Due :
                       </span>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Due amount"
                         name="dueAmount"
-                        step="any"
                         className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                        readOnly
-                        value={
-                          isFullPaid
-                            ? "0"
-                            : Number(totalPrice) - Number(paidAmount)
-                        }
                       />
                     </div>
                   </div>
@@ -317,19 +293,14 @@ function SalesForm() {
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
                     Customer :
                   </span>
-                  <div className="w-full border border-whiteLow  rounded text-blackLow text-sm flex items-center gap-1 relative">
-                    <div className="w-full relative customer">
-                      <CustomerSuggestions
-                        suggestions={customers}
-                        setSelectedCustomer={setSelectedCustomer}
-                        setValue={setCustomerValue}
-                        value={customerValue}
-                      ></CustomerSuggestions>
-                    </div>
-                    <label
-                      htmlFor="customerModal"
-                      className="cursor-pointer absolute top-1/2 right-4 -translate-y-1/2"
-                    >
+                  <div className="w-full py-3 px-4 border border-whiteLow  rounded text-blackLow text-sm flex items-center gap-1">
+                    <input
+                      type="text"
+                      placeholder="Type customer number"
+                      name="shopName"
+                      className="w-full outline-none"
+                    />
+                    <label htmlFor="customerModal" className="cursor-pointer">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -360,7 +331,7 @@ function SalesForm() {
                       type="submit"
                       className="w-[160px] p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                     >
-                      Submit
+                      Back
                     </button>
                     {/* <button
                       type="submit"
@@ -375,7 +346,7 @@ function SalesForm() {
           </div>
         </div>
 
-        {(customerAddLoading || isLoading) && <RequestLoader></RequestLoader>}
+        {/* {(isLoading || updateProductLoading) && <RequestLoader></RequestLoader>} */}
         <div>
           <ToastContainer
             position="top-right"
@@ -391,14 +362,7 @@ function SalesForm() {
           ></ToastContainer>
         </div>
 
-        <CustomerModal
-          handler={addCustomers}
-          infoNotify={infoNotify}
-          errorNotify={errorNotify}
-          setSelectedCustomer={setSelectedCustomer}
-          setCustomerValue={setCustomerValue}
-          storeId={store?._id}
-        ></CustomerModal>
+        <CustomerModal></CustomerModal>
       </div>
     </section>
   );

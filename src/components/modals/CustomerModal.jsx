@@ -1,6 +1,13 @@
 import React from "react";
 
-const CustomerModal = ({ item }) => {
+const CustomerModal = ({
+  handler,
+  errorNotify,
+  infoNotify,
+  setSelectedCustomer,
+  setCustomerValue,
+  storeId,
+}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -12,9 +19,20 @@ const CustomerModal = ({ item }) => {
       customerPhone,
       customerName,
       customerAddress,
+      storeId,
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
+    handler(formData)
+      .unwrap()
+      .then((res) => {
+        setSelectedCustomer(res);
+        setCustomerValue(res?.customerPhone);
+        infoNotify("Customer add successfull");
+      })
+      .catch((error) => {
+        errorNotify("Customer add failed");
+      });
   };
   return (
     <section>
@@ -77,15 +95,17 @@ const CustomerModal = ({ item }) => {
                   <div className="flex items-center gap-3">
                     <label
                       htmlFor="customerModal"
-                      className="w-[160px] p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center cursor-pointer"
+                      className="btn rounded-full w-[160px] bg-transparent text-errorLowColor border-errorLowColor hover:border-errorLowColor hover:bg-transparent cursor-pointer"
                     >
                       Cancel
                     </label>
-                    <button
-                      htmlFor="customerModal"
-                      className="w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
-                    >
-                      Save
+                    <button type="submit">
+                      <label
+                        htmlFor="customerModal"
+                        className="btn rounded-full w-[160px] bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh cursor-pointer"
+                      >
+                        Save
+                      </label>
                     </button>
                   </div>
                 </div>

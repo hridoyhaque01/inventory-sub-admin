@@ -13,9 +13,41 @@ input[type="number"] {
   border-radius: 4px !important;
 }
 
-.jiMOeR .wrapper:hover,
-.jiMOeR .wrapper:focus-within {
-  box-shadow: none !important;
+.react-autosuggest__container input {
+  width: 100%;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  padding: 12px 16px;
+  outline: none;
+}
+
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-height: 160px;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 5px rgba(150, 150, 150, 0.4);
+  overflow: auto;
+  background-color: #f9f9f9;
+}
+
+.customer .react-autosuggest__container input {
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  outline: none;
+}
+
+.customer .react-autosuggest__suggestions-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-height: 160px;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 5px rgba(150, 150, 150, 0.4);
+  overflow: auto;
+  background-color: #f9f9f9;
 }
 
 .menu li > *:not(ul):not(.menu-title):not(details):active {

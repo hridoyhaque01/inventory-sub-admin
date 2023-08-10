@@ -1,7 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import getIsoDateString from "../../utils/getIsoDateString";
 
 function MoneyOwedForm() {
+  const { state } = useLocation();
+  const { payload, type } = state || {};
+  const [paidAmount, setPaidAmount] = useState("");
+
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
@@ -18,10 +23,14 @@ function MoneyOwedForm() {
                     Customer Id:
                   </span>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Customer id"
                     name="customerId"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className={`w-full py-3 px-4 border border-whiteLow outline-none rounded ${
+                      type === "edit" ? "text-fadeColor" : "text-blackLow"
+                    } text-sm`}
+                    readOnly={type === "edit" ? true : false}
+                    defaultValue={payload?.customerId}
                   />
                 </div>
 
@@ -35,6 +44,7 @@ function MoneyOwedForm() {
                     placeholder="Due amount"
                     name="dueAmount"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={payload?.dueAmount}
                   />
                 </div>
 
@@ -48,6 +58,7 @@ function MoneyOwedForm() {
                     placeholder="Pay date"
                     name="payDate"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    defaultValue={getIsoDateString(payload?.payDate)}
                   />
                 </div>
 
@@ -60,6 +71,9 @@ function MoneyOwedForm() {
                     type="number"
                     placeholder="Paid amount"
                     name="due"
+                    step="any"
+                    value={paidAmount}
+                    onChange={(e) => setPaidAmount(e.target.value)}
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                   />
                 </div>
@@ -74,7 +88,10 @@ function MoneyOwedForm() {
                     placeholder="Remaining amount"
                     name="remainingAmount"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    readOnly
+                    value={Number(payload?.dueAmount) - Number(paidAmount)}
                   />
+                  {/* console.log() */}
                 </div>
 
                 {/* edit button */}
