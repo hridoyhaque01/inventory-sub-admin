@@ -1,11 +1,63 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import RequestLoader from "../../components/loaders/RequestLoader";
+import { useUpdateOwesMutation } from "../../features/owes/owesApi";
+import dateFormater from "../../utils/dateFormater";
 import getIsoDateString from "../../utils/getIsoDateString";
 
 function MoneyOwedForm() {
+  const [updateOwes, { isLoading }] = useUpdateOwesMutation();
   const { state } = useLocation();
   const { payload, type } = state || {};
-  const [paidAmount, setPaidAmount] = useState("");
+  const [paidAmount, setPaidAmount] = useState(0);
+
+  const errorNotify = (message) =>
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const infoNotify = (message) =>
+    toast.info(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const dueAmount = event.target.remainingAmount.value;
+    const payAmount = payload?.paidAmount + Number(paidAmount);
+    const payDate = event.target.payDate.value;
+    const data = {
+      dueAmount: Number(dueAmount)?.toFixed(2),
+      paidAmount: payAmount?.toFixed(2),
+      payDate: dateFormater(payDate),
+    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    updateOwes({ data: formData, id: payload?._id })
+      .unwrap()
+      .then((res) => {
+        infoNotify("Update customer owes successfull");
+      })
+      .catch((error) => {
+        errorNotify("Update customer owes failed");
+      });
+  };
 
   return (
     <section className="h-full w-full overflow-auto px-10 py-6">
@@ -15,7 +67,7 @@ function MoneyOwedForm() {
         </div>
         <div className="bg-whiteHigh w-full">
           <div className=" w-full max-w-[620px] mx-auto py-6">
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start gap-6">
                 {/* productId */}
                 <div className="flex items-center gap-3">
@@ -45,6 +97,7 @@ function MoneyOwedForm() {
                     name="dueAmount"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                     defaultValue={payload?.dueAmount}
+                    readOnly
                   />
                 </div>
 
@@ -74,6 +127,7 @@ function MoneyOwedForm() {
                     step="any"
                     value={paidAmount}
                     onChange={(e) => setPaidAmount(e.target.value)}
+                    required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                   />
                 </div>
@@ -89,7 +143,9 @@ function MoneyOwedForm() {
                     name="remainingAmount"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                     readOnly
-                    value={Number(payload?.dueAmount) - Number(paidAmount)}
+                    value={(
+                      Number(payload?.dueAmount) - Number(paidAmount)
+                    )?.toFixed(2)}
                   />
                   {/* console.log() */}
                 </div>
@@ -115,6 +171,21 @@ function MoneyOwedForm() {
               </div>
             </form>
           </div>
+        </div>
+        {isLoading && <RequestLoader></RequestLoader>}
+        <div>
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          ></ToastContainer>
         </div>
       </div>
     </section>

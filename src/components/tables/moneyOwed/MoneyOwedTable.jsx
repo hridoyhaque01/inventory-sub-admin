@@ -83,7 +83,8 @@ function MoneyOwedTable({ data }) {
                   <td className="py-3">{owe?.customerId}</td>
                   <td className="py-3">{owe?.dueAmount}</td>
                   <td className="py-3">
-                    {new Date(owe?.payDate).toLocaleDateString("en-US")}
+                    {console.log(owe?.payDate)}
+                    {new Date(owe?.payDate * 1000).toLocaleDateString("en-US")}
                   </td>
                   <td className="py-3">
                     <button type="button" onClick={() => handleNavigate(owe)}>

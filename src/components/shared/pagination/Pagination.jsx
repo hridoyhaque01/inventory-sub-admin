@@ -76,10 +76,6 @@ export const Pagination = ({
         </div>
       </div>
       <div>
-        {/* <p>
-          {Math.min(rowsPerPage * currentPage - rowsPerPage + 1, totalRows)} -{" "}
-          {Math.min(rowsPerPage * currentPage, totalRows)} of {totalRows}
-        </p> */}
         <p>
           {currentPage} - {Math.min(rowsPerPage * currentPage, totalRows)} of{" "}
           {totalRows}
@@ -96,7 +92,7 @@ export const Pagination = ({
           >
             <path
               d="M15.7049 16.59L11.1249 12L15.7049 7.41L14.2949 6L8.29492 12L14.2949 18L15.7049 16.59Z"
-              fill="#797979"
+              fill="#474747"
             />
           </svg>
         </button>
