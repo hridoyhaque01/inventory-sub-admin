@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setPdfData } from "../../../features/sales/salesSlice";
+import InvoiceModal from "../../modals/InvoiceModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 
 function SalesTable({ data }) {
@@ -12,7 +11,7 @@ function SalesTable({ data }) {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
-  const dispatch = useDispatch();
+  const [activeData, setActiveData] = useState({});
 
   const handleNavigate = (data) => {
     navigate("/sales-edit", {
@@ -102,9 +101,11 @@ function SalesTable({ data }) {
                   <td className="py-3">{item?.unitCount}</td>
                   <td className="py-3">{item?.unitPrice}</td>
                   <td className="py-3 flex items-center justify-center gap-2">
-                    <button
+                    <label
                       type="button"
-                      onClick={() => dispatch(setPdfData(item))}
+                      htmlFor="invoiceModal"
+                      className="cursor-pointer"
+                      onClick={() => setActiveData(item)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +131,7 @@ function SalesTable({ data }) {
                         ></path>
                         <path fill="#fff" d="m113.95 77 .05-.05-4-4"></path>
                       </svg>
-                    </button>
+                    </label>
                     <button type="button" onClick={() => handleNavigate(item)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -161,6 +162,9 @@ function SalesTable({ data }) {
           setRowsPerPage={setRowsPerPage}
           totalRows={data?.length}
         ></Pagination>
+      </div>
+      <div>
+        <InvoiceModal data={activeData}></InvoiceModal>
       </div>
     </>
   );

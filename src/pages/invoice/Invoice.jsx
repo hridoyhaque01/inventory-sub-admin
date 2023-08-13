@@ -1,6 +1,6 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPdfData } from "../../features/sales/salesSlice";
 const Invoice = () => {
@@ -24,13 +24,6 @@ const Invoice = () => {
     });
   };
 
-  console.log("dkd");
-
-  useEffect(() => {
-    if (isDownloadPdf) {
-      downloadPDF();
-    }
-  }, [isDownloadPdf]);
   return (
     <>
       <div
