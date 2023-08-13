@@ -44,7 +44,7 @@ function MoneyOwedForm() {
     const payDate = event.target.payDate.value;
     const data = {
       dueAmount: Number(dueAmount)?.toFixed(2),
-      paidAmount: payAmount?.toFixed(2),
+      paidAmount: Number(payAmount)?.toFixed(2),
       payDate: dateFormater(payDate),
     };
     const formData = new FormData();
