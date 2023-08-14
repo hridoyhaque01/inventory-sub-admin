@@ -1,23 +1,6 @@
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import React, { useRef } from "react";
+import React, { forwardRef } from "react";
 
-const InvoiceModal = ({ data }) => {
-  const targetRef = useRef();
-
-  console.log(data);
-
-  const downloadPDF = () => {
-    const capture = targetRef.current;
-    html2canvas(capture, { scale: 3 }).then((canvas) => {
-      const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("p", "mm", "a4");
-      const componentWidth = doc.internal.pageSize.getWidth();
-      const componentHeight = doc.internal.pageSize.getHeight();
-      doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
-      doc.save("receipt.pdf");
-    });
-  };
+const InvoiceModal = forwardRef(({ data }, targetRef) => {
   return (
     <section>
       <input type="checkbox" id="invoiceModal" className="modal-toggle" />
@@ -223,19 +206,19 @@ const InvoiceModal = ({ data }) => {
                 </div>
               </article>
             </div>
-            <div>
+            {/* <div>
               <button
                 className="btn bg-primaryMainDarkest hover:bg-primaryMainDarkest text-whiteHigh"
                 onClick={downloadPDF}
               >
                 download PDF
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default InvoiceModal;

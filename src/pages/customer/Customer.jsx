@@ -35,7 +35,7 @@ function Customer() {
     content = <CustomerTable data={newData}></CustomerTable>;
   }
   return (
-    <section className="h-full w-full overflow-auto px-10 py-6">
+    <section className="h-full w-full overflow-auto px-4 md:px-10 py-6">
       <div className="shadow-sm bg-whiteHigh w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
           title="Customer"
@@ -44,7 +44,7 @@ function Customer() {
           onChange={onChange}
         ></SearchBar>
 
-        <div className="h-[calc(100%-80px)] overflow-auto flex flex-col justify-between pb-4">
+        <div className="h-[calc(100%-80px)] overflow-auto flex flex-col items-end justify-between flex-wrap pb-4">
           {content}
         </div>
       </div>

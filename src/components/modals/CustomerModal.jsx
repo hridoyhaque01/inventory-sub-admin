@@ -48,8 +48,8 @@ const CustomerModal = ({
             <form action="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start gap-6">
                 {/* productId */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Mobile Number :
                   </span>
                   <input
@@ -62,8 +62,8 @@ const CustomerModal = ({
                 </div>
 
                 {/* Product Name */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Name:
                   </span>
                   <input
@@ -76,8 +76,8 @@ const CustomerModal = ({
                 </div>
 
                 {/* Shop Name: */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Address:
                   </span>
                   <input
@@ -90,19 +90,19 @@ const CustomerModal = ({
                 </div>
 
                 {/* edit button */}
-                <div className="flex items-center gap-3 mt-4">
+                <div className="flex flex-col md:flex-row md:items-center gap-3 mt-4">
                   <span className="w-[140px]"></span>
                   <div className="flex items-center gap-3">
                     <label
                       htmlFor="customerModal"
-                      className="btn rounded-full w-[160px] bg-transparent text-errorLowColor border-errorLowColor hover:border-errorLowColor hover:bg-transparent cursor-pointer"
+                      className="btn rounded-full w-[100px] sm:w-[160px] p-2 text-xs sm:text-base bg-transparent text-errorLowColor border-errorLowColor hover:border-errorLowColor hover:bg-transparent cursor-pointer"
                     >
                       Cancel
                     </label>
                     <button type="submit">
                       <label
                         htmlFor="customerModal"
-                        className="btn rounded-full w-[160px] bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh cursor-pointer"
+                        className="btn rounded-full w-[100px] sm:w-[160px] p-2 text-xs sm:text-base bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh cursor-pointer"
                       >
                         Save
                       </label>

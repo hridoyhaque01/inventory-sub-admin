@@ -6,15 +6,17 @@ function ExpensesForm() {
     <section className="h-full w-full overflow-auto px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
-          <h4 className=" text-whiteHigh text-2xl font-bold">My Expenses</h4>
+          <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
+            My Expenses
+          </h4>
         </div>
         <div className="bg-whiteHigh w-full">
           <div className=" w-full max-w-[620px] mx-auto py-6">
             <form action="">
               <div className="flex flex-col justify-start gap-6">
                 {/* Product Name */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col justify-start gap-6">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Date :
                   </span>
                   <input
@@ -26,8 +28,8 @@ function ExpensesForm() {
                 </div>
 
                 {/* Description */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col justify-start gap-6">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Description :
                   </span>
                   <input
@@ -39,8 +41,8 @@ function ExpensesForm() {
                 </div>
 
                 {/* Shop Name: */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col justify-start gap-6">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Amount :
                   </span>
                   <input
@@ -52,9 +54,9 @@ function ExpensesForm() {
                 </div>
 
                 {/* edit button */}
-                <div className="flex items-center gap-3 mt-4">
+                <div className="flex flex-col justify-start gap-6 mt-4">
                   <span className="w-[140px]"></span>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col justify-start gap-6">
                     <Link
                       to="/expenses"
                       className="w-[160px] p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"

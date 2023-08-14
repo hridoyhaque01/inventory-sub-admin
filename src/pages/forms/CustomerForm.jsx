@@ -90,18 +90,20 @@ function CustomerForm() {
   };
 
   return (
-    <section className="h-full w-full overflow-auto px-10 py-6">
+    <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
-          <h4 className=" text-whiteHigh text-2xl font-bold">Customer</h4>
+          <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
+            Customer
+          </h4>
         </div>
-        <div className="bg-whiteHigh w-full">
+        <div className="bg-whiteHigh w-full px-4">
           <div className=" w-full max-w-[620px] mx-auto py-6">
             <form action="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start gap-6">
                 {/* productId */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Mobile Number :
                   </span>
                   <input
@@ -116,8 +118,8 @@ function CustomerForm() {
                 </div>
 
                 {/* Product Name */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Name:
                   </span>
                   <input
@@ -131,8 +133,8 @@ function CustomerForm() {
                 </div>
 
                 {/* Shop Name: */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Address:
                   </span>
                   <input
@@ -145,21 +147,22 @@ function CustomerForm() {
                   />
                 </div>
 
-                {/* edit button */}
-                <div className="flex items-center gap-3 mt-4">
+                {/* submit buttons  */}
+
+                <div className="flex flex-col md:flex-row md:items-center gap-3 mt-4">
                   <span className="w-[140px]"></span>
                   <div className="flex items-center gap-3">
                     <Link
                       to="/customer"
-                      className="w-[160px] p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
+                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
                     >
-                      Cancel
+                      Back
                     </Link>
                     <button
                       type="submit"
-                      className="w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
+                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                     >
-                      Save
+                      Submit
                     </button>
                   </div>
                 </div>

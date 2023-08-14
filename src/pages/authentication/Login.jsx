@@ -64,11 +64,11 @@ function Login() {
   return (
     <section className="h-screen w-full text-whiteHigh">
       <div className="flex items-center w-full h-full">
-        <div className="w-full max-w-[630px] h-full flex items-center justify-center p-4">
+        <div className="w-full max-w-[630px] mx-auto h-full flex items-center justify-center p-4">
           <div className="w-full max-w-[296px]">
             <div className="mb-10">
-              <h2>logo</h2>
-              <h2 className="text-blackSemi text-2xl font-bold">
+              <h2 className="text-black text-center lg:text-left">logo</h2>
+              <h2 className="text-blackSemi text-2xl text-center lg:text-left font-bold">
                 Welcome Back!
               </h2>
             </div>
@@ -114,15 +114,9 @@ function Login() {
                 </div>
               </div>
             </form>
-
-            {/* <div className="text-center mt-6">
-              <Link to="/forget-password" className="text-navyDark">
-                Forgot Password?
-              </Link>
-            </div> */}
           </div>
         </div>
-        <div className="w-full h-full bg-login bg-cover bg-center object-cover flex items-end pb-24">
+        <div className="hidden w-full h-full bg-login bg-cover bg-center object-cover lg:flex items-end pb-24">
           <div className="w-full max-w-[490px] mx-auto">
             <Swiper
               // install Swiper modules

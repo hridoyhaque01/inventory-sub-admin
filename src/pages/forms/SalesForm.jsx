@@ -107,18 +107,20 @@ function SalesForm() {
   ) : customerFetchError ? (
     <div>Something went wrong </div>
   ) : (
-    <section className="h-full w-full overflow-auto px-10 py-6">
+    <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl">
         <div className="bg-primaryMainDarkest p-4 rounded-t-2xl">
-          <h4 className=" text-whiteHigh text-2xl font-bold">Sales</h4>
+          <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
+            Sales
+          </h4>
         </div>
-        <div className="bg-whiteHigh w-full rounded-b-2xl">
+        <div className="bg-whiteHigh w-full px-4 rounded-b-2xl">
           <div className=" w-full max-w-[620px] mx-auto py-6">
             <form action="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start gap-6">
                 {/* productId */}
-                <div className="flex items-center gap-3 relative">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3 relative">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Product ID :
                   </span>
                   <div className="w-full relative">
@@ -132,8 +134,8 @@ function SalesForm() {
                 </div>
 
                 {/* Product Name */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right ">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Product Name :
                   </span>
                   <input
@@ -147,8 +149,8 @@ function SalesForm() {
                 </div>
 
                 {/* Product Category */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Product Category :
                   </span>
                   <input
@@ -162,8 +164,8 @@ function SalesForm() {
                 </div>
 
                 {/* Shop Name: */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Shop Name :
                   </span>
                   <input
@@ -177,8 +179,8 @@ function SalesForm() {
                 </div>
 
                 {/* Selling Price/Unit: */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Selling Price/Unit :
                   </span>
                   <input
@@ -192,8 +194,8 @@ function SalesForm() {
                 </div>
 
                 {/* Quantity */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Quantity :
                   </span>
                   <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-blackLow text-sm">
@@ -244,8 +246,8 @@ function SalesForm() {
                 </div>
 
                 {/* Total Price: */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Total Price :
                   </span>
                   <input
@@ -261,8 +263,8 @@ function SalesForm() {
 
                 {/* checkbox   */}
 
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right"></span>
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right"></span>
                   <input
                     type="checkbox"
                     className="checkbox checkbox-accent border-fadeHigh  checkbox-sm rounded "
@@ -277,8 +279,8 @@ function SalesForm() {
                 {/* pay and due  */}
                 {!isFullPaid && (
                   <div className="w-full flex flex-col gap-6">
-                    <div className="flex items-center gap-3">
-                      <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                    <div className="flex flex-col md:flex-row md:items-center gap-3">
+                      <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                         Pay :
                       </span>
                       <input
@@ -291,8 +293,8 @@ function SalesForm() {
                         onChange={(e) => setPaidAmount(e.target.value)}
                       />
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                    <div className="flex flex-col md:flex-row md:items-center gap-3">
+                      <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                         Due :
                       </span>
                       <input
@@ -313,8 +315,8 @@ function SalesForm() {
                 )}
                 {/* customer */}
 
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Customer :
                   </span>
                   <div className="w-full border border-whiteLow  rounded text-blackLow text-sm flex items-center gap-1 relative">
@@ -347,18 +349,18 @@ function SalesForm() {
                 </div>
 
                 {/* edit button */}
-                <div className="flex items-center gap-3 mt-4">
+                <div className="flex flex-col md:flex-row md:items-center gap-3 mt-4">
                   <span className="w-[140px]"></span>
                   <div className="flex items-center gap-3">
                     <Link
                       to="/sales"
-                      className="w-[160px] p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
+                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
                     >
                       Back
                     </Link>
                     <button
                       type="submit"
-                      className="w-[160px] p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
+                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                     >
                       Submit
                     </button>

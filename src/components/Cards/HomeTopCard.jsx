@@ -3,7 +3,7 @@ import React from "react";
 const HomeTopCard = ({ data }) => {
   return (
     <section
-      className={`flex items-center gap-4 px-4 w-full md:py-4 lg:py-14 rounded-xl relative overflow-hidden ${data?.color}`}
+      className={`flex lg:flex-col xl:flex-row items-center gap-2 xl:gap-4 px-4 w-full py-10 lg:py-6 xl:py-14 rounded-xl relative overflow-hidden ${data?.color}`}
     >
       <div className="p-4 bg-whiteHigh bg-opacity-30 rounded-full">
         <svg
@@ -19,9 +19,9 @@ const HomeTopCard = ({ data }) => {
           />
         </svg>
       </div>
-      <div className="text-whiteHigh">
+      <div className="text-whiteHigh lg:text-center xl:text-left">
         <p>{data?.title}</p>
-        <p className="text-4xl font-bold">{data?.number}</p>
+        <p className="lg:text-2xl xl:text-4xl font-bold">{data?.number}</p>
       </div>
       <div
         className="w-24 h-36 bg-gradient-primary absolute -top-6 -right-2.5 rounded-2xl"

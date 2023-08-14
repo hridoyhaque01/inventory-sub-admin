@@ -121,18 +121,20 @@ function EditProfile() {
   };
 
   return (
-    <section className="h-full w-full overflow-auto px-10 py-6">
+    <section className="h-full w-full overflow-auto px-6 lg:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
-          <h4 className=" text-whiteHigh text-2xl font-bold">Edit Profile</h4>
+          <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
+            Edit Profile
+          </h4>
         </div>
-        <div className="bg-whiteHigh w-full">
+        <div className="bg-whiteHigh w-full px-4">
           <div className=" w-full max-w-[620px] mx-auto py-6">
             <form action="" onSubmit={handleSubmit}>
-              <div className="flex flex-col justify-start gap-6">
+              <div className="flex flex-col justify-start gap-3">
                 {/* profile */}
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Avatar (140X140):
                   </span>
                   <div className="w-full relative">
