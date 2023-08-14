@@ -25,13 +25,13 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
           <div className="w-full max-w-[600px]">
             <div
               ref={targetRef}
-              className="max-w-[595px] mx-auto px-8 py-6 bg-whiteHigh"
+              className="max-w-[595px] mx-auto px-8 pb-2 bg-whiteHigh"
             >
               <article className="overflow-">
                 <div className="">
                   <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-1">
-                      <h2 className="text-base font-medium bg-primaryMainDark">
+                      <h2 className="text-base font-medium">
                         {data?.storeName}
                       </h2>
                       <p className="text-xs">160/68 California</p>
@@ -84,43 +84,42 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                               scope="col"
                               className="text-left text-sm font-normal bg-primaryMainDarkest"
                             >
-                              <p className="py-3 pl-4 pr-3 ">Description</p>
+                              <p className="pb-4 pl-4 pr-3 ">Description</p>
                             </th>
                             <th
                               scope="col"
-                              className=" py-3 px-3 text-right text-sm font-normal  table-cell bg-primaryMainDarkest"
+                              className="pb-4 px-3 text-right text-sm font-normal  table-cell bg-primaryMainDarkest"
                             >
                               Quantity
                             </th>
                             <th
                               scope="col"
-                              className=" py-3 px-3 text-right text-sm font-normal  table-cell bg-primaryMainDarkest"
+                              className=" pb-4 px-3 text-right text-sm font-normal  table-cell bg-primaryMainDarkest"
                             >
                               Rate
                             </th>
                             <th
                               scope="col"
-                              className="py-3 pl-3 pr-4 text-right text-sm font-normal   bg-primaryMainDarkest"
+                              className="pb-4 pl-3 pr-4 text-right text-sm font-normal   bg-primaryMainDarkest"
                             >
                               Amount
                             </th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr className="border-b border-whiteLow">
-                            <td className="py-4 pl-4 pr-3 text-sm ">
+                          <tr className="border-b border-whiteLow pb-1">
+                            <td className="pb-2 pl-4 pr-3 text-sm ">
                               <div className="font-medium ">
                                 {data?.productName}
                               </div>
-                              <div className="mt-0.5  ">1 unit at 0.00tk</div>
                             </td>
-                            <td className=" px-3 py-4 text-sm text-right  table-cell">
+                            <td className="px-3 pb-2 text-sm text-right  table-cell">
                               48
                             </td>
-                            <td className=" px-3 py-4 text-sm text-right  table-cell">
+                            <td className="pb-2 pr-3 text-sm text-right  table-cell">
                               0.00tk
                             </td>
-                            <td className="py-4 pl-3 pr-4 text-sm text-right  ">
+                            <td className="pb-2 pr-3 text-sm text-right  ">
                               0.00tk
                             </td>
                           </tr>
@@ -130,12 +129,12 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             <th
                               scope="row"
                               colSpan="3"
-                              className="pt-6 pl-6 pr-3 text-sm font-light text-right  table-cell"
+                              className="pb-2 pl-6 pr-3 text-sm font-light text-right  table-cell"
                             >
                               Subtotal
                             </th>
 
-                            <td className="pt-6 pl-3 pr-4 text-sm text-right  ">
+                            <td className="pb-2 pl-3 pr-4 text-sm text-right  ">
                               0.00tk
                             </td>
                           </tr>
@@ -143,12 +142,12 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             <th
                               scope="row"
                               colSpan="3"
-                              className="hidd pt-6 pl-6 pr-3 text-sm font-light text-right  table-cell"
+                              className=" pb-2 pl-6 pr-3 text-sm font-light text-right  table-cell"
                             >
                               Discount
                             </th>
 
-                            <td className="pt-6 pl-3 pr-4 text-sm text-right  ">
+                            <td className="pb-2 pl-3 pr-4 text-sm text-right  ">
                               -0.00tk
                             </td>
                           </tr>
@@ -156,12 +155,12 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             <th
                               scope="row"
                               colSpan="3"
-                              className="hidd pt-6 pl-6 pr-3 text-sm font-light text-right  table-cell"
+                              className=" pb-2 pl-6 pr-3 text-sm font-light text-right  table-cell"
                             >
                               Total
                             </th>
 
-                            <td className="pt-6 pl-3 pr-4 text-sm text-right  ">
+                            <td className="pb-2 pl-3 pr-4 text-sm text-right  ">
                               0.00tk
                             </td>
                           </tr>
@@ -169,12 +168,12 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             <th
                               scope="row"
                               colSpan="3"
-                              className="hidd py-6 pl-6 pr-3 text-sm font-light text-right  table-cell"
+                              className="pb-3 pl-6 pr-3 text-sm font-light text-right  table-cell"
                             >
                               Paid Amount
                             </th>
 
-                            <td className="py-6 pl-3 pr-4 text-sm text-right  ">
+                            <td className="pb-3 pl-3 pr-4 text-sm text-right  ">
                               -0.00tk
                             </td>
                           </tr>
@@ -183,12 +182,12 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             <th></th>
                             <th
                               scope="row"
-                              className="py-3 pl-3 pr-4 text-sm text-right text-whiteHigh bg-primaryMainDarkest"
+                              className="pb-4 pl-3 pr-4 text-sm text-right text-whiteHigh bg-primaryMainDarkest"
                             >
                               Due Amount
                             </th>
 
-                            <td className="py-3 pl-3 pr-4 text-sm text-right text-whiteHigh bg-primaryMainDarkest">
+                            <td className="pb-4 pl-3 pr-4 text-sm text-right text-whiteHigh bg-primaryMainDarkest">
                               0.00tk
                             </td>
                           </tr>
@@ -198,7 +197,7 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                   </div>
                   <div className="mt-16">
                     <div>
-                      <h4 className="text-xs font-medium border-t border-primaryMainDarkest inline-block px-4 pt-1">
+                      <h4 className="text-xs font-medium border-t border-primaryMainDarkest inline-block px-4 pb-2">
                         Signature
                       </h4>
                     </div>

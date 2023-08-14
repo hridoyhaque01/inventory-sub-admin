@@ -71,6 +71,8 @@ function SalesForm() {
       productCategory: selectedProduct?.productCategory,
       storeId: selectedProduct?.storeId,
       storeName: selectedProduct?.storeName,
+      storeAddress: store?.location,
+      storeEmail: store?.email,
       unit: selectedProduct?.unit,
       unitPrice: selectedProduct?.sellingPrice,
       unitCount: quantity,
@@ -81,6 +83,8 @@ function SalesForm() {
         ? paidAmount?.toString()
         : "0",
       customerId: customerValue,
+      customerAddress: selectedCustomer?.customerAddress,
+      customerName: selectedCustomer?.customerName,
       dueAmount: dueAmount ? dueAmount?.toString() : "0",
     };
     const formData = new FormData();

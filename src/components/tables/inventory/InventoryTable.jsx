@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InvoiceModal from "../../modals/InvoiceModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 
 function InventoryTable({ data }) {
@@ -21,7 +20,7 @@ function InventoryTable({ data }) {
   };
 
   return (
-    <>
+    <div className="h-full overflow-auto flex flex-col items-end justify-between pb-4 gap-4">
       <table className="table w-full">
         <thead className=" p-0">
           <tr className="font-bold text-center text-3xl">
@@ -113,6 +112,7 @@ function InventoryTable({ data }) {
           </tbody>
         )}
       </table>
+
       <div>
         <Pagination
           currentPage={currentPage}
@@ -121,11 +121,8 @@ function InventoryTable({ data }) {
           setRowsPerPage={setRowsPerPage}
           totalRows={data?.length}
         ></Pagination>
-        <div>
-          <InvoiceModal></InvoiceModal>
-        </div>
       </div>
-    </>
+    </div>
   );
 }
 

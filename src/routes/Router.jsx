@@ -11,6 +11,7 @@ import EditProfile from "../pages/forms/EditProfile";
 import InventoryForm from "../pages/forms/InventoryForm";
 import MoneyOwedForm from "../pages/forms/MoneyOwedForm";
 import SalesForm from "../pages/forms/SalesForm";
+import SalesFormView from "../pages/forms/SalesFormView";
 import Home from "../pages/home/Home";
 import Inventory from "../pages/inventory/Inventory";
 import Invoice from "../pages/invoice/Invoice";
@@ -63,7 +64,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/sales-edit",
-        element: <SalesForm></SalesForm>,
+        element: <SalesFormView></SalesFormView>,
       },
       {
         path: "/customer-add",

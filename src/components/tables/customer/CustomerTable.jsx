@@ -22,7 +22,7 @@ function CustomerTable({ data }) {
   };
 
   return (
-    <>
+    <div className="h-full overflow-auto flex flex-col items-end justify-between pb-4 gap-4">
       <table className="table w-full">
         <thead className=" p-0">
           <tr className="font-bold text-center text-3xl">
@@ -99,7 +99,7 @@ function CustomerTable({ data }) {
         setRowsPerPage={setRowsPerPage}
         totalRows={data?.length}
       ></Pagination>
-    </>
+    </div>
   );
 }
 
