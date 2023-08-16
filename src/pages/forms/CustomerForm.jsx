@@ -11,7 +11,7 @@ import {
 
 function CustomerForm() {
   const { store } = useSelector((state) => state.auth);
-  const { _id: id } = store || {};
+  const { _id: id, name } = store || {};
   const [addCustomers, { isLoading }] = useAddCustomersMutation();
   const [updateCustomers, { isLoading: updateLoading }] =
     useUpdateCustomersMutation();
@@ -70,6 +70,7 @@ function CustomerForm() {
     } else {
       const data = {
         storeId: id,
+        storeName: name,
         customerPhone,
         customerName,
         customerAddress,

@@ -42,7 +42,6 @@ function Customer() {
           path="/customer-add"
           value={searchValue}
           onChange={onChange}
-          isNotAddable={true}
         ></SearchBar>
 
         <div className="h-[calc(100%-80px)] overflow-auto flex flex-col justify-between flex-wrap pb-4">

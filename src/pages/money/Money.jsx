@@ -13,6 +13,13 @@ function Expenses() {
     const value = e.target.value;
     setSearchValue(value);
   };
+
+  console.log(data);
+
+  const filterByDue = (data) => {
+    return data?.dueAmount !== "0";
+  };
+
   const filterBySearch = (data) => {
     if (searchValue.trim().length > 0) {
       return data?.customerId
@@ -32,7 +39,7 @@ function Expenses() {
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = data?.filter(filterBySearch);
+    const newData = data?.filter(filterByDue).filter(filterBySearch);
     content = <MoneyOwedTable data={newData}></MoneyOwedTable>;
   }
   return (
@@ -43,6 +50,7 @@ function Expenses() {
           path="/moneyOwed-add"
           value={searchValue}
           onChange={onChange}
+          isNotAddable={true}
         ></SearchBar>
         <div className="h-[calc(100%-80px)] overflow-auto flex flex-col justify-between flex-wrap pb-4">
           {content}

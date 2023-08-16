@@ -13,6 +13,9 @@ function MoneyOwedForm() {
   const { payload, type } = state || {};
   const [paidAmount, setPaidAmount] = useState(0);
 
+  console.log(`payload Data = ` + payload?.payDate);
+  console.log(`return = ` + getIsoDateString(payload?.payDate));
+
   const errorNotify = (message) =>
     toast.error(message, {
       position: "top-right",

@@ -7,7 +7,9 @@ const CustomerModal = ({
   setSelectedCustomer,
   setCustomerValue,
   storeId,
+  storeName,
 }) => {
+  console.log(storeName);
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -20,6 +22,7 @@ const CustomerModal = ({
       customerName,
       customerAddress,
       storeId,
+      storeName,
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));

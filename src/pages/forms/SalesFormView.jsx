@@ -226,16 +226,11 @@ function SalesFormView() {
                   <div className="flex items-center gap-3">
                     <Link
                       to="/sales"
-                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
+                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full bg-primaryMainLight font-medium text-center text-whiteHigh"
                     >
                       Back
                     </Link>
-                    <button
-                      type="submit"
-                      className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
-                    >
-                      Submit
-                    </button>
+
                     {/* <button
                       type="submit"
                       className="w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"

@@ -6,7 +6,6 @@ const salesApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/invoices",
       }),
-
       // providesTags: ["products"],
     }),
 
@@ -26,6 +25,26 @@ const salesApi = apiSlice.injectEndpoints({
                 draft?.push(result?.data);
               })
             );
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getAllOwes",
+                undefined,
+                (draft) => {
+                  draft?.push(result?.data);
+                }
+              )
+            );
+            // dispatch(owesApi.endpoints.getAllOwes)
+
+            // dispatch(
+            //   messagesApi.endpoints.addMessage.initiate({
+            //     conversationId: conversation?.data?.id,
+            //     sender: senderUser,
+            //     receiver: receiverUser,
+            //     message: data.message,
+            //     timestamp: data.timestamp,
+            //   })
+            // );
           }
         } catch (error) {
           console.log(error);

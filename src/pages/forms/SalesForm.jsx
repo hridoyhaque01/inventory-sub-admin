@@ -19,8 +19,10 @@ function SalesForm() {
     isLoading: customerLoading,
     isError: customerFetchError,
   } = useGetCustomersQuery();
+
   const [addCustomers, { isLoading: customerAddLoading }] =
     useAddCustomersMutation();
+
   const [addSales, { isLoading }] = useAddSalesMutation();
   const { store } = useSelector((state) => state.auth);
   const { products: data } = store || {};
@@ -50,6 +52,10 @@ function SalesForm() {
       theme: "light",
     });
 
+  console.log(selectedProduct);
+
+  console.log(selectedCustomer);
+
   const infoNotify = (message) =>
     toast.info(message, {
       position: "top-right",
@@ -75,6 +81,7 @@ function SalesForm() {
       storeEmail: store?.email,
       unit: selectedProduct?.unit,
       unitPrice: selectedProduct?.sellingPrice,
+      buyingPrice: selectedProduct?.buyingPrice,
       unitCount: quantity,
       totalAmount: totalPrice,
       paidAmount: isFullPaid
@@ -365,9 +372,11 @@ function SalesForm() {
                     <button
                       type="submit"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
+                      disabled={selectedCustomer?.customerPhone ? false : true}
                     >
                       Submit
                     </button>
+
                     {/* <button
                       type="submit"
                       className="w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
@@ -404,6 +413,7 @@ function SalesForm() {
           setSelectedCustomer={setSelectedCustomer}
           setCustomerValue={setCustomerValue}
           storeId={store?._id}
+          storeName={store?.name}
         ></CustomerModal>
       </div>
     </section>

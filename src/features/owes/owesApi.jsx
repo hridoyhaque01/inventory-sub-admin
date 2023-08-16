@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 
-const owesApi = apiSlice.injectEndpoints({
+export const owesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllOwes: builder.query({
       query: () => ({
