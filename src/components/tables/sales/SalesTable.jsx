@@ -1,7 +1,6 @@
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 import InvoiceModal from "../../modals/InvoiceModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 
@@ -24,23 +23,16 @@ function SalesTable({ data }) {
     });
   };
 
-  const downloadPDFWithDelay = (delayMilliseconds) => {
-    setTimeout(() => {
-      const capture = targetRef.current;
-      html2canvas(capture, { scale: 3 }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const doc = new jsPDF();
-        const componentWidth = doc.internal.pageSize.getWidth();
-        const componentHeight = doc.internal.pageSize.getHeight();
-        doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
-        doc.save("receipt.pdf");
-      });
-    }, delayMilliseconds);
-  };
+  const generatePDF = useReactToPrint({
+    content: () => targetRef.current,
+    documentTitle: "reciept",
+  });
 
   const handlePdf = (data) => {
     setActiveData(data);
-    downloadPDFWithDelay(1000);
+    setTimeout(() => {
+      generatePDF();
+    }, 1000);
   };
 
   return (
@@ -112,7 +104,7 @@ function SalesTable({ data }) {
                     type="button"
                     className="cursor-pointer"
                     onClick={() => handlePdf(item)}
-                    htmlFor="invoiceModal"
+                    // htmlFor="invoiceModal"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
