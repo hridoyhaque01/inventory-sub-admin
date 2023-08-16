@@ -6,9 +6,8 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
+  YAxis,
 } from "recharts";
-import blue from "../../../Assets/round/blue.png";
-import red from "../../../Assets/round/red.png";
 
 const ChartArea = ({ title, data }) => {
   const [activeChart, setActiveChart] = useState("weekly");
@@ -18,12 +17,12 @@ const ChartArea = ({ title, data }) => {
 
   return (
     <div className="flex flex-col justify-between">
-      <section className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <p className="text-xl sm:text-2xl text-blackHigh  font-bold">{title}</p>
-        <div className="flex items-center flex-wrap gap-2">
+      <section className="flex items-center justify-between">
+        <p className="text-2xl text-blackHigh  font-bold">{title}</p>
+        {/* <div className="flex items-center gap-2">
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "weekly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -34,7 +33,7 @@ const ChartArea = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "monthly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -45,7 +44,7 @@ const ChartArea = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "half-yearly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -56,7 +55,7 @@ const ChartArea = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "yearly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -65,20 +64,21 @@ const ChartArea = ({ title, data }) => {
           >
             Yearly
           </button>
-        </div>
+        </div> */}
       </section>
-      <section className="flex items-center justify-start gap-6 mt-8 sm:mt-14 mb-8">
+      <section className="flex items-center justify-start gap-6 mt-14 mb-8">
         <div className="flex items-center justify-center gap-2">
-          <img src={red} alt="" />
+          <div className="w-4 h-4 rounded-full bg-warningColor"></div>
+          {/* <img src={red} alt="" /> */}
           <p>This Year</p>
         </div>
-        <div className="flex items-center justify-center gap-2">
+        {/* <div className="flex items-center justify-center gap-2">
           <img src={blue} alt="" />
           <p>Last Year</p>
-        </div>
+        </div> */}
       </section>
       <section className="overflow-x-auto overflow-y-hidden flex items-center justify-center">
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={400}>
           <ComposedChart
             data={data}
             margin={{
@@ -96,21 +96,22 @@ const ChartArea = ({ title, data }) => {
             </defs>
             <CartesianGrid stroke="#E8E8E8" />
             <XAxis dataKey="name" />
+            <YAxis />
             <Tooltip />
             <Area
               type="monotone"
-              dataKey="uv"
+              dataKey="sales"
               fill="url(#gradientColor)"
               stroke="#FFC227"
               strokeWidth={2}
             />
-            <Area
+            {/* <Area
               type="monotone"
-              dataKey="pv"
+              dataKey="sales"
               fill="none"
               stroke="#54ADAA"
               strokeWidth={2}
-            />
+            /> */}
           </ComposedChart>
         </ResponsiveContainer>
       </section>

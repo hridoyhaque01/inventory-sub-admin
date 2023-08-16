@@ -1,30 +1,27 @@
 import React, { useState } from "react";
 import {
-  Bar,
-  BarChart,
   CartesianGrid,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import blue from "../../../Assets/round/blue.png";
-import red from "../../../Assets/round/red.png";
 
-const ChartBarLoan = ({ title, data }) => {
+const ChartLine = ({ title, data }) => {
   const [activeChart, setActiveChart] = useState("weekly");
   const handleChart = (value) => {
     setActiveChart(value);
   };
-
   return (
-    <div className="flex flex-col justify-between ">
-      <section className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+    <div className="flex flex-col justify-between">
+      <section className="flex items-center justify-between">
         <p className="text-2xl text-blackHigh  font-bold">{title}</p>
-        <div className="flex items-center flex-wrap gap-2">
+        {/* <div className="flex items-center gap-2">
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "weekly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -35,7 +32,7 @@ const ChartBarLoan = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "monthly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -46,7 +43,7 @@ const ChartBarLoan = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "half-yearly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -57,7 +54,7 @@ const ChartBarLoan = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "yearly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -66,21 +63,22 @@ const ChartBarLoan = ({ title, data }) => {
           >
             Yearly
           </button>
-        </div>
+        </div> */}
       </section>
-      <section className="flex items-center justify-start gap-6 mt-8 sm:mt-14 mb-8">
+      <section className="flex items-center justify-start gap-6 mt-14 mb-8">
         <div className="flex items-center justify-center gap-2">
-          <img src={red} alt="" />
+          {/* <img src={red} alt="" /> */}
+          <div className="w-4 h-4 rounded-full bg-warningColor"></div>
           <p>This Year</p>
         </div>
-        <div className="flex items-center justify-center gap-2">
+        {/* <div className="flex items-center justify-center gap-2">
           <img src={blue} alt="" />
           <p>Last Year</p>
-        </div>
+        </div> */}
       </section>
       <section className="overflow-x-auto overflow-y-hidden flex items-center justify-center">
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart
             data={data}
             margin={{
               top: 5,
@@ -90,15 +88,15 @@ const ChartBarLoan = ({ title, data }) => {
             }}
           >
             <defs>
-              <linearGradient id="gradientLoan" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#54ADAA" />
-                <stop offset="100%" stopColor="rgba(84, 173, 170, 0.40)" />
+              <linearGradient id="gradientLine" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#FFC227" />
+                <stop offset="100%" stopColor="rgba(255, 194, 39, 0.29)" />
               </linearGradient>
             </defs>
             <defs>
-              <linearGradient id="gradientLoanTwo" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#FD5D5D" />
-                <stop offset="100%" stopColor="rgba(253, 93, 93, 0.40)" />
+              <linearGradient id="gradientLineTwo" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#234B4C" />
+                <stop offset="100%" stopColor="rgba(84, 173, 170, 0.17)" />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#E8E8E8" />
@@ -106,21 +104,27 @@ const ChartBarLoan = ({ title, data }) => {
             <YAxis />
             <Tooltip />
             {/* <Legend /> */}
-            <Bar
-              dataKey="pv"
-              fill="url(#gradientLoanTwo)"
-              radius={[24, 24, 0, 0]}
+
+            <Line
+              type="monotone"
+              dataKey="costs"
+              stroke="url(#gradientLine)"
+              strokeDasharray="5 5"
+              strokeWidth={2}
+              dot={false}
             />
-            <Bar
+            {/* <Line
+              type="monotone"
               dataKey="uv"
-              fill="url(#gradientLoan)"
-              radius={[24, 24, 0, 0]}
-            />
-          </BarChart>
+              stroke="url(#gradientLineTwo)"
+              dot={false}
+              strokeWidth={2}
+            /> */}
+          </LineChart>
         </ResponsiveContainer>
       </section>
     </div>
   );
 };
 
-export default ChartBarLoan;
+export default ChartLine;

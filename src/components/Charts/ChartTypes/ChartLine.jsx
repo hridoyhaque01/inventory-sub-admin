@@ -8,7 +8,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { blue, red } from "../../../assets/getAssets";
 
 const ChartLine = ({ title, data }) => {
   const [activeChart, setActiveChart] = useState("weekly");
@@ -17,12 +16,12 @@ const ChartLine = ({ title, data }) => {
   };
   return (
     <div className="flex flex-col justify-between">
-      <section className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <p className="text-2xl text-blackHigh font-bold">{title}</p>
-        <div className="flex items-center flex-wrap gap-2">
+      <section className="flex items-center justify-between">
+        <p className="text-2xl text-blackHigh  font-bold">{title}</p>
+        {/* <div className="flex items-center gap-2">
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "weekly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -33,7 +32,7 @@ const ChartLine = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "monthly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -44,7 +43,7 @@ const ChartLine = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "half-yearly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -55,7 +54,7 @@ const ChartLine = ({ title, data }) => {
           </button>
           <button
             type="button"
-            className={`py-2 px-4 rounded-full text-blackMid text-xs sm:text-sm border ${
+            className={`py-2 px-4 rounded-full text-blackMid text-sm border ${
               activeChart === "yearly"
                 ? "bg-primaryMainLight text-whiteHigh border-primaryMainLight"
                 : " border-fadeHigh"
@@ -64,20 +63,21 @@ const ChartLine = ({ title, data }) => {
           >
             Yearly
           </button>
-        </div>
+        </div> */}
       </section>
-      <section className="flex items-center justify-start gap-6 mt-8 sm:mt-14 mb-8">
+      <section className="flex items-center justify-start gap-6 mt-14 mb-8">
         <div className="flex items-center justify-center gap-2">
-          <img src={red} alt="" />
+          {/* <img src={red} alt="" /> */}
+          <div className="w-4 h-4 rounded-full bg-warningColor"></div>
           <p>This Year</p>
         </div>
-        <div className="flex items-center justify-center gap-2">
+        {/* <div className="flex items-center justify-center gap-2">
           <img src={blue} alt="" />
           <p>Last Year</p>
-        </div>
+        </div> */}
       </section>
       <section className="overflow-x-auto overflow-y-hidden flex items-center justify-center">
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={400}>
           <LineChart
             data={data}
             margin={{
@@ -107,19 +107,19 @@ const ChartLine = ({ title, data }) => {
 
             <Line
               type="monotone"
-              dataKey="pv"
+              dataKey="costs"
               stroke="url(#gradientLine)"
               strokeDasharray="5 5"
               strokeWidth={2}
               dot={false}
             />
-            <Line
+            {/* <Line
               type="monotone"
               dataKey="uv"
               stroke="url(#gradientLineTwo)"
               dot={false}
               strokeWidth={2}
-            />
+            /> */}
           </LineChart>
         </ResponsiveContainer>
       </section>

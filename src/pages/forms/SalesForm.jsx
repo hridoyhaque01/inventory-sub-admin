@@ -7,25 +7,16 @@ import RequestLoader from "../../components/loaders/RequestLoader";
 import CustomerModal from "../../components/modals/CustomerModal";
 import CustomerSuggestions from "../../components/shared/autosuggestions/CustomerSuggestions";
 import ProductSuggestions from "../../components/shared/autosuggestions/ProductSuggestions";
-import {
-  useAddCustomersMutation,
-  useGetCustomersQuery,
-} from "../../features/customers/customerApi";
+import { useAddCustomersMutation } from "../../features/customers/customerApi";
 import { useAddSalesMutation } from "../../features/sales/salesApi";
 
 function SalesForm() {
-  const {
-    data: customers,
-    isLoading: customerLoading,
-    isError: customerFetchError,
-  } = useGetCustomersQuery();
-
   const [addCustomers, { isLoading: customerAddLoading }] =
     useAddCustomersMutation();
 
   const [addSales, { isLoading }] = useAddSalesMutation();
   const { store } = useSelector((state) => state.auth);
-  const { products: data } = store || {};
+  const { products: data, customers } = store || {};
   const { state } = useLocation();
   const { payload } = state || {};
   const [isFullPaid, setIsFullPaid] = useState(true);
@@ -106,6 +97,7 @@ function SalesForm() {
         setProductValue("");
         setCustomerValue("");
         setPaidAmount("");
+        setQuantity(1);
         totalPrice = "";
       })
       .catch((error) => {
@@ -113,11 +105,7 @@ function SalesForm() {
       });
   };
 
-  return customerLoading ? (
-    <div>Loading...</div>
-  ) : customerFetchError ? (
-    <div>Something went wrong </div>
-  ) : (
+  return (
     <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl">
         <div className="bg-primaryMainDarkest p-4 rounded-t-2xl">
