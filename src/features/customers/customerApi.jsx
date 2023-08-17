@@ -38,16 +38,13 @@ const customerApi = apiSlice.injectEndpoints({
     }),
 
     updateCustomers: builder.mutation({
-      query: ({ data, id, storeId }) => ({
-        url: `/customers/update/${id}`,
+      query: ({ data, storeId }) => ({
+        url: `/customers/update/${storeId}`,
         method: "PATCH",
         body: data,
       }),
       // invalidatesTags: ["products"],
-      async onQueryStarted(
-        { data, id, storeId },
-        { queryFulfilled, dispatch }
-      ) {
+      async onQueryStarted({ data, storeId }, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
           const formData = JSON.parse(data.get("data"));
@@ -58,7 +55,8 @@ const customerApi = apiSlice.injectEndpoints({
                 storeId,
                 (draft) => {
                   const changeObj = draft.find(
-                    (customer) => customer.customerPhone === id
+                    (customer) =>
+                      customer.customerPhone === formData?.customerPhone
                   );
                   if (changeObj) {
                     changeObj.customerName = formData.customerName;

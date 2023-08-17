@@ -54,12 +54,12 @@ function CustomerForm() {
       const data = {
         customerName,
         customerAddress,
+        customerPhone,
       };
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
       updateCustomers({
         data: formData,
-        id: payload?.customerPhone,
         storeId: id,
       })
         .unwrap()
