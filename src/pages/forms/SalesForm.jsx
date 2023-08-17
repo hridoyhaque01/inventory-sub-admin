@@ -75,6 +75,15 @@ function SalesForm() {
       theme: "light",
     });
 
+  const handlePaid = (event) => {
+    const value = event.target.value;
+    if (Number(totalPrice) - Number(value) < 0) {
+      return;
+    } else {
+      setPaidAmount(value);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const dueAmount = event.target?.dueAmount?.value;
@@ -338,7 +347,7 @@ function SalesForm() {
                         step="any"
                         className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                         value={paidAmount}
-                        onChange={(e) => setPaidAmount(e.target.value)}
+                        onChange={(e) => handlePaid(e)}
                       />
                     </div>
                     <div className="flex flex-col md:flex-row md:items-center gap-3">
