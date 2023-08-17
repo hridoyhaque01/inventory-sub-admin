@@ -13,7 +13,6 @@ const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           const data = result?.data;
-          console.log(result);
           dispatch(setStore(data));
           const tokenExpiration = 7 * 24 * 60 * 60 * 1000;
           const expireIn = Date.now() + tokenExpiration;
@@ -54,13 +53,10 @@ const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           if (result?.data) {
-            console.log(result?.data);
             const { fileUrl } = result?.data || {};
             dispatch(updateStore({ fileUrl }));
-            console.log(fileUrl);
             const localAuth = localStorage?.getItem("store");
             const auth = JSON.parse(localAuth);
-            console.log(auth);
             const { token, store, expireIn } = auth || {};
             store.fileUrl = fileUrl;
             localStorage.setItem(

@@ -9,7 +9,6 @@ const CustomerModal = ({
   storeId,
   storeName,
 }) => {
-  console.log(storeName);
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;

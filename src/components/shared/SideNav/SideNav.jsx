@@ -22,6 +22,7 @@ const SideNav = () => {
             <NavLink
               to="/"
               className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
+              onClick={() => dispatch(toggleSidebar())}
             >
               <span>
                 <svg
@@ -48,6 +49,7 @@ const SideNav = () => {
             <NavLink
               to="/inventory"
               className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
+              onClick={() => dispatch(toggleSidebar())}
             >
               <span>
                 <svg
@@ -78,6 +80,7 @@ const SideNav = () => {
             <NavLink
               to="/sales"
               className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
+              onClick={() => dispatch(toggleSidebar())}
             >
               <span>
                 <svg
@@ -108,6 +111,7 @@ const SideNav = () => {
             <NavLink
               to="/customer"
               className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
+              onClick={() => dispatch(toggleSidebar())}
             >
               <span>
                 <svg
@@ -137,6 +141,7 @@ const SideNav = () => {
             <NavLink
               to="/moneyOwed"
               className="flex items-center px-4 py-2 gap-2 cursor-pointer select-none"
+              onClick={() => dispatch(toggleSidebar())}
             >
               <span>
                 <svg

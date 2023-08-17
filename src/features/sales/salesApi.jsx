@@ -3,8 +3,8 @@ import { apiSlice } from "../api/apiSlice";
 const salesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getSales: builder.query({
-      query: () => ({
-        url: "/invoices",
+      query: (id) => ({
+        url: `/invoices/store/${id}`,
       }),
       // providesTags: ["products"],
     }),
@@ -18,12 +18,15 @@ const salesApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          console.log(result);
           if (result?.data) {
             dispatch(
-              apiSlice.util.updateQueryData("getSales", undefined, (draft) => {
-                draft?.push(result?.data);
-              })
+              apiSlice.util.updateQueryData(
+                "getSales",
+                result?.data?.storeId,
+                (draft) => {
+                  draft?.push(result?.data);
+                }
+              )
             );
             dispatch(
               apiSlice.util.updateQueryData(
@@ -62,7 +65,6 @@ const salesApi = apiSlice.injectEndpoints({
       async onQueryStarted({ data, id }, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          console.log(result);
           if (result?.data) {
             dispatch(
               apiSlice.util.updateQueryData(
@@ -72,7 +74,6 @@ const salesApi = apiSlice.injectEndpoints({
                   const index = draft.findIndex(
                     (prdouct) => prdouct.productId === id
                   );
-                  // console.log(JSON.stringify(draft));
                   if (index !== -1) {
                     draft[index] = result?.data;
                   }

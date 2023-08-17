@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
+import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 import CustomerTable from "../../components/tables/customer/CustomerTable";
+import { useGetCustomersQuery } from "../../features/customers/customerApi";
 
 function Customer() {
-  // const { data, isLoading, isError } = useGetSalesQuery();
   const { store } = useSelector((state) => state.auth);
-
-  const { customers: data } = store || {};
-  // console.log(products);
+  const { data, isLoading, isError } = useGetCustomersQuery(store?._id);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -20,7 +20,7 @@ function Customer() {
 
   const filterBySearch = (data) => {
     if (searchValue.trim().length > 0) {
-      return data?.customerPhone
+      return data?.storeName
         ?.toLowerCase()
         .includes(searchValue?.toLowerCase());
     } else {
@@ -30,9 +30,13 @@ function Customer() {
 
   let content = null;
 
-  if (data?.length === 0) {
+  if (isLoading) {
+    content = <SearchLoader></SearchLoader>;
+  } else if (!isLoading && isError) {
+    content = <SomethingWrong></SomethingWrong>;
+  } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
-  } else if (data?.length > 0) {
+  } else if (!isLoading && !isError && data?.length > 0) {
     const newData = data?.filter(filterBySearch);
     content = <CustomerTable data={newData}></CustomerTable>;
   }

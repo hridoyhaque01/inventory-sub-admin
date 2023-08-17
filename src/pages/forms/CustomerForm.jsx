@@ -57,14 +57,17 @@ function CustomerForm() {
       };
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
-      updateCustomers({ data: formData, id: payload?.customerPhone })
+      updateCustomers({
+        data: formData,
+        id: payload?.customerPhone,
+        storeId: id,
+      })
         .unwrap()
         .then((res) => {
           form.reset();
           navigate("/customer");
         })
         .catch((error) => {
-          console.log(error);
           errorNotify("Customer update failed");
         });
     } else {
@@ -84,7 +87,6 @@ function CustomerForm() {
           infoNotify("Customer add successfull");
         })
         .catch((error) => {
-          console.log(error);
           errorNotify("Customer add failed");
         });
     }

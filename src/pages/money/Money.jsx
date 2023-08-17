@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
@@ -6,15 +7,14 @@ import MoneyOwedTable from "../../components/tables/moneyOwed/MoneyOwedTable";
 import { useGetAllOwesQuery } from "../../features/owes/owesApi";
 
 function Expenses() {
-  const { data, isLoading, isError } = useGetAllOwesQuery();
+  const { store } = useSelector((state) => state.auth);
+  const { data, isLoading, isError } = useGetAllOwesQuery(store?._id);
   const [searchValue, setSearchValue] = useState("");
 
   const onChange = (e) => {
     const value = e.target.value;
     setSearchValue(value);
   };
-
-  console.log(data);
 
   const filterByDue = (data) => {
     return data?.dueAmount !== "0";

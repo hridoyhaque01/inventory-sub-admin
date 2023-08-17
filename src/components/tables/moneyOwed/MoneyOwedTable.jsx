@@ -67,7 +67,6 @@ function MoneyOwedTable({ data }) {
                 <td className="py-3">{owe?.customerId}</td>
                 <td className="py-3">{owe?.dueAmount}</td>
                 <td className="py-3">
-                  {console.log(owe?.payDate)}
                   {new Date(owe?.payDate * 1000).toLocaleDateString("en-US")}
                 </td>
                 <td className="py-3">

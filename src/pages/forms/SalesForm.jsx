@@ -1,24 +1,44 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RequestLoader from "../../components/loaders/RequestLoader";
 import CustomerModal from "../../components/modals/CustomerModal";
 import CustomerSuggestions from "../../components/shared/autosuggestions/CustomerSuggestions";
 import ProductSuggestions from "../../components/shared/autosuggestions/ProductSuggestions";
-import { useAddCustomersMutation } from "../../features/customers/customerApi";
+import {
+  useAddCustomersMutation,
+  useGetCustomersQuery,
+} from "../../features/customers/customerApi";
+import {
+  inventoryApi,
+  useGetInventoriesQuery,
+  useUpdateProductsMutation,
+} from "../../features/inventory/inventoryApi";
 import { useAddSalesMutation } from "../../features/sales/salesApi";
 
 function SalesForm() {
+  const { store } = useSelector((state) => state.auth);
   const [addCustomers, { isLoading: customerAddLoading }] =
     useAddCustomersMutation();
+  const {
+    data: customers,
+    isLoading: customerLoading,
+    isError: customerError,
+  } = useGetCustomersQuery(store?._id);
+
+  const {
+    data,
+    isLoading: productsLoading,
+    isError: productsError,
+  } = useGetInventoriesQuery(store?._id);
 
   const [addSales, { isLoading }] = useAddSalesMutation();
-  const { store } = useSelector((state) => state.auth);
-  const { products: data, customers } = store || {};
-  const { state } = useLocation();
-  const { payload } = state || {};
+  const [updateProducts, { isLoading: productsUpdateLoading }] =
+    useUpdateProductsMutation();
+
+  const dispatch = useDispatch();
   const [isFullPaid, setIsFullPaid] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState({});
@@ -42,10 +62,6 @@ function SalesForm() {
       progress: undefined,
       theme: "light",
     });
-
-  console.log(selectedProduct);
-
-  console.log(selectedCustomer);
 
   const infoNotify = (message) =>
     toast.info(message, {
@@ -91,21 +107,55 @@ function SalesForm() {
     addSales(formData)
       .unwrap()
       .then((res) => {
-        infoNotify("New sales add successfull");
-        setSelectedCustomer({});
-        setSelectedProduct({});
-        setProductValue("");
-        setCustomerValue("");
-        setPaidAmount("");
-        setQuantity(1);
-        totalPrice = "";
+        const unitLeft = selectedProduct?.unitLeft - Number(quantity);
+        const data = {
+          unitLeft,
+          productId: selectedProduct?.productId,
+        };
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(data));
+
+        dispatch(
+          inventoryApi.endpoints.updateProducts.initiate({
+            data: formData,
+            storeId: store?._id,
+          })
+        )
+          .unwrap()
+          .then((res) => {
+            infoNotify("New sales add successfull");
+            setSelectedCustomer({});
+            setSelectedProduct({});
+            setProductValue("");
+            setCustomerValue("");
+            setPaidAmount("");
+            setQuantity(1);
+            totalPrice = "";
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
+        console.log(error);
         errorNotify("New sales add failed");
       });
   };
 
-  return (
+  const handleQuantity = (event) => {
+    const value = event.target.value;
+    if (Number(value) > selectedProduct?.unitLeft) {
+      return;
+    } else {
+      setQuantity(Number(value));
+    }
+  };
+
+  return customerLoading || productsLoading ? (
+    <div>Loading...</div>
+  ) : customerError || productsError ? (
+    <div>Something went wrong</div>
+  ) : (
     <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl">
         <div className="bg-primaryMainDarkest p-4 rounded-t-2xl">
@@ -205,7 +255,7 @@ function SalesForm() {
                       placeholder="Quantity"
                       step="any"
                       value={`${quantity}`}
-                      onChange={(e) => setQuantity(Number(e.target.value))}
+                      onChange={(e) => handleQuantity(e)}
                     />
 
                     <div className="relative w-full max-w-max">
@@ -256,7 +306,6 @@ function SalesForm() {
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                     readOnly
                     value={totalPrice}
-                    // onChange={() => console.log("")}
                   />
                 </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RequestLoader from "../../components/loaders/RequestLoader";
@@ -12,9 +12,7 @@ function MoneyOwedForm() {
   const { state } = useLocation();
   const { payload, type } = state || {};
   const [paidAmount, setPaidAmount] = useState(0);
-
-  console.log(`payload Data = ` + payload?.payDate);
-  console.log(`return = ` + getIsoDateString(payload?.payDate));
+  const navigate = useNavigate();
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -52,14 +50,25 @@ function MoneyOwedForm() {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    updateOwes({ data: formData, id: payload?._id })
+    updateOwes({ data: formData, id: payload?._id, storeId: payload?.storeId })
       .unwrap()
       .then((res) => {
         infoNotify("Update customer owes successfull");
+        setPaidAmount(0);
+        navigate("/moneyOwed");
       })
       .catch((error) => {
         errorNotify("Update customer owes failed");
       });
+  };
+
+  const handlePaid = (event) => {
+    const value = event.target.value;
+    if ((Number(payload?.dueAmount) - Number(value))?.toFixed(2) < 0) {
+      return;
+    } else {
+      setPaidAmount(value);
+    }
   };
 
   return (
@@ -131,7 +140,7 @@ function MoneyOwedForm() {
                     name="due"
                     step="any"
                     value={paidAmount}
-                    onChange={(e) => setPaidAmount(e.target.value)}
+                    onChange={(e) => handlePaid(e)}
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                   />
@@ -152,7 +161,6 @@ function MoneyOwedForm() {
                       Number(payload?.dueAmount) - Number(paidAmount)
                     )?.toFixed(2)}
                   />
-                  {/* console.log() */}
                 </div>
 
                 {/* submit buttons  */}

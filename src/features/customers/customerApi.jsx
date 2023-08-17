@@ -3,8 +3,8 @@ import { apiSlice } from "../api/apiSlice";
 const customerApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCustomers: builder.query({
-      query: () => ({
-        url: "/customers",
+      query: (id) => ({
+        url: `customers/store/${id}`,
       }),
 
       // providesTags: ["products"],
@@ -19,12 +19,12 @@ const customerApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          console.log(result);
           if (result?.data) {
+            // storeApi.endpoints.getStore
             dispatch(
               apiSlice.util.updateQueryData(
                 "getCustomers",
-                undefined,
+                result?.data?.storeId,
                 (draft) => {
                   draft?.push(result?.data);
                 }
@@ -38,13 +38,16 @@ const customerApi = apiSlice.injectEndpoints({
     }),
 
     updateCustomers: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ({ data, id, storeId }) => ({
         url: `/customers/update/${id}`,
         method: "PATCH",
         body: data,
       }),
       // invalidatesTags: ["products"],
-      async onQueryStarted({ data, id }, { queryFulfilled, dispatch }) {
+      async onQueryStarted(
+        { data, id, storeId },
+        { queryFulfilled, dispatch }
+      ) {
         try {
           const result = await queryFulfilled;
           const formData = JSON.parse(data.get("data"));
@@ -52,7 +55,7 @@ const customerApi = apiSlice.injectEndpoints({
             dispatch(
               apiSlice.util.updateQueryData(
                 "getCustomers",
-                undefined,
+                storeId,
                 (draft) => {
                   const changeObj = draft.find(
                     (customer) => customer.customerPhone === id

@@ -7,7 +7,6 @@ const dashboardApi = apiSlice.injectEndpoints({
         // get a random user
         const { data } = await fetchWithBQ("/invoices");
         const invoices = data?.filter((item) => item?.storeName === _arg);
-        console.log(invoices);
 
         const monthlySalesMap = new Map();
         const monthlyCostMap = new Map();

@@ -12,7 +12,6 @@ const salesSlice = createSlice({
     setPdfData: (state, action) => {
       state.pdfData = action.payload;
       state.isDownloadPdf = true;
-      console.log(state.isDownloadPdf);
     },
     resetPdfData: (state) => {
       state.pdfData = {};

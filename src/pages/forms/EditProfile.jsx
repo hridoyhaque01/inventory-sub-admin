@@ -10,7 +10,6 @@ import getCompressedImage from "../../utils/getCompresedImage";
 function EditProfile() {
   const [updateAdmin, { isLoading }] = useUpdateAdminMutation();
   const { store } = useSelector((state) => state.auth);
-  console.log(store);
   const profileRef = useRef();
   const [profile, setProfile] = useState(null);
   const [profilePreveiw, setProfilePreveiw] = useState(null);
@@ -116,7 +115,6 @@ function EditProfile() {
       })
       .catch((error) => {
         errorNotify("Store image update failed");
-        console.log(error);
       });
   };
 

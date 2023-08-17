@@ -15,8 +15,6 @@ const Dashboard = () => {
   const { salesData, totalSales, costsData, totalCosts, totalDues } =
     data || {};
 
-  console.log(data);
-
   let content = null;
 
   if (isLoading) {

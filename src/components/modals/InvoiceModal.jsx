@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 
-const InvoiceModal = forwardRef(({ data }, targetRef) => {
+const InvoiceModal = forwardRef(({ data, activeInvoice }, targetRef) => {
   return (
     <section>
       <input type="checkbox" id="invoiceModal" className="modal-toggle" />
@@ -29,13 +29,13 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
             >
               <article className="overflow-">
                 <div className="">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-start justify-between">
                     <div className="flex flex-col gap-1">
                       <h2 className="text-2xl font-medium">
                         {data?.storeName}
                       </h2>
-                      <p className="text-xs">160/68 California</p>
-                      <p className="text-xs">1-888-123-8910</p>
+                      <p className="text-xs">{data?.storeAddress}</p>
+                      <p className="text-xs">{data?.storeEmail}</p>
                     </div>
                     <div className="">
                       <h2 className="text-3xl text-primaryMainDarkest font-bold tracking-tight uppercase">
@@ -49,30 +49,32 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                         Invoice to:
                       </h2>
                       <p className="text-primaryMainDarkest font-medium">
-                        Mahmud Saimon
+                        {data?.customerName}
                       </p>
-                      <p className="text-xs">256/8 California</p>
-                      <p className="text-xs">1-888-123-8910</p>
+                      <p className="text-xs">{data?.customerId}</p>
+                      <p className="text-xs">{data?.customerAddress}</p>
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col items-end gap-1">
                       <h2 className="text-xs font-semibold text-primaryMainDarkest flex items-center gap-2">
-                        <span className="inline-block w-28 text-right">
-                          Invoice number:
-                        </span>
-                        <span className="text-fadeColor">INV 10012</span>
+                        <span className="">Invoice number:</span>
+                        <span className="text-fadeColor">{activeInvoice}</span>
                       </h2>
                       <h2 className="text-xs font-semibold text-primaryMainDarkest flex items-center gap-2">
-                        <span className="inline-block w-28 text-right">
-                          Date Issued:
+                        <span className="">Date Issued:</span>
+                        <span className="text-fadeColor">
+                          {new Date(data?.payDate * 1000).toLocaleDateString(
+                            "en-US"
+                          )}
                         </span>
-                        <span className="text-fadeColor">26/03/2021</span>
                       </h2>
-                      <h2 className="text-xs font-semibold text-primaryMainDarkest flex items-center gap-2">
+                      {/* <h2 className="text-xs font-semibold text-primaryMainDarkest flex items-center gap-2">
                         <span className="inline-block w-28 text-right">
                           Due Date:
                         </span>
-                        <span className="text-fadeColor">25/04/2021</span>
-                      </h2>
+                        <span className="text-fadeColor">
+                          {data?.storeAddress}
+                        </span>
+                      </h2> */}
                     </div>
                   </div>
                   <div className="">
@@ -114,13 +116,13 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                               </div>
                             </td>
                             <td className="px-3 py-3 text-sm text-right  table-cell">
-                              48
+                              {data?.unitCount}
                             </td>
                             <td className="py-3 pr-3 text-sm text-right  table-cell">
-                              0.00tk
+                              {data?.unitPrice}
                             </td>
                             <td className="py-3 pr-3 text-sm text-right  ">
-                              0.00tk
+                              {data?.totalAmount}
                             </td>
                           </tr>
                         </tbody>
@@ -135,7 +137,7 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             </th>
 
                             <td className="py-3 pl-3 pr-4 text-sm text-right  ">
-                              0.00tk
+                              {data?.totalAmount}tk
                             </td>
                           </tr>
                           <tr>
@@ -148,7 +150,7 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             </th>
 
                             <td className="py-3 pl-3 pr-4 text-sm text-right  ">
-                              -0.00tk
+                              -0tk
                             </td>
                           </tr>
                           <tr>
@@ -161,7 +163,7 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             </th>
 
                             <td className="py-3 pl-3 pr-4 text-sm text-right  ">
-                              0.00tk
+                              {data?.totalAmount}tk
                             </td>
                           </tr>
                           <tr>
@@ -174,7 +176,7 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             </th>
 
                             <td className="pb-3 pl-3 pr-4 text-sm text-right  ">
-                              -0.00tk
+                              -{data?.paidAmount}tk
                             </td>
                           </tr>
                           <tr className="">
@@ -188,7 +190,7 @@ const InvoiceModal = forwardRef(({ data }, targetRef) => {
                             </th>
 
                             <td className="py-4 pl-3 pr-4 text-sm text-right text-whiteHigh bg-primaryMainDarkest">
-                              0.00tk
+                              {data?.totalAmount - Number(data?.paidAmount)}tk
                             </td>
                           </tr>
                         </tfoot>

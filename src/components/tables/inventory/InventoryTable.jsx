@@ -13,8 +13,6 @@ function InventoryTable({ data }) {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
-  // console.log(data);
-
   const handleNavigate = (data) => {
     navigate("/inventory-edit", { state: { payload: data, type: "edit" } });
   };
@@ -46,6 +44,10 @@ function InventoryTable({ data }) {
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
               Quantity
+            </th>
+
+            <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
+              Product Left
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
@@ -87,6 +89,7 @@ function InventoryTable({ data }) {
                   <td className="py-3">{item?.productCategory}</td>
                   <td className="py-3">{item?.storeName}</td>
                   <td className="py-3">{item?.productQuantity} </td>
+                  <td className="py-3">{item?.unitLeft} </td>
                   <td className="py-3">{item?.buyingPrice}</td>
                   <td className="py-3">{item?.sellingPrice}</td>
                   <td className="py-3">

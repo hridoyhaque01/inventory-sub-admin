@@ -1,64 +1,36 @@
 import { apiSlice } from "../api/apiSlice";
 
-const inventoryApi = apiSlice.injectEndpoints({
+export const inventoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getInventories: builder.query({
-      query: () => ({
-        url: "/products",
+      query: (id) => ({
+        url: `/products/store/${id}`,
       }),
-
       // providesTags: ["products"],
     }),
-
-    addProducts: builder.mutation({
-      query: (data) => ({
-        url: "/products/add",
-        method: "POST",
-        body: data,
-      }),
-      async onQueryStarted(args, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          console.log(result);
-          if (result?.data) {
-            dispatch(
-              apiSlice.util.updateQueryData(
-                "getInventories",
-                undefined,
-                (draft) => {
-                  draft?.push(result?.data);
-                }
-              )
-            );
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
-    }),
     updateProducts: builder.mutation({
-      query: ({ data, id }) => ({
-        url: `/products/update/${id}`,
+      query: ({ data, storeId }) => ({
+        url: `/products/update/${storeId}`,
         method: "PATCH",
         body: data,
       }),
       // invalidatesTags: ["products"],
-      async onQueryStarted({ data, id }, { queryFulfilled, dispatch }) {
+      async onQueryStarted({ data, storeId }, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          console.log(result);
+          const formData = JSON.parse(data.get("data"));
           if (result?.data) {
             dispatch(
               apiSlice.util.updateQueryData(
                 "getInventories",
-                undefined,
+                storeId,
                 (draft) => {
-                  const index = draft.findIndex(
-                    (prdouct) => prdouct.productId === id
+                  const changeObj = draft.find(
+                    (prdouct) => prdouct.productId === formData?.productId
                   );
-                  // console.log(JSON.stringify(draft));
-                  if (index !== -1) {
-                    draft[index] = result?.data;
+
+                  if (changeObj) {
+                    changeObj.unitLeft = formData.unitLeft;
                   }
                 }
               )

@@ -3,20 +3,17 @@ import { useSelector } from "react-redux";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
+import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 import SalesTable from "../../components/tables/sales/SalesTable";
 import { useGetSalesQuery } from "../../features/sales/salesApi";
 function Sales() {
-  const { data, isLoading, isError } = useGetSalesQuery();
   const { store } = useSelector((state) => state.auth);
+  const { data, isLoading, isError } = useGetSalesQuery(store?._id);
   const [searchValue, setSearchValue] = useState("");
 
   const onChange = (e) => {
     const value = e.target.value;
     setSearchValue(value);
-  };
-
-  const filterByStore = (data) => {
-    return data?.storeName === store?.name;
   };
 
   const filterBySearch = (data) => {
@@ -34,11 +31,11 @@ function Sales() {
   if (isLoading) {
     content = <SearchLoader></SearchLoader>;
   } else if (!isLoading && isError) {
-    content = <div>Something went wrong</div>;
+    content = <SomethingWrong></SomethingWrong>;
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = data?.filter(filterByStore).filter(filterBySearch);
+    const newData = data?.filter(filterBySearch);
     content = <SalesTable data={newData}></SalesTable>;
   }
 

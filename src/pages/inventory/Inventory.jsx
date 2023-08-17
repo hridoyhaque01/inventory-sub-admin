@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
+import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 import InventoryTable from "../../components/tables/inventory/InventoryTable";
+import { useGetInventoriesQuery } from "../../features/inventory/inventoryApi";
 
 function Inventory() {
   // const { data, isLoading, isError } = useGetSalesQuery();
   const { store } = useSelector((state) => state.auth);
-
-  const { products: data } = store || {};
-  // console.log(products);
+  const { data, isLoading, isError } = useGetInventoriesQuery(store?._id);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -30,9 +31,13 @@ function Inventory() {
 
   let content = null;
 
-  if (data?.length === 0) {
+  if (isLoading) {
+    content = <SearchLoader></SearchLoader>;
+  } else if (!isLoading && isError) {
+    content = <SomethingWrong></SomethingWrong>;
+  } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
-  } else if (data?.length > 0) {
+  } else if (!isLoading && !isError && data?.length > 0) {
     const newData = data?.filter(filterBySearch);
     content = <InventoryTable data={newData}></InventoryTable>;
   }

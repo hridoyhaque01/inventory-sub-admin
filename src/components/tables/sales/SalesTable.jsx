@@ -13,6 +13,7 @@ function SalesTable({ data }) {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
   const [activeData, setActiveData] = useState({});
+  const [activeInvoice, setActiveInvoice] = useState("");
   const targetRef = useRef();
 
   const handleNavigate = (data) => {
@@ -28,8 +29,9 @@ function SalesTable({ data }) {
     documentTitle: "reciept",
   });
 
-  const handlePdf = (data) => {
+  const handlePdf = (data, index) => {
     setActiveData(data);
+    setActiveInvoice(index);
     setTimeout(() => {
       generatePDF();
     }, 1000);
@@ -103,7 +105,7 @@ function SalesTable({ data }) {
                   <label
                     type="button"
                     className="cursor-pointer"
-                    onClick={() => handlePdf(item)}
+                    onClick={() => handlePdf(item, i)}
                     // htmlFor="invoiceModal"
                   >
                     <svg
@@ -161,7 +163,11 @@ function SalesTable({ data }) {
           totalRows={data?.length}
         ></Pagination>
         <div>
-          <InvoiceModal data={activeData} ref={targetRef}></InvoiceModal>
+          <InvoiceModal
+            data={activeData}
+            activeInvoice={activeInvoice}
+            ref={targetRef}
+          ></InvoiceModal>
         </div>
       </div>
     </div>

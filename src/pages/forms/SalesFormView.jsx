@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 function SalesFormView() {
   const { state } = useLocation();
   const { payload } = state || {};
-  console.log(payload);
   return (
     <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl">
