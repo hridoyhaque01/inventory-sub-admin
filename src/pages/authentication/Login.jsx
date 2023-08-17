@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { logo } from "../../assets/getAssets";
 import RequestLoader from "../../components/loaders/RequestLoader";
 import PasswordInput from "../../components/shared/ui/PasswordInput";
 import { useLoginMutation } from "../../features/auth/authApi";
@@ -67,7 +68,9 @@ function Login() {
         <div className="w-full max-w-[630px] mx-auto h-full flex items-center justify-center p-4">
           <div className="w-full max-w-[296px]">
             <div className="mb-10">
-              <h2 className="text-black text-center lg:text-left">logo</h2>
+              <div className="text-center lg:text-left mb-6">
+                <img src={logo} alt="" className="w-20 h-20" />
+              </div>
               <h2 className="text-blackSemi text-2xl text-center lg:text-left font-bold">
                 Welcome Back!
               </h2>
