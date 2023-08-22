@@ -41,7 +41,7 @@ function MoneyOwedForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const dueAmount = event.target.remainingAmount.value;
-    const payAmount = payload?.paidAmount + Number(paidAmount);
+    const payAmount = Number(payload?.paidAmount) + Number(paidAmount);
     const payDate = event.target.payDate.value;
     const data = {
       dueAmount: Number(dueAmount)?.toFixed(2),

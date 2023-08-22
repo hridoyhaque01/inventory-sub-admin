@@ -18,11 +18,11 @@ function Login() {
   const [login, { isLoading }] = useLoginMutation();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
+
   const navigate = useNavigate();
   const handleInput = (event) => {
     setIsShowIcon(event.target.value.trim().length > 0);
   };
-
   const errorNotify = (message) =>
     toast.error(message, {
       position: "top-right",
@@ -68,8 +68,8 @@ function Login() {
         <div className="w-full max-w-[630px] mx-auto h-full flex items-center justify-center p-4">
           <div className="w-full max-w-[296px]">
             <div className="mb-10">
-              <div className="text-center lg:text-left mb-6">
-                <img src={logo} alt="" className="w-20 h-20" />
+              <div className="flex justify-center lg:justify-start mb-6">
+                <img src={logo} alt="" className="w-16 h-16" />
               </div>
               <h2 className="text-blackSemi text-2xl text-center lg:text-left font-bold">
                 Welcome Back!

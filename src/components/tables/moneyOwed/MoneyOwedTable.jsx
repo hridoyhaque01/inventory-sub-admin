@@ -31,6 +31,9 @@ function MoneyOwedTable({ data }) {
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
               Customer Id
             </th>
+            <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
+              Customer Name
+            </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
               Due Amount
@@ -65,6 +68,7 @@ function MoneyOwedTable({ data }) {
                     : rowsPerPage * (currentPage - 1) + i + 1}
                 </td>
                 <td className="py-3">{owe?.customerId}</td>
+                <td className="py-3">{owe?.customerName}</td>
                 <td className="py-3">{owe?.dueAmount}</td>
                 <td className="py-3">
                   {new Date(owe?.payDate * 1000).toLocaleDateString("en-US")}

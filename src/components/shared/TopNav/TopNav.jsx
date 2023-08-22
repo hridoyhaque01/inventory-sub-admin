@@ -35,7 +35,7 @@ const TopNav = ({ isShowButton }) => {
         </button>
         <h1 className="text-2xl">
           <Link to="/">
-            <img src={logo} alt="" className="w-16 h-16" />
+            <img src={logo} alt="" className="w-10 h-10" />
           </Link>
         </h1>
       </div>

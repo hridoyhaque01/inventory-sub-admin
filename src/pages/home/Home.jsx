@@ -26,7 +26,7 @@ const Dashboard = () => {
   } else if (!isLoading && !isError && totalSales) {
     content = (
       <>
-        <section className="flex justify-between gap-8 px-4">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {dashboardData.map((dashboardData, index) => (
             <HomeTopCard data={dashboardData} key={index}></HomeTopCard>
           ))}
@@ -39,7 +39,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (!isLoading && !isError && totalSales) {
       setDashboardData((prev) => [
-        ...prev,
         {
           title: "Total Sales",
           number: totalSales,
@@ -65,8 +64,8 @@ const Dashboard = () => {
   }, [isLoading, isError, totalSales]);
 
   return (
-    <div className="w-full overflow-auto pt-10 pb-6 pr-10">
-      <div className="flex flex-col justify-around pty-10 gap-4 w-full">
+    <div className="w-full overflow-auto pt-10 pb-6 px-6">
+      <div className="flex flex-col justify-around gap-4 w-full">
         {/* 4 top cards */}
         {content}
       </div>

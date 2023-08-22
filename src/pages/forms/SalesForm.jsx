@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,7 +14,6 @@ import {
 import {
   inventoryApi,
   useGetInventoriesQuery,
-  useUpdateProductsMutation,
 } from "../../features/inventory/inventoryApi";
 import { useAddSalesMutation } from "../../features/sales/salesApi";
 
@@ -35,8 +34,6 @@ function SalesForm() {
   } = useGetInventoriesQuery(store?._id);
 
   const [addSales, { isLoading }] = useAddSalesMutation();
-  const [updateProducts, { isLoading: productsUpdateLoading }] =
-    useUpdateProductsMutation();
 
   const dispatch = useDispatch();
   const [isFullPaid, setIsFullPaid] = useState(true);
@@ -46,10 +43,8 @@ function SalesForm() {
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [customerValue, setCustomerValue] = useState("");
   const [paidAmount, setPaidAmount] = useState("0");
-  let totalPrice =
-    selectedProduct?.sellingPrice === undefined
-      ? ""
-      : selectedProduct?.sellingPrice * quantity;
+  const [sellingPrice, setSellingPrice] = useState(0);
+  let totalPrice = sellingPrice === 0 ? 0 : sellingPrice * quantity;
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -96,7 +91,7 @@ function SalesForm() {
       storeAddress: store?.location,
       storeEmail: store?.email,
       unit: selectedProduct?.unit,
-      unitPrice: selectedProduct?.sellingPrice,
+      unitPrice: sellingPrice,
       buyingPrice: selectedProduct?.buyingPrice,
       unitCount: quantity,
       totalAmount: totalPrice,
@@ -112,6 +107,8 @@ function SalesForm() {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
+
+    console.log(data);
 
     addSales(formData)
       .unwrap()
@@ -139,7 +136,8 @@ function SalesForm() {
             setCustomerValue("");
             setPaidAmount("");
             setQuantity(1);
-            totalPrice = "";
+            setSellingPrice(0);
+            totalPrice = 0;
           })
           .catch((error) => {
             console.log(error);
@@ -159,6 +157,12 @@ function SalesForm() {
       setQuantity(Number(value));
     }
   };
+
+  useEffect(() => {
+    if (selectedProduct?.productId) {
+      setSellingPrice(selectedProduct?.sellingPrice);
+    }
+  }, [selectedProduct?.productId]);
 
   return customerLoading || productsLoading ? (
     <div>Loading...</div>
@@ -246,8 +250,9 @@ function SalesForm() {
                     name="sellingPrice"
                     placeholder="Selling price"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
-                    readOnly
-                    defaultValue={selectedProduct?.sellingPrice}
+                    value={sellingPrice}
+                    onChange={(e) => setSellingPrice(Number(e.target.value))}
+                    readOnly={selectedProduct?.productId ? false : true}
                   />
                 </div>
 
@@ -265,6 +270,7 @@ function SalesForm() {
                       step="any"
                       value={`${quantity}`}
                       onChange={(e) => handleQuantity(e)}
+                      readOnly={selectedProduct?.productId ? false : true}
                     />
 
                     <div className="relative w-full max-w-max">
@@ -328,6 +334,7 @@ function SalesForm() {
                     name="checkbox"
                     checked={isFullPaid}
                     onChange={() => setIsFullPaid((prev) => !prev)}
+                    disabled={selectedProduct?.productId ? false : true}
                     id="fullPaid"
                   />
                   <label htmlFor="fullPaid">Full Paid</label>
