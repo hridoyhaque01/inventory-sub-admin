@@ -108,8 +108,6 @@ function SalesForm() {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
 
-    console.log(data);
-
     addSales(formData)
       .unwrap()
       .then((res) => {
