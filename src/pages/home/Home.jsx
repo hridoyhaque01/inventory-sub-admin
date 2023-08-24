@@ -5,23 +5,40 @@ import Charts from "../../components/Charts/Charts";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import NoData from "../../components/shared/ui/NoData";
 import SomethingWrong from "../../components/shared/ui/SomethingWrong";
-import { useGetDashboardResultQuery } from "../../features/dashboard/dashboardApi";
+import DashboardTable from "../../components/tables/DashboardTable/DashboardTable";
+import {
+  useGetDashboardResultQuery,
+  useGetStoreResultQuery,
+} from "../../features/dashboard/dashboardApi";
 
 const Dashboard = () => {
   const { store } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetDashboardResultQuery(store?.name);
   const [dashboardData, setDashboardData] = useState([]);
 
+  const {
+    data: storeData,
+    isLoading: storeLoading,
+    isError: storeError,
+  } = useGetStoreResultQuery(store?._id);
+
+  console.log(storeData);
+
   const { salesData, totalSales, costsData, totalCosts, totalDues } =
     data || {};
 
   let content = null;
 
-  if (isLoading) {
+  if (isLoading || storeLoading) {
     content = <SearchLoader></SearchLoader>;
-  } else if (!isLoading && isError) {
+  } else if (!isLoading && !storeLoading && (isError || storeError)) {
     content = <SomethingWrong></SomethingWrong>;
-  } else if (!isLoading && !isError && !totalSales) {
+  } else if (
+    !isLoading &&
+    !storeLoading &&
+    (isError || storeError) &&
+    !totalSales
+  ) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && totalSales) {
     content = (
@@ -32,6 +49,10 @@ const Dashboard = () => {
           ))}
         </section>
         <Charts salesData={salesData} costsData={costsData}></Charts>
+
+        <section>
+          <DashboardTable results={storeData}></DashboardTable>
+        </section>
       </>
     );
   }
@@ -64,8 +85,8 @@ const Dashboard = () => {
   }, [isLoading, isError, totalSales]);
 
   return (
-    <div className="w-full overflow-auto pt-10 pb-6 px-6">
-      <div className="flex flex-col justify-around gap-4 w-full">
+    <div className="w-full overflow-auto pt-10 pb-6 pr-6">
+      <div className="flex flex-col justify-around gap-8 w-full">
         {/* 4 top cards */}
         {content}
       </div>
