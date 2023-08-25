@@ -1,55 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HomeTopCard from "../../Components/Cards/HomeTopCard";
-import Charts from "../../components/Charts/Charts";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import NoData from "../../components/shared/ui/NoData";
 import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 import DashboardTable from "../../components/tables/DashboardTable/DashboardTable";
-import {
-  useGetDashboardResultQuery,
-  useGetStoreResultQuery,
-} from "../../features/dashboard/dashboardApi";
+import { useGetStoreResultQuery } from "../../features/dashboard/dashboardApi";
 
 const Dashboard = () => {
   const { store } = useSelector((state) => state.auth);
-  const { data, isLoading, isError } = useGetDashboardResultQuery(store?.name);
-  const [dashboardData, setDashboardData] = useState([]);
+  // const { data, isLoading, isError } = useGetDashboardResultQuery(store?.name);
+  const [dashboardData, setDashboardData] = useState([
+    {
+      title: "Total Sales",
+      color: "bg-successColor",
+      number: 0,
+    },
+    {
+      title: "Total Customers",
+      color: "bg-secondaryMainLight",
+      number: 0,
+    },
+    {
+      title: "Total Products",
+      color: "bg-infoColor",
+      number: 0,
+    },
+    {
+      title: "Total Revenue",
+      color: "bg-errorMidColor",
+      number: 0,
+    },
+  ]);
 
-  const {
-    data: storeData,
-    isLoading: storeLoading,
-    isError: storeError,
-  } = useGetStoreResultQuery(store?._id);
+  const { data, isLoading, isError } = useGetStoreResultQuery(store?._id);
 
-  console.log(storeData);
-
-  const { salesData, totalSales, costsData, totalCosts, totalDues } =
-    data || {};
+  const { storeDetails: storeData, cardData } = data || {};
 
   let content = null;
-
-  if (isLoading || storeLoading) {
+  if (isLoading) {
     content = <SearchLoader></SearchLoader>;
-  } else if (!isLoading && !storeLoading && (isError || storeError)) {
+  } else if (!isLoading && isError) {
     content = <SomethingWrong></SomethingWrong>;
-  } else if (
-    !isLoading &&
-    !storeLoading &&
-    (isError || storeError) &&
-    !totalSales
-  ) {
+  } else if (!isLoading && !isError && storeData?.length === 0) {
     content = <NoData></NoData>;
-  } else if (!isLoading && !isError && totalSales) {
+  } else if (!isLoading && !isError && storeData?.length > 0) {
     content = (
       <>
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {dashboardData.map((dashboardData, index) => (
-            <HomeTopCard data={dashboardData} key={index}></HomeTopCard>
-          ))}
-        </section>
-        <Charts salesData={salesData} costsData={costsData}></Charts>
-
+        {/* <Charts salesData={salesData} costsData={costsData}></Charts> */}
         <section>
           <DashboardTable results={storeData}></DashboardTable>
         </section>
@@ -58,36 +56,52 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    if (!isLoading && !isError && totalSales) {
-      setDashboardData((prev) => [
-        {
-          title: "Total Sales",
-          number: totalSales,
-          color: "bg-successColor",
-        },
-        {
-          title: "Total Costs",
-          number: totalCosts,
-          color: "bg-secondaryMainLight",
-        },
-        {
-          title: "Total Revenue",
-          number: totalSales - totalDues,
-          color: "bg-infoColor",
-        },
-        {
-          title: "Total Dues",
-          number: totalDues,
-          color: "bg-errorMidColor",
-        },
-      ]);
+    if (!isLoading && !isError) {
+      const updatedData = [...dashboardData];
+      updatedData[0].number = cardData?.totalSales || 0;
+      updatedData[1].number = cardData?.totalCustomers || 0;
+      updatedData[2].number = cardData?.totalProducts || 0;
+      updatedData[3].number = cardData?.totalRevenue || 0;
+      setDashboardData(updatedData);
     }
-  }, [isLoading, isError, totalSales]);
+  }, [isLoading, isError]);
+
+  // useEffect(() => {
+  //   if (!isLoading && !isError && totalSales) {
+  //     setDashboardData((prev) => [
+  //       {
+  //         title: "Total Sales",
+  //         number: totalSales,
+  //         color: "bg-successColor",
+  //       },
+  //       {
+  //         title: "Total Costs",
+  //         number: totalCosts,
+  //         color: "bg-secondaryMainLight",
+  //       },
+  //       {
+  //         title: "Total Revenue",
+  //         number: totalSales - totalDues,
+  //         color: "bg-infoColor",
+  //       },
+  //       {
+  //         title: "Total Dues",
+  //         number: totalDues,
+  //         color: "bg-errorMidColor",
+  //       },
+  //     ]);
+  //   }
+  // }, [isLoading, isError, totalSales]);
 
   return (
-    <div className="w-full overflow-auto pt-10 pb-6 pr-6">
+    <div className="w-full overflow-auto pt-10 pb-6 px-4 md:px-6">
       <div className="flex flex-col justify-around gap-8 w-full">
         {/* 4 top cards */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {dashboardData.map((dashboardData, index) => (
+            <HomeTopCard data={dashboardData} key={index}></HomeTopCard>
+          ))}
+        </section>
         {content}
       </div>
     </div>

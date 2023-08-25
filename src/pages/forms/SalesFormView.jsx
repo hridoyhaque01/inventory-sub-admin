@@ -26,7 +26,7 @@ function SalesFormView() {
                     type="text"
                     placeholder="Product name"
                     name="productName"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.productId}
                   />
@@ -41,7 +41,7 @@ function SalesFormView() {
                     type="text"
                     placeholder="Product name"
                     name="productName"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.productName}
                   />
@@ -56,7 +56,7 @@ function SalesFormView() {
                     type="text"
                     placeholder="Product category"
                     name="productCategory"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.productCategory}
                   />
@@ -71,7 +71,7 @@ function SalesFormView() {
                     type="text"
                     placeholder="Shop name"
                     name="shopName"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.storeName}
                   />
@@ -86,7 +86,7 @@ function SalesFormView() {
                     type="number"
                     name="sellingPrice"
                     placeholder="Selling price"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.unitPrice}
                   />
@@ -97,19 +97,20 @@ function SalesFormView() {
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Quantity :
                   </span>
-                  <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-blackLow text-sm">
+                  <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-blackLow text-sm  bg-whiteMid">
                     <input
                       type="number"
                       name="quantity"
-                      className="w-20 border-none outline-none"
+                      className="w-20 border-none outline-none bg-transparent"
                       placeholder="Quantity"
                       step="any"
                       defaultValue={payload?.unitCount}
+                      readOnly
                     />
 
                     <div className="relative w-full max-w-max">
                       <select
-                        className="appearance-none outline-none  w-16"
+                        className="appearance-none outline-none w-16 bg-transparent"
                         name="quantityAction"
                         defaultValue=""
                         disabled
@@ -139,7 +140,7 @@ function SalesFormView() {
                     type="number"
                     name="buyingPrice"
                     placeholder="Buying price"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                   /> */}
                 </div>
 
@@ -152,7 +153,7 @@ function SalesFormView() {
                     type="text"
                     placeholder="Total price"
                     name="totalPrice"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.totalAmount}
                     // onChange={() => console.log("")}
@@ -183,8 +184,9 @@ function SalesFormView() {
                       placeholder="Pay amount"
                       name="payAmount"
                       step="any"
-                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                       defaultValue={payload?.paidAmount}
+                      readOnly
                     />
                   </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-3">
@@ -196,7 +198,7 @@ function SalesFormView() {
                       placeholder="Due amount"
                       name="dueAmount"
                       step="any"
-                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                       readOnly
                       defaultValue={payload?.dueAmount}
                     />
@@ -213,7 +215,7 @@ function SalesFormView() {
                     placeholder="Due amount"
                     name="dueAmount"
                     step="any"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.customerId}
                   />

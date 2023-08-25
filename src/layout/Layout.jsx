@@ -7,7 +7,7 @@ const Main = () => {
   return (
     <div className="bg-whiteSemi h-screen w-full overflow-hidden">
       <TopNav isShowButton={true}></TopNav>
-      <div className="flex gap-6 h-[calc(100%-66px)]">
+      <div className="flex h-[calc(100%-66px)]">
         <SideNav></SideNav>
         <Outlet></Outlet>
       </div>

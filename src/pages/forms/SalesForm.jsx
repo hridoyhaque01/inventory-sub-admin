@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RequestLoader from "../../components/loaders/RequestLoader";
@@ -32,6 +32,8 @@ function SalesForm() {
     isLoading: productsLoading,
     isError: productsError,
   } = useGetInventoriesQuery(store?._id);
+
+  const navigate = useNavigate();
 
   const [addSales, { isLoading }] = useAddSalesMutation();
 
@@ -72,7 +74,7 @@ function SalesForm() {
 
   const handlePaid = (event) => {
     const value = event.target.value;
-    if (Number(totalPrice) - Number(value) < 0) {
+    if (parseInt(totalPrice) - parseInt(value) < 0) {
       return;
     } else {
       setPaidAmount(value);
@@ -111,7 +113,7 @@ function SalesForm() {
     addSales(formData)
       .unwrap()
       .then((res) => {
-        const unitLeft = selectedProduct?.unitLeft - Number(quantity);
+        const unitLeft = selectedProduct?.unitLeft - parseInt(quantity);
         const data = {
           unitLeft,
           productId: selectedProduct?.productId,
@@ -127,7 +129,6 @@ function SalesForm() {
         )
           .unwrap()
           .then((res) => {
-            infoNotify("New sales add successfull");
             setSelectedCustomer({});
             setSelectedProduct({});
             setProductValue("");
@@ -136,6 +137,7 @@ function SalesForm() {
             setQuantity(1);
             setSellingPrice(0);
             totalPrice = 0;
+            navigate("/sales");
           })
           .catch((error) => {
             console.log(error);
@@ -149,10 +151,10 @@ function SalesForm() {
 
   const handleQuantity = (event) => {
     const value = event.target.value;
-    if (Number(value) > selectedProduct?.unitLeft) {
+    if (parseInt(value) > selectedProduct?.unitLeft) {
       return;
     } else {
-      setQuantity(Number(value));
+      setQuantity(parseInt(value));
     }
   };
 
@@ -160,7 +162,7 @@ function SalesForm() {
     if (selectedProduct?.productId) {
       setSellingPrice(selectedProduct?.sellingPrice);
     }
-  }, [selectedProduct?.productId]);
+  }, [selectedProduct?.productId, selectedProduct?.sellingPrice]);
 
   return customerLoading || productsLoading ? (
     <div>Loading...</div>
@@ -244,12 +246,12 @@ function SalesForm() {
                     Selling Price/Unit :
                   </span>
                   <input
-                    type="number"
+                    type="parseInt"
                     name="sellingPrice"
                     placeholder="Selling price"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                     value={sellingPrice}
-                    onChange={(e) => setSellingPrice(Number(e.target.value))}
+                    onChange={(e) => setSellingPrice(parseInt(e.target.value))}
                     readOnly={selectedProduct?.productId ? false : true}
                   />
                 </div>
@@ -261,7 +263,7 @@ function SalesForm() {
                   </span>
                   <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-blackLow text-sm">
                     <input
-                      type="number"
+                      type="parseInt"
                       name="quantity"
                       className="w-20 border-none outline-none"
                       placeholder="Quantity"
@@ -300,7 +302,7 @@ function SalesForm() {
                     </div>
                   </div>
                   {/* <input
-                    type="number"
+                    type="parseInt"
                     name="buyingPrice"
                     placeholder="Buying price"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
@@ -346,7 +348,7 @@ function SalesForm() {
                         Pay :
                       </span>
                       <input
-                        type="number"
+                        type="parseInt"
                         placeholder="Pay amount"
                         name="payAmount"
                         step="any"
@@ -360,7 +362,7 @@ function SalesForm() {
                         Due :
                       </span>
                       <input
-                        type="number"
+                        type="parseInt"
                         placeholder="Due amount"
                         name="dueAmount"
                         step="any"
@@ -369,7 +371,9 @@ function SalesForm() {
                         value={
                           isFullPaid
                             ? "0"
-                            : Number(totalPrice) - Number(paidAmount)
+                            : parseInt(totalPrice) - parseInt(paidAmount)
+                            ? parseInt(totalPrice) - parseInt(paidAmount)
+                            : totalPrice
                         }
                       />
                     </div>

@@ -41,11 +41,11 @@ function MoneyOwedForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const dueAmount = event.target.remainingAmount.value;
-    const payAmount = Number(payload?.paidAmount) + Number(paidAmount);
+    const payAmount = parseInt(payload?.paidAmount) + parseInt(paidAmount);
     const payDate = event.target.payDate.value;
     const data = {
-      dueAmount: Number(dueAmount)?.toFixed(2),
-      paidAmount: Number(payAmount)?.toFixed(2),
+      dueAmount: parseInt(dueAmount),
+      paidAmount: parseInt(payAmount),
       payDate: dateFormater(payDate),
     };
     const formData = new FormData();
@@ -64,7 +64,7 @@ function MoneyOwedForm() {
 
   const handlePaid = (event) => {
     const value = event.target.value;
-    if ((Number(payload?.dueAmount) - Number(value))?.toFixed(2) < 0) {
+    if (parseInt(payload?.dueAmount) - parseInt(value) < 0) {
       return;
     } else {
       setPaidAmount(value);
@@ -94,7 +94,7 @@ function MoneyOwedForm() {
                     name="customerId"
                     className={`w-full py-3 px-4 border border-whiteLow outline-none rounded ${
                       type === "edit" ? "text-fadeColor" : "text-blackLow"
-                    } text-sm`}
+                    } text-sm bg-whiteMid`}
                     readOnly={type === "edit" ? true : false}
                     defaultValue={payload?.customerId}
                   />
@@ -109,7 +109,7 @@ function MoneyOwedForm() {
                     type="number"
                     placeholder="Due amount"
                     name="dueAmount"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     defaultValue={payload?.dueAmount}
                     readOnly
                   />
@@ -155,11 +155,9 @@ function MoneyOwedForm() {
                     type="number"
                     placeholder="Remaining amount"
                     name="remainingAmount"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
-                    value={(
-                      Number(payload?.dueAmount) - Number(paidAmount)
-                    )?.toFixed(2)}
+                    value={parseInt(payload?.dueAmount) - parseInt(paidAmount)}
                   />
                 </div>
 

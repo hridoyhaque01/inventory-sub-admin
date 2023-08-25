@@ -28,7 +28,7 @@ function InventoryForm() {
                     placeholder="Enter product ID"
                     name="productId"
                     readOnly
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                     defaultValue={payload?.productId}
                   />
                 </div>
@@ -43,7 +43,7 @@ function InventoryForm() {
                     placeholder="Enter product name"
                     name="productName"
                     readOnly
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                     defaultValue={payload?.productName}
                   />
                 </div>
@@ -59,7 +59,7 @@ function InventoryForm() {
                       placeholder="Enter product name"
                       name="productCategory"
                       readOnly
-                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                       defaultValue={payload?.productCategory}
                     />
                   </div>
@@ -76,7 +76,7 @@ function InventoryForm() {
                       placeholder="Enter product name"
                       name="productCategory"
                       readOnly
-                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                      className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                       defaultValue={payload?.storeName}
                     />
                   </div>
@@ -87,11 +87,11 @@ function InventoryForm() {
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                     Quantity:
                   </span>
-                  <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-fadeColor text-sm">
+                  <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid">
                     <input
                       type="number"
                       name="productQuantity"
-                      className="w-28 border-none outline-none"
+                      className="w-28 border-none outline-none bg-transparent"
                       placeholder="Enter quantity"
                       defaultValue={`${payload?.productQuantity}`}
                       readOnly
@@ -99,7 +99,7 @@ function InventoryForm() {
 
                     <div className="relative w-full max-w-max">
                       <select
-                        className="appearance-none outline-none  w-16"
+                        className="appearance-none outline-none bg-transparent w-16"
                         name="unit"
                         defaultValue=""
                         disabled
@@ -126,7 +126,7 @@ function InventoryForm() {
                     type="number"
                     name="buyingPrice"
                     placeholder="Buying price"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                   /> */}
                 </div>
                 {/* Buying Price/Unit: */}
@@ -139,7 +139,7 @@ function InventoryForm() {
                     name="buyingPrice"
                     placeholder="Enter buying price"
                     readOnly
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                     defaultValue={payload?.buyingPrice}
                   />
                 </div>
@@ -154,7 +154,7 @@ function InventoryForm() {
                     name="sellingPrice"
                     placeholder="Enter selling price"
                     readOnly
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm"
+                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                     defaultValue={payload?.sellingPrice}
                   />
                 </div>

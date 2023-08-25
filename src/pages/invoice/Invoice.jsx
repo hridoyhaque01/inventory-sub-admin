@@ -28,7 +28,7 @@ const Invoice = () => {
     <>
       <div
         ref={targetRef}
-        className="max-w-[595px] mx-auto px-8 py-6 bg-whiteHigh"
+        className="max-w-[595px] mx-auto px-4 md:px-6 py-6 bg-whiteHigh"
       >
         <article className="overflow-">
           <div className="">
