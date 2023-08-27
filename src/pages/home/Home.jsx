@@ -10,6 +10,7 @@ import { useGetStoreResultQuery } from "../../features/dashboard/dashboardApi";
 const Dashboard = () => {
   const { store } = useSelector((state) => state.auth);
   // const { data, isLoading, isError } = useGetDashboardResultQuery(store?.name);
+
   const [dashboardData, setDashboardData] = useState([
     {
       title: "Total Sales",

@@ -83,7 +83,7 @@ const dashboardApi = apiSlice.injectEndpoints({
             0
           );
           const paymentRevenue = totalPaidToOwner;
-          const revenue = invoiceRevenue + paymentRevenue;
+          const revenue = invoiceRevenue;
           const remaining = revenue - totalPaidToOwner;
 
           const storeDetailsEntry = {
