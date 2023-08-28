@@ -50,11 +50,11 @@ const TopNav = ({ isShowButton }) => {
             ></path>
           </svg>
         </button>
-        <h1 className="text-2xl">
+        <div>
           <Link to="/">
             <img src={logo} alt="" className="w-10 h-10" />
           </Link>
-        </h1>
+        </div>
       </div>
       {/* top nav right */}
       <div className="flex-none">

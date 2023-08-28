@@ -430,14 +430,14 @@ function SalesForm() {
                       to="/sales"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
                     >
-                      Back
+                      {t("buttons.cancel")}
                     </Link>
                     <button
                       type="submit"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                       disabled={selectedCustomer?.customerPhone ? false : true}
                     >
-                      Submit
+                      {t("buttons.save")}
                     </button>
 
                     {/* <button

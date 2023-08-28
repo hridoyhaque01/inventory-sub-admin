@@ -218,16 +218,16 @@ function EditProfile() {
                 </div>
 
                 {/* edit button */}
-                <div className="flex items-center justify-end gap-3">
+                <div className="flex items-center justify-end gap-3 mt-4">
                   <Link
                     to="/store-profile"
-                    className="w-full max-w-[160px] p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center"
+                    className="w-full max-w-[160px] p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center text-xs sm:text-base"
                   >
                     {t("buttons.cancel")}
                   </Link>
                   <button
                     type="submit"
-                    className="w-full max-w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
+                    className="w-full max-w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center text-xs sm:text-base"
                   >
                     {t("buttons.save")}
                   </button>

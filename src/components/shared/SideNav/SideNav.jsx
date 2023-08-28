@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../../features/auth/authSlice";
@@ -8,6 +9,8 @@ import "./SideNav.css";
 const SideNav = () => {
   const dispatch = useDispatch();
   const { isShowSidebar } = useSelector((state) => state.nav);
+  const { t } = useTranslation();
+
   return (
     <>
       <div
@@ -39,7 +42,7 @@ const SideNav = () => {
                 </svg>
               </span>
               <span className={`flex-1 shrink-0`}>
-                <span>dashboard</span>
+                <span>{t("navigations.dashboard")}</span>
               </span>
             </NavLink>
           </div>
@@ -70,7 +73,7 @@ const SideNav = () => {
                 </svg>
               </span>
               <span className={`flex-1 shrink-0`}>
-                <span>Inventory</span>
+                <span>{t("navigations.inventory")}</span>
               </span>
             </NavLink>
           </div>
@@ -101,7 +104,7 @@ const SideNav = () => {
                 </svg>
               </span>
               <span className={`flex-1 shrink-0`}>
-                <span>Sales</span>
+                <span>{t("navigations.sales")}</span>
               </span>
             </NavLink>
           </div>
@@ -131,7 +134,7 @@ const SideNav = () => {
                 </svg>
               </span>
               <span className={`flex-1 shrink-0`}>
-                <span>Customer</span>
+                <span>{t("navigations.customers")}</span>
               </span>
             </NavLink>
           </div>
@@ -158,7 +161,7 @@ const SideNav = () => {
                 </svg>
               </span>
               <span className={`flex-1 shrink-0`}>
-                <span>Money Owed</span>
+                <span>{t("navigations.owes")}</span>
               </span>
             </NavLink>
           </div>
@@ -188,7 +191,7 @@ const SideNav = () => {
                 </svg>
               </span>
               <span className={`flex-1 shrink-0`}>
-                <span>Logout</span>
+                <span>{t("navigations.logout")}</span>
               </span>
             </button>
           </div>

@@ -67,8 +67,6 @@ const Dashboard = () => {
     }
   }, [isLoading, isError, data]);
 
-  console.log("tst");
-
   return (
     <div className="w-full overflow-auto pt-10 pb-6 px-4 md:px-6">
       <div className="flex flex-col justify-around gap-8 w-full">

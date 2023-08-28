@@ -74,16 +74,16 @@ function Profile() {
                   />
                 </div>
                 {/* edit button */}
-                <div className="flex items-center justify-end gap-6">
+                <div className="flex items-center justify-end gap-3 sm:gap-6">
                   <Link
                     to="/"
-                    className="w-full max-w-[120px] lg:max-w-[160px] text-sm p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center"
+                    className="w-full max-w-[120px] lg:max-w-[160px] p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center text-xs sm:text-base"
                   >
                     {t("buttons.cancel")}
                   </Link>
                   <Link
                     to="/edit-store-profile"
-                    className="w-full max-w-max p-4 px-6 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
+                    className="w-full max-w-max p-4 px-4 sm:px-6 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center text-xs sm:text-base"
                   >
                     {t("buttons.editStore")}
                   </Link>
