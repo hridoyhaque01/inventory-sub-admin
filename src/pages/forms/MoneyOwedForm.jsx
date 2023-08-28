@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,6 +14,7 @@ function MoneyOwedForm() {
   const { payload, type } = state || {};
   const [paidAmount, setPaidAmount] = useState(0);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -76,7 +78,7 @@ function MoneyOwedForm() {
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
-            Money Owed
+            {t("tableTitle.owes")}
           </h4>
         </div>
         <div className="bg-whiteHigh w-full px-4">
@@ -86,11 +88,11 @@ function MoneyOwedForm() {
                 {/* productId */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Customer Id:
+                    {t("tables.customerId")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Customer id"
+                    placeholder={t("tables.customerId")}
                     name="customerId"
                     className={`w-full py-3 px-4 border border-whiteLow outline-none rounded ${
                       type === "edit" ? "text-fadeColor" : "text-blackLow"
@@ -103,11 +105,11 @@ function MoneyOwedForm() {
                 {/* Product Name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Due Amount:
+                    {t("tables.dueAmount")} :
                   </span>
                   <input
                     type="number"
-                    placeholder="Due amount"
+                    placeholder={t("tables.dueAmount")}
                     name="dueAmount"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     defaultValue={payload?.dueAmount}
@@ -118,11 +120,11 @@ function MoneyOwedForm() {
                 {/* Pay Date: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Pay Date:
+                    {t("tables.payDate")} :
                   </span>
                   <input
                     type="date"
-                    placeholder="Pay date"
+                    placeholder={t("tables.payDate")}
                     name="payDate"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
                     defaultValue={getIsoDateString(payload?.payDate)}
@@ -132,11 +134,11 @@ function MoneyOwedForm() {
                 {/* Paid */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Paid :
+                    {t("forms.paid")} :
                   </span>
                   <input
                     type="number"
-                    placeholder="Paid amount"
+                    placeholder={t("placeholders.enterPaid")}
                     name="due"
                     step="any"
                     value={paidAmount}
@@ -149,11 +151,11 @@ function MoneyOwedForm() {
                 {/* Paid */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Remaining :
+                    {t("forms.remaining")} :
                   </span>
                   <input
                     type="number"
-                    placeholder="Remaining amount"
+                    placeholder={t("placeholders.remainingAmount")}
                     name="remainingAmount"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
@@ -170,13 +172,13 @@ function MoneyOwedForm() {
                       to="/moneyOwed"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
                     >
-                      Back
+                      {t("buttons.cancel")}
                     </Link>
                     <button
                       type="submit"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                     >
-                      Submit
+                      {t("buttons.save")}
                     </button>
                     {/* <button
                       type="submit"

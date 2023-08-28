@@ -1,17 +1,19 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 function InventoryForm() {
   const { state } = useLocation() || {};
-  const { payload, type } = state || {};
+  const { payload } = state || {};
+  const { t } = useTranslation();
 
   return (
     <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
-            Inventory
+            {t("tableTitle.inventory")}
           </h4>
         </div>
         <div className="bg-whiteHigh w-full px-6">
@@ -21,11 +23,11 @@ function InventoryForm() {
                 {/* productId */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Product ID :
+                    {t("tables.productId")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Enter product ID"
+                    placeholder={t("placeholders.enterProductId")}
                     name="productId"
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
@@ -36,11 +38,11 @@ function InventoryForm() {
                 {/* Product Name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Product Name:
+                    {t("tables.productName")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Enter product name"
+                    placeholder={t("tables.productName")}
                     name="productName"
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
@@ -51,12 +53,12 @@ function InventoryForm() {
                 {/* Product Category: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Product Category:
+                    {t("tables.productCategory")} :
                   </span>
                   <div className="relative w-full">
                     <input
                       type="text"
-                      placeholder="Enter product name"
+                      placeholder={t("tables.productCategory")}
                       name="productCategory"
                       readOnly
                       className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
@@ -68,12 +70,12 @@ function InventoryForm() {
                 {/* Shop name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Shop Name :
+                    {t("tables.shopName")} :
                   </span>
                   <div className="relative w-full">
                     <input
                       type="text"
-                      placeholder="Enter product name"
+                      placeholder={t("tables.shopName")}
                       name="productCategory"
                       readOnly
                       className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
@@ -82,62 +84,39 @@ function InventoryForm() {
                   </div>
                 </div>
 
-                {/* Buying Price/Unit: */}
+                {/* quantity*/}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Quantity:
+                    {t("tables.quantity")} :
                   </span>
                   <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid">
                     <input
                       type="number"
                       name="productQuantity"
                       className="w-28 border-none outline-none bg-transparent"
-                      placeholder="Enter quantity"
+                      placeholder={t("tables.quantity")}
                       defaultValue={`${payload?.productQuantity}`}
                       readOnly
                     />
-
                     <div className="relative w-full max-w-max">
-                      <select
-                        className="appearance-none outline-none bg-transparent w-16"
-                        name="unit"
-                        defaultValue=""
-                        disabled
-                      >
-                        <option value="">{payload?.unit}</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-1 flex items-center text-secondaryColor pointer-events-none">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="17"
-                          height="16"
-                          viewBox="0 0 17 16"
-                          fill="none"
-                        >
-                          <path
-                            d="M12.0561 5.53003L8.99609 8.58336L5.93609 5.53003L4.99609 6.47003L8.99609 10.47L12.9961 6.47003L12.0561 5.53003Z"
-                            fill="#808080"
-                          />
-                        </svg>
-                      </div>
+                      <input
+                        type="text"
+                        className="appearance-none outline-none bg-transparent w-16 text-fadeColor"
+                        readOnly
+                        defaultValue={payload?.unit}
+                      />
                     </div>
                   </div>
-                  {/* <input
-                    type="number"
-                    name="buyingPrice"
-                    placeholder="Buying price"
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
-                  /> */}
                 </div>
                 {/* Buying Price/Unit: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Buying Price/Unit:
+                    {t("tables.buyingPrice")} :
                   </span>
                   <input
                     type="number"
                     name="buyingPrice"
-                    placeholder="Enter buying price"
+                    placeholder={t("tables.buyingPrice")}
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                     defaultValue={payload?.buyingPrice}
@@ -147,12 +126,12 @@ function InventoryForm() {
                 {/* Selling Price/Unit: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Selling Price/Unit:
+                    {t("tables.sellingPrice")} :
                   </span>
                   <input
                     type="number"
                     name="sellingPrice"
-                    placeholder="Enter selling price"
+                    placeholder={t("tables.sellingPrice")}
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-fadeColor text-sm bg-whiteMid"
                     defaultValue={payload?.sellingPrice}
@@ -166,7 +145,7 @@ function InventoryForm() {
                       to="/inventory"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                     >
-                      Back
+                      {t("buttons.back")}
                     </Link>
                   </div>
                 </div>

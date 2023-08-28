@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
@@ -10,12 +11,16 @@ import { useGetCustomersQuery } from "../../features/customers/customerApi";
 function Customer() {
   const { store } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetCustomersQuery(store?._id);
-
+  const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState("");
 
   const onChange = (e) => {
     const value = e.target.value;
     setSearchValue(value);
+  };
+
+  const sortByTime = (a, b) => {
+    return b.timestamp - a.timestamp;
   };
 
   const filterBySearch = (data) => {
@@ -37,7 +42,7 @@ function Customer() {
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = data?.filter(filterBySearch);
+    const newData = [...data]?.sort(sortByTime)?.filter(filterBySearch);
     content = <CustomerTable data={newData}></CustomerTable>;
   }
 
@@ -45,7 +50,7 @@ function Customer() {
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
       <div className="shadow-sm bg-whiteHigh w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
-          title="Customer"
+          title="tableTitle.customers"
           path="/customer-add"
           value={searchValue}
           onChange={onChange}

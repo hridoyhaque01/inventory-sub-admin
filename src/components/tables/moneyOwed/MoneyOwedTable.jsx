@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import { Pagination } from "../../shared/pagination/Pagination";
@@ -10,6 +11,7 @@ function MoneyOwedTable({ data }) {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  const { t } = useTranslation();
 
   const handleNavigate = (item) => {
     navigate("/moneyOwed-edit", {
@@ -26,25 +28,25 @@ function MoneyOwedTable({ data }) {
         <thead className=" p-0">
           <tr className="font-bold text-center text-3xl">
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Serial
+              {t("tables.serial")}
             </th>
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
-              Customer Id
+              {t("tables.customerId")}
             </th>
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
-              Customer Name
+              {t("tables.customerName")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Due Amount
+              {t("tables.dueAmount")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Pay Date
+              {t("tables.payDate")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Action
+              {t("tables.action")}
             </th>
           </tr>
         </thead>
@@ -53,7 +55,7 @@ function MoneyOwedTable({ data }) {
             <tr className="border-none">
               <td colSpan="10" className="py-6">
                 <h2 className="text-center text-lg text-blackRgb font-medium">
-                  No data found!
+                  {t("noData")}
                 </h2>
               </td>
             </tr>

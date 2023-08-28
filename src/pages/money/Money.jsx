@@ -16,8 +16,12 @@ function Expenses() {
     setSearchValue(value);
   };
 
+  const sortByTime = (a, b) => {
+    return b.payDate - a.payDate;
+  };
+
   const filterByDue = (data) => {
-    return data?.dueAmount !== "0";
+    return parseInt(data?.dueAmount) !== 0;
   };
 
   const filterBySearch = (data) => {
@@ -39,14 +43,17 @@ function Expenses() {
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = data?.filter(filterByDue).filter(filterBySearch);
+    const newData = [...data]
+      ?.filter(filterByDue)
+      ?.sort(sortByTime)
+      ?.filter(filterBySearch);
     content = <MoneyOwedTable data={newData}></MoneyOwedTable>;
   }
   return (
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6 ">
       <div className="shadow-sm w-full h-full rounded-2xl overflow-hidden bg-whiteHigh">
         <SearchBar
-          title="Money Owed"
+          title="tableTitle.owes"
           path="/moneyOwed-add"
           value={searchValue}
           onChange={onChange}

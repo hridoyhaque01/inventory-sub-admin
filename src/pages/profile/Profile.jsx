@@ -1,16 +1,20 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { avatar } from "../../assets/getAssets";
 
 function Profile() {
   const { store } = useSelector((state) => state.auth);
+  const { t } = useTranslation();
+  console.log(store);
+
   return (
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-xl lg:text-2xl font-bold">
-            Edit Profile
+            {t("editProfile")}
           </h4>
         </div>
         <div className="bg-whiteHigh w-full px-4">
@@ -20,11 +24,11 @@ function Profile() {
                 {/* name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Store Name :
+                    {t("forms.storeName")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder={t("forms.storeName")}
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     defaultValue={store?.name}
@@ -33,7 +37,7 @@ function Profile() {
                 {/* profile pic */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Store Image:
+                    {t("forms.store_img")} :
                   </span>
                   <div>
                     <img
@@ -46,11 +50,11 @@ function Profile() {
                 {/* Email: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Email:
+                    {t("forms.email")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Email address"
+                    placeholder={t("forms.email")}
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     defaultValue={store?.email}
@@ -59,11 +63,11 @@ function Profile() {
                 {/* phone no */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Address :
+                    {t("tables.address")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Phone number"
+                    placeholder={t("tables.address")}
                     readOnly
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     defaultValue={store?.location}
@@ -75,13 +79,13 @@ function Profile() {
                     to="/"
                     className="w-full max-w-[120px] lg:max-w-[160px] text-sm p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center"
                   >
-                    Cancel
+                    {t("buttons.cancel")}
                   </Link>
                   <Link
                     to="/edit-store-profile"
-                    className="w-full max-w-[120px] lg:max-w-[160px] text-sm p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
+                    className="w-full max-w-max p-4 px-6 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
                   >
-                    Edit Store
+                    {t("buttons.editStore")}
                   </Link>
                 </div>
               </div>

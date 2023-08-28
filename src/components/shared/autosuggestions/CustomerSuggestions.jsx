@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Autosuggest from "react-autosuggest";
+import { useTranslation } from "react-i18next";
 
 const CustomerSuggestions = ({
   suggestions,
@@ -8,7 +9,7 @@ const CustomerSuggestions = ({
   value,
 }) => {
   const [suggestionsList, setSuggestionsList] = useState([]);
-
+  const { t } = useTranslation();
   const getSuggestions = (inputValue) => {
     return suggestions.filter((suggestion) =>
       suggestion.customerPhone?.toLowerCase().includes(inputValue.toLowerCase())
@@ -34,7 +35,7 @@ const CustomerSuggestions = ({
   );
 
   const inputProps = {
-    placeholder: "Enter customer phone number",
+    placeholder: t("placeholders.enterCustomerPhone"),
     required: true,
     value,
     onChange: (event, { newValue }) => {

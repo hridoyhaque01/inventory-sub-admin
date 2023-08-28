@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,6 +17,7 @@ function EditProfile() {
   const [isTypeError, setIsTypeError] = useState(false);
   const [compressedLoading, setCompressedLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -123,7 +125,7 @@ function EditProfile() {
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
-            Edit Profile
+            {t("editProfile")}
           </h4>
         </div>
         <div className="bg-whiteHigh w-full px-4">
@@ -133,7 +135,7 @@ function EditProfile() {
                 {/* profile */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Avatar (140X140):
+                    {t("forms.avatar")} {t("forms.140")} :
                   </span>
                   <div className="w-full relative">
                     {!profilePreveiw ? (
@@ -156,15 +158,14 @@ function EditProfile() {
                               />
                             </svg>
                           </div>
-                          <p className="text-sm font-medium text-center text-fadeColor">
+                          <p className="text-sm font-medium text-center text-fadeColor max-w-[200px] mx-auto">
                             <label
                               htmlFor="profile"
                               className="text-primaryMainDarkest cursor-pointer"
                             >
-                              Upload Image
+                              {t("forms.upload")}
                             </label>{" "}
-                            or Drag and Drop <br />
-                            JPG, JPEG or PNG
+                            {t("forms.upload_drop")}
                           </p>
                         </div>
                       </div>
@@ -210,7 +211,7 @@ function EditProfile() {
                     />
                     {isTypeError && (
                       <p className="text-errorLightColor text-sm">
-                        Only JPG, JPEG and PNG file are supported
+                        {t("forms.supported")}
                       </p>
                     )}
                   </div>
@@ -222,13 +223,13 @@ function EditProfile() {
                     to="/store-profile"
                     className="w-full max-w-[160px] p-4 rounded-full font-medium border border-errorLightColor text-errorLightColor text-center"
                   >
-                    Cancel
+                    {t("buttons.cancel")}
                   </Link>
                   <button
                     type="submit"
                     className="w-full max-w-[160px] p-4 rounded-full bg-primaryMainLight font-medium text-whiteHigh text-center"
                   >
-                    Save
+                    {t("buttons.save")}
                   </button>
                 </div>
               </div>

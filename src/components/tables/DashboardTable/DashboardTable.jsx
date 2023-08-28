@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { Pagination } from "../../shared/pagination/Pagination";
 
@@ -9,7 +9,7 @@ const DashboardTable = ({ results, setActiveStore }) => {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = results?.slice(indexOfFirstRow, indexOfLastRow);
-  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const totalPaidToOwner = results.reduce(
     (acc, result) => acc + result.totalPaidToOwner,
@@ -40,24 +40,24 @@ const DashboardTable = ({ results, setActiveStore }) => {
             <thead className=" p-0">
               <tr className="font-bold text-center text-3xl">
                 <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                  Serial
+                  {t("tables.serial")}
                 </th>
 
                 <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                  Total Due
+                  {t("tables.totalDue")}
                 </th>
 
                 <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                  Revenue
+                  {t("tables.totalRevenue")}
                 </th>
                 <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                  Total Costs
+                  {t("tables.totalCost")}
                 </th>
                 <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                  Total sales
+                  {t("tables.totalSales")}
                 </th>
                 <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                  Date
+                  {t("date")}
                 </th>
               </tr>
             </thead>
@@ -65,7 +65,7 @@ const DashboardTable = ({ results, setActiveStore }) => {
               <tbody>
                 <tr>
                   <td colSpan="6" className="">
-                    No data found
+                    {t("noData")}
                   </td>
                 </tr>
               </tbody>
@@ -104,33 +104,33 @@ const DashboardTable = ({ results, setActiveStore }) => {
           <thead className=" p-0">
             <tr className="font-bold text-center text-3xl">
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Serial
+                {/* {t("tables.serial")} */}
               </th>
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
-                Paid to Owner
+                {t("tables.totalPaidOwner")}
               </th>
 
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Remaining
+                {t("tables.totalRemaining")}
               </th>
 
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Total Due
+                {t("tables.totalDue")}
               </th>
 
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Revenue
+                {t("tables.totalRevenue")}
               </th>
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Total Costs
+                {t("tables.totalCost")}
               </th>
               <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-                Total sales
+                {t("tables.totalSales")}
               </th>
             </tr>
             <tr className="font-bold text-center text-3xl">
               <th className="bg-secondaryMain text-blackHigh text-base normal-case py-6">
-                Total
+                {t("tables.total")}
               </th>
               <th className="bg-secondaryMain text-blackHigh text-base normal-case  py-6">
                 {totalPaidToOwner}

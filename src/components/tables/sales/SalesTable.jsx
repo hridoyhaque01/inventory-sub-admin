@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import InvoiceModal from "../../modals/InvoiceModal";
@@ -15,6 +16,7 @@ function SalesTable({ data }) {
   const [activeData, setActiveData] = useState({});
   const [activeInvoice, setActiveInvoice] = useState("");
   const targetRef = useRef();
+  const { t } = useTranslation();
 
   const handleNavigate = (data) => {
     navigate("/sales-edit", {
@@ -43,35 +45,35 @@ function SalesTable({ data }) {
         <thead className=" p-0">
           <tr className="font-bold text-center text-3xl">
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
-              Serial
+              {t("tables.serial")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Product Id
+              {t("tables.productId")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Product Name
+              {t("tables.productName")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Category
+              {t("cards.totalSales")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Shop Name
+              {t("tables.shopName")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Quantity
+              {t("tables.quantity")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Selling Price/Unit
+              {t("tables.sellingPrice")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Actions
+              {t("tables.action")}
             </th>
           </tr>
         </thead>
@@ -80,7 +82,7 @@ function SalesTable({ data }) {
             <tr className="border-none">
               <td colSpan="10" className="py-6">
                 <h2 className="text-center text-lg text-blackRgb font-medium">
-                  No data found!
+                  {t("noData")}
                 </h2>
               </td>
             </tr>
@@ -97,7 +99,9 @@ function SalesTable({ data }) {
                 <td className="py-3">{item?.productId}</td>
 
                 <td className="py-3">{item?.productName}</td>
-                <td className="py-3">{item?.productCategory}</td>
+                <td className="py-3">
+                  {parseInt(item?.unitCount) * parseInt(item?.unitPrice)}
+                </td>
                 <td className="py-3">{item?.storeName}</td>
                 <td className="py-3">{item?.unitCount}</td>
                 <td className="py-3">{item?.unitPrice}</td>

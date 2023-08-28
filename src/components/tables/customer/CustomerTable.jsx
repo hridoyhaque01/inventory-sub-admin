@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "../../shared/pagination/Pagination";
 
 function CustomerTable({ data }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeButton, setActiveButton] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [imageUrl, setImageUrl] = useState();
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  const { t } = useTranslation();
 
   const handleNavigate = (item) => {
     navigate("/customer-edit", {
@@ -27,22 +27,22 @@ function CustomerTable({ data }) {
         <thead className=" p-0">
           <tr className="font-bold text-center text-3xl">
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Serial
+              {t("tables.serial")}
             </th>
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case p-2">
-              Name
+              {t("tables.name")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Phone Number
+              {t("tables.phone")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Address
+              {t("tables.address")}
             </th>
 
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
-              Action
+              {t("tables.action")}
             </th>
           </tr>
         </thead>
@@ -50,7 +50,7 @@ function CustomerTable({ data }) {
           <tbody>
             <tr>
               <td colSpan="6" className="">
-                No data found
+                {t("noData")}
               </td>
             </tr>
           </tbody>

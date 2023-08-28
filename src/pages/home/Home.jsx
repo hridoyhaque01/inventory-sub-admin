@@ -13,22 +13,22 @@ const Dashboard = () => {
 
   const [dashboardData, setDashboardData] = useState([
     {
-      title: "Total Sales",
+      title: "cards.totalSales",
       color: "bg-successColor",
       number: 0,
     },
     {
-      title: "Total Customers",
+      title: "cards.totalCustomers",
       color: "bg-secondaryMainLight",
       number: 0,
     },
     {
-      title: "Total Products",
+      title: "cards.totalProducts",
       color: "bg-infoColor",
       number: 0,
     },
     {
-      title: "Total Revenue",
+      title: "cards.totalRevenue",
       color: "bg-errorMidColor",
       number: 0,
     },
@@ -66,33 +66,6 @@ const Dashboard = () => {
       setDashboardData(updatedData);
     }
   }, [isLoading, isError]);
-
-  // useEffect(() => {
-  //   if (!isLoading && !isError && totalSales) {
-  //     setDashboardData((prev) => [
-  //       {
-  //         title: "Total Sales",
-  //         number: totalSales,
-  //         color: "bg-successColor",
-  //       },
-  //       {
-  //         title: "Total Costs",
-  //         number: totalCosts,
-  //         color: "bg-secondaryMainLight",
-  //       },
-  //       {
-  //         title: "Total Revenue",
-  //         number: totalSales - totalDues,
-  //         color: "bg-infoColor",
-  //       },
-  //       {
-  //         title: "Total Dues",
-  //         number: totalDues,
-  //         color: "bg-errorMidColor",
-  //       },
-  //     ]);
-  //   }
-  // }, [isLoading, isError, totalSales]);
 
   return (
     <div className="w-full overflow-auto pt-10 pb-6 px-4 md:px-6">

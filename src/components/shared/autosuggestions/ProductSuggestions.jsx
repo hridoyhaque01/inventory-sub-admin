@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Autosuggest from "react-autosuggest";
+import { useTranslation } from "react-i18next";
 
 const ProductSuggestions = ({
   suggestions,
@@ -8,7 +9,7 @@ const ProductSuggestions = ({
   value,
 }) => {
   const [suggestionsList, setSuggestionsList] = useState([]);
-
+  const { t } = useTranslation();
   const getSuggestions = (inputValue) => {
     return suggestions.filter((suggestion) =>
       suggestion.productId.toLowerCase().includes(inputValue.toLowerCase())
@@ -34,7 +35,7 @@ const ProductSuggestions = ({
   );
 
   const inputProps = {
-    placeholder: "Enter product Id",
+    placeholder: t("placeholders.enterProductId"),
     required: true,
     value,
     onChange: (event, { newValue }) => {
@@ -51,7 +52,6 @@ const ProductSuggestions = ({
       getSuggestionValue={(suggestion) => suggestion.productId}
       renderSuggestion={renderSuggestion}
       inputProps={inputProps}
-      placeholder="Enter product id"
     />
   );
 };

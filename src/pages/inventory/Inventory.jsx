@@ -19,6 +19,10 @@ function Inventory() {
     setSearchValue(value);
   };
 
+  const sortByTime = (a, b) => {
+    return b.timestamp - a.timestamp;
+  };
+
   const filterBySearch = (data) => {
     if (searchValue.trim().length > 0) {
       return data?.productName
@@ -38,7 +42,7 @@ function Inventory() {
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = data?.filter(filterBySearch);
+    const newData = [...data]?.sort(sortByTime)?.filter(filterBySearch);
     content = <InventoryTable data={newData}></InventoryTable>;
   }
 
@@ -46,7 +50,7 @@ function Inventory() {
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
       <div className="bg-whiteHigh shadow-sm w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
-          title="Sales"
+          title="tableTitle.inventory"
           path="/sales-add"
           value={searchValue}
           onChange={onChange}

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,6 +19,7 @@ function CustomerForm() {
   const { state } = useLocation();
   const { payload, type } = state || {};
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -97,7 +99,7 @@ function CustomerForm() {
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
-            Customer
+            {t("tableTitle.customer")}
           </h4>
         </div>
         <div className="bg-whiteHigh w-full px-4">
@@ -107,15 +109,17 @@ function CustomerForm() {
                 {/* productId */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Mobile Number :
+                    {t("tables.phone")} :
                   </span>
                   <input
                     type="number"
-                    placeholder="Enter mobile number"
+                    placeholder={t("placeholders.enterPhone")}
                     name="customerPhone"
                     readOnly={type === "edit" ? true : false}
                     required
-                    className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
+                    className={`w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm ${
+                      type === "edit" ? "bg-whiteMid" : "bg-transparent"
+                    }`}
                     defaultValue={payload?.customerPhone}
                   />
                 </div>
@@ -123,11 +127,11 @@ function CustomerForm() {
                 {/* Product Name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Name:
+                    {t("tables.name")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Enter fullname"
+                    placeholder={t("placeholders.enterFullName")}
                     name="customerName"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
@@ -138,11 +142,11 @@ function CustomerForm() {
                 {/* Shop Name: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Address:
+                    {t("tables.address")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Enter address"
+                    placeholder={t("placeholders.enterAddress")}
                     name="customerAddress"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
@@ -159,13 +163,13 @@ function CustomerForm() {
                       to="/customer"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border border-errorLightColor text-errorLightColor font-medium text-center"
                     >
-                      Back
+                      {t("buttons.cancel")}
                     </Link>
                     <button
                       type="submit"
                       className="w-[140px] sm:w-[160px] p-3 sm:p-4 rounded-full border bg-primaryMainLight text-whiteHigh font-medium text-center"
                     >
-                      Submit
+                      {t("buttons.save")}
                     </button>
                   </div>
                 </div>
