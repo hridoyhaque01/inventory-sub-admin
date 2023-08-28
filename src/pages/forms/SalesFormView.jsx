@@ -1,16 +1,19 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 function SalesFormView() {
   const { state } = useLocation();
   const { payload } = state || {};
+  const { t } = useTranslation();
+
   return (
-    <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
+    <section className="h-full w-full overflow-auto px-6 py-6">
       <div className="shadow-sm w-full rounded-2xl">
         <div className="bg-primaryMainDarkest p-4 rounded-t-2xl">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
-            Sales
+            {t("tableTitle.sales")}
           </h4>
         </div>
         <div className="bg-whiteHigh w-full px-4 rounded-b-2xl">
@@ -20,11 +23,11 @@ function SalesFormView() {
                 {/* productId */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3 relative">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Product ID :
+                    {t("tables.productId")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Product name"
+                    placeholder={t("tables.productId")}
                     name="productName"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
@@ -35,11 +38,11 @@ function SalesFormView() {
                 {/* Product Name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Product Name :
+                    {t("tables.productName")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Product name"
+                    placeholder={t("tables.productName")}
                     name="productName"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
@@ -50,11 +53,11 @@ function SalesFormView() {
                 {/* Product Category */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Product Category :
+                    {t("tables.category")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Product category"
+                    placeholder={t("tables.category")}
                     name="productCategory"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
@@ -65,11 +68,11 @@ function SalesFormView() {
                 {/* Shop Name: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Shop Name :
+                    {t("tables.shopName")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Shop name"
+                    placeholder={t("tables.shopName")}
                     name="shopName"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
@@ -80,12 +83,12 @@ function SalesFormView() {
                 {/* Selling Price/Unit: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Selling Price/Unit :
+                    {t("tables.sellingPrice")} :
                   </span>
                   <input
                     type="number"
                     name="sellingPrice"
-                    placeholder="Selling price"
+                    placeholder={t("tables.sellingPrice")}
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
                     defaultValue={payload?.unitPrice}
@@ -95,14 +98,14 @@ function SalesFormView() {
                 {/* Quantity */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Quantity :
+                    {t("tables.quantity")} :
                   </span>
                   <div className="w-full py-3 px-4 flex items-center border border-whiteLow outline-none rounded text-blackLow text-sm  bg-whiteMid">
                     <input
                       type="number"
                       name="quantity"
                       className="w-20 border-none outline-none bg-transparent"
-                      placeholder="Quantity"
+                      placeholder={t("tables.quantity")}
                       step="any"
                       defaultValue={payload?.unitCount}
                       readOnly
@@ -147,11 +150,11 @@ function SalesFormView() {
                 {/* Total Price: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Total Price :
+                    {t("tables.totalPrice")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Total price"
+                    placeholder={t("tables.totalPrice")}
                     name="totalPrice"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
                     readOnly
@@ -177,11 +180,11 @@ function SalesFormView() {
                 <div className="w-full flex flex-col gap-6">
                   <div className="flex flex-col md:flex-row md:items-center gap-3">
                     <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                      Pay :
+                      {t("forms.pay")} :
                     </span>
                     <input
                       type="number"
-                      placeholder="Pay amount"
+                      placeholder={t("forms.pay")}
                       name="payAmount"
                       step="any"
                       className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
@@ -191,11 +194,11 @@ function SalesFormView() {
                   </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-3">
                     <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                      Due :
+                      {t("forms.due")} :
                     </span>
                     <input
                       type="number"
-                      placeholder="Due amount"
+                      placeholder={t("tables.dueAmount")}
                       name="dueAmount"
                       step="any"
                       className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"
@@ -208,11 +211,11 @@ function SalesFormView() {
 
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Customer :
+                    {t("tableTitle.customer")} :
                   </span>
                   <input
                     type="number"
-                    placeholder="Due amount"
+                    placeholder={t("tableTitle.customer")}
                     name="dueAmount"
                     step="any"
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm bg-whiteMid"

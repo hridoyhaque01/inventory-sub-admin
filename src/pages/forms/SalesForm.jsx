@@ -176,7 +176,7 @@ function SalesForm() {
   ) : customerError || productsError ? (
     <div>{t("somethingWrong")}</div>
   ) : (
-    <section className="h-full w-full overflow-auto px-6 md:px-10 py-6">
+    <section className="h-full w-full overflow-auto px-6 py-6">
       <div className="shadow-sm w-full rounded-2xl">
         <div className="bg-primaryMainDarkest p-4 rounded-t-2xl">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
@@ -344,7 +344,7 @@ function SalesForm() {
                     disabled={selectedProduct?.productId ? false : true}
                     id="fullPaid"
                   />
-                  <label htmlFor="fullPaid">Full Paid</label>
+                  <label htmlFor="fullPaid">{t("forms.fullPaid")}</label>
                 </div>
 
                 {/* pay and due  */}

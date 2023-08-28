@@ -52,7 +52,8 @@
     "totalAmount": "Total Amount",
     "paidAmount": "Paid Amount",
     "pay": "Pay",
-    "due": "Due"
+    "due": "Due",
+    "fullPaid": "Full Paid"
   },
   "placeholders": {
     "enterFirstName": "Enter first name",

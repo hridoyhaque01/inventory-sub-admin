@@ -97,7 +97,7 @@ function StoreForm() {
   };
 
   return (
-    <section className="h-full w-full overflow-auto px-10 py-6">
+    <section className="h-full w-full overflow-auto px-6 py-6">
       <div className="shadow-sm w-full rounded-2xl overflow-hidden">
         <div className="bg-primaryMainDarkest p-4">
           <h4 className=" text-whiteHigh text-lg md:text-2xl font-bold">
