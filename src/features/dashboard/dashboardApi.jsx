@@ -25,7 +25,7 @@ const dashboardApi = apiSlice.injectEndpoints({
         );
 
         totalSales = data?.invoices?.reduce(
-          (acc, item) => acc + parseInt(item?.unitCount),
+          (acc, item) => acc + parseInt(item?.totalAmount),
           0
         );
 
@@ -105,6 +105,7 @@ const dashboardApi = apiSlice.injectEndpoints({
           data: { storeDetails, cardData },
         };
       },
+      providesTags: ["stores"],
     }),
   }),
 });

@@ -13,7 +13,6 @@ export const owesApi = apiSlice.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      // invalidatesTags: ["products"],
       async onQueryStarted(
         { data, id, storeId },
         { queryFulfilled, dispatch }
@@ -37,6 +36,7 @@ export const owesApi = apiSlice.injectEndpoints({
           console.log(error);
         }
       },
+      invalidatesTags: ["stores"],
     }),
   }),
 });

@@ -86,7 +86,7 @@ function CustomerForm() {
         .unwrap()
         .then((res) => {
           form.reset();
-          infoNotify("Customer add successfull");
+          navigate("/customer");
         })
         .catch((error) => {
           errorNotify("Customer add failed");

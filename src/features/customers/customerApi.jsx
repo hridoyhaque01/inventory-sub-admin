@@ -35,6 +35,7 @@ const customerApi = apiSlice.injectEndpoints({
           console.log(error);
         }
       },
+      invalidatesTags: ["stores"],
     }),
 
     updateCustomers: builder.mutation({

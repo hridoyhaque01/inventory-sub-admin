@@ -65,7 +65,9 @@ const Dashboard = () => {
       updatedData[3].number = cardData?.totalRevenue || 0;
       setDashboardData(updatedData);
     }
-  }, [isLoading, isError]);
+  }, [isLoading, isError, data]);
+
+  console.log("tst");
 
   return (
     <div className="w-full overflow-auto pt-10 pb-6 px-4 md:px-6">

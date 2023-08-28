@@ -53,6 +53,7 @@ const salesApi = apiSlice.injectEndpoints({
           console.log(error);
         }
       },
+      invalidatesTags: ["stores"],
     }),
 
     updateSales: builder.mutation({
