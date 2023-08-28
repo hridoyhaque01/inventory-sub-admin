@@ -25,7 +25,7 @@ function MoneyOwedTable({ data }) {
   return (
     <div className="h-full overflow-auto flex flex-col items-end justify-between pb-4 gap-4">
       <table className="table w-full">
-        <thead className=" p-0">
+        <thead className="p-0">
           <tr className="font-bold text-center text-3xl">
             <th className="bg-primaryMainLightest text-blackHigh text-base normal-case">
               {t("tables.serial")}

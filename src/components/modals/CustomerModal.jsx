@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const CustomerModal = ({
   handler,
@@ -9,6 +10,8 @@ const CustomerModal = ({
   storeId,
   storeName,
 }) => {
+  const { t } = useTranslation();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -44,7 +47,7 @@ const CustomerModal = ({
           <div className="w-full max-w-[618px]">
             <div className="flex justify-center mb-6">
               <span className="inline-block p-3 rounded-full font-medium bg-warningLowColor">
-                Add Customer
+                {t("forms.addCustomer")}
               </span>
             </div>
             <form action="" onSubmit={handleSubmit}>
@@ -52,11 +55,11 @@ const CustomerModal = ({
                 {/* productId */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Mobile Number :
+                    {t("tables.phone")} :
                   </span>
                   <input
                     type="number"
-                    placeholder="Enter mobile number"
+                    placeholder={t("placeholders.enterPhone")}
                     name="customerPhone"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
@@ -66,11 +69,11 @@ const CustomerModal = ({
                 {/* Product Name */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Name:
+                    {t("tables.name")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Enter fullname"
+                    placeholder={t("placeholders.enterFullName")}
                     name="customerName"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
@@ -80,11 +83,11 @@ const CustomerModal = ({
                 {/* Shop Name: */}
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
-                    Address:
+                    {t("tables.address")} :
                   </span>
                   <input
                     type="text"
-                    placeholder="Enter address"
+                    placeholder={t("placeholders.enterAddress")}
                     name="customerAddress"
                     required
                     className="w-full py-3 px-4 border border-whiteLow outline-none rounded text-blackLow text-sm"
@@ -99,14 +102,14 @@ const CustomerModal = ({
                       htmlFor="customerModal"
                       className="btn rounded-full w-[100px] sm:w-[160px] p-2 text-xs sm:text-base bg-transparent text-errorLowColor border-errorLowColor hover:border-errorLowColor hover:bg-transparent cursor-pointer"
                     >
-                      Cancel
+                      {t("buttons.cancel")}
                     </label>
                     <button type="submit">
                       <label
                         htmlFor="customerModal"
-                        className="btn rounded-full w-[100px] sm:w-[160px] p-2 text-xs sm:text-base bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh cursor-pointer"
+                        className="btn rounded-full w-[120px] sm:w-[160px] p-2 text-xs sm:text-base bg-primaryMainLight hover:bg-primaryMainLight border-secondaryColor hover:border-primaryMainLight text-whiteHigh cursor-pointer"
                       >
-                        Save
+                        {t("buttons.save")}
                       </label>
                     </button>
                   </div>

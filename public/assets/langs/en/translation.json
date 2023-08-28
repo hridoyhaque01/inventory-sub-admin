@@ -53,7 +53,8 @@
     "paidAmount": "Paid Amount",
     "pay": "Pay",
     "due": "Due",
-    "fullPaid": "Full Paid"
+    "fullPaid": "Full Paid",
+    "addCustomer": "গ্রাহক যোগ করুন"
   },
   "placeholders": {
     "enterFirstName": "Enter first name",

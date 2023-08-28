@@ -27,7 +27,7 @@ const TopNav = ({ isShowButton }) => {
   };
 
   return (
-    <div className="navbar bg-primaryMainDarkest px-6 py-2 z-[9999] relative">
+    <div className="navbar bg-primaryMainDarkest px-6 py-2 relative z-[9999] ">
       {/* top nav left */}
       <div className="flex-1 flex items-center gap-3 text-whiteHigh">
         <button

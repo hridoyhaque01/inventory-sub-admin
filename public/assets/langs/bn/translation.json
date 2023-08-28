@@ -53,7 +53,8 @@
     "paidAmount": "প্রদত্ত পরিমাণ",
     "pay": "প্রদান",
     "due": "বাকি",
-    "fullPaid": "সম্পূর্ণ অর্থপ্রদান"
+    "fullPaid": "সম্পূর্ণ অর্থপ্রদান",
+    "addCustomer": "গ্রাহক যোগ করুন"
   },
   "placeholders": {
     "enterFirstName": "নামের প্রথম অংশ লিখুন",

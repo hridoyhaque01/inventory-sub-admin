@@ -8,7 +8,7 @@ function SearchBar({ title, value, onChange, path, isNotAddable, children }) {
   return (
     <div className="bg-primaryMainDarkest px-3 py-4 sm:p-4 flex items-center justify-between">
       <div className="flex items-center gap-8">
-        <h4 className=" text-whiteHigh text-md sm:text-2xl font-bold">
+        <h4 className=" text-whiteHigh text-lg sm:text-2xl font-bold">
           {t(title)}
         </h4>
         {children}
