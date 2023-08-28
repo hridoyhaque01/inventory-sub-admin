@@ -65,7 +65,7 @@ function Login() {
   }, [accessToken, navigate]);
 
   return (
-    <section className="h-screen w-full text-whiteHigh">
+    <section className="min-h-screen w-full text-whiteHigh overflow-auto">
       <div className="flex items-center w-full h-full">
         <div className="w-full max-w-[630px] mx-auto h-full flex items-center justify-center p-4">
           <div className="w-full max-w-[296px]">
@@ -73,7 +73,7 @@ function Login() {
               <div className="flex justify-center lg:justify-start mb-6">
                 <img src={logo} alt="" className="w-16 h-16" />
               </div>
-              <h2 className="text-blackSemi text-2xl text-center lg:text-left font-bold">
+              <h2 className="text-blackSemi text-lg lg:text-2xl text-center lg:text-left font-bold">
                 {t("welcome")}
               </h2>
             </div>
@@ -89,7 +89,7 @@ function Login() {
                     required
                     name="email"
                     placeholder={t("placeholders.enterEmail")}
-                    className="w-full py-3 px-4 border text-black border-fadeLight outline-none rounded-lg"
+                    className="w-full py-3 px-4 border text-black border-fadeLight outline-none rounded-lg text-sm sm:text-base"
                   />
                 </div>
                 {/* password  */}

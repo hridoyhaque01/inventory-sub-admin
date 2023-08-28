@@ -73,8 +73,8 @@ const ResetPasswordModal = ({ email, errorNotify, infoNotify, handler }) => {
                 {/* NEW PASSWORD  */}
 
                 <div className="">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-right">
+                  <div className="flex flex-col md:flex-row md:items-center gap-3">
+                    <span className="inline-block w-[140px] shrink-0 whitespace-nowrap text-sm sm:text-base text-left md:text-right">
                       New Password :
                     </span>
                     <PasswordInput
