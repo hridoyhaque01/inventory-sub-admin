@@ -65,7 +65,7 @@ function Login() {
   }, [accessToken, navigate]);
 
   return (
-    <section className="min-h-screen w-full text-whiteHigh overflow-auto">
+    <section className="min-h-screen md:h-screen w-full text-whiteHigh overflow-auto">
       <div className="flex items-center w-full h-full">
         <div className="w-full max-w-[630px] mx-auto h-full flex items-center justify-center p-4">
           <div className="w-full max-w-[296px]">
